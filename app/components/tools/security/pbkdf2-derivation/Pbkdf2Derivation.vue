@@ -45,42 +45,42 @@ async function derive() {
   >
     <div class="grid gap-5">
       <div class="grid gap-4 lg:grid-cols-2">
-        <UFormField label="Password"
-          ><UInput
+        <UiField label="Password"
+          ><UiInput
             v-model="password"
             type="password"
             class="w-full"
-        /></UFormField>
-        <UFormField
+        /></UiField>
+        <UiField
           label="Salt"
-          help="Use a unique, non-secret salt in production."
-          ><UInput
+          description="Use a unique, non-secret salt in production."
+          ><UiInput
             v-model="salt"
             class="w-full font-mono"
-        /></UFormField>
+        /></UiField>
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Iterations"
-          ><UInput
-            v-model.number="iterations"
-            type="number"
-            min="1"
-            max="1000000"
+        <UiField label="Iterations"
+          ><UiNumberField
+            v-model="iterations"
+            :step-snapping="false"
+            :min="1"
+            :max="1000000"
             class="w-full"
-        /></UFormField>
-        <UFormField label="Hash"
-          ><USelect
+        /></UiField>
+        <UiField label="Hash"
+          ><UiSelect
             v-model="hash"
             :items="hashes"
             class="w-full"
-        /></UFormField>
+        /></UiField>
       </div>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Derive key"
           icon="i-tabler-lock"
           @click="derive"
-        /><UButton
+        /><UiButton
           label="Copy hex"
           icon="i-tabler-copy"
           color="neutral"
@@ -89,16 +89,19 @@ async function derive() {
           @click="copyText(output)"
         />
       </div>
-      <UFormField label="Derived key (hex)"
-        ><UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Derived key (hex)"
+        ><UiTextarea
+          v-bind="controlProps"
           v-model="output"
           :rows="4"
           readonly
           class="w-full font-mono"
-      /></UFormField>
+      /></UiField>
       <p
         v-if="status"
-        class="text-muted text-sm"
+        class="text-foreground-muted text-sm"
         role="status"
       >
         {{ status }}

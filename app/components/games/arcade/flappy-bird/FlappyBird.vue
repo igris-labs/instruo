@@ -30,17 +30,17 @@ function updateState(nextState: Record<string, unknown>) {
     description="A bright, local flight game. Guide the bird through rocky gates, chase your best score, and play again instantly."
   >
     <div class="mx-auto grid max-w-xl gap-5">
-      <div class="border-default/70 flex items-center justify-between border-b pb-4">
+      <div class="border-outline/70 flex items-center justify-between border-b pb-4">
         <div>
-          <p class="text-highlighted text-sm font-semibold">Skybound</p>
-          <p class="text-muted mt-1 font-mono text-xs">Flappy Bird · local arcade run</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Skybound</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Flappy Bird · local arcade run</p>
         </div>
-        <div class="text-muted flex gap-4 font-mono text-xs">
+        <div class="text-foreground-muted flex gap-4 font-mono text-xs">
           <span>
-            Score <strong class="text-highlighted">{{ state.score }}</strong>
+            Score <strong class="text-foreground-highlighted">{{ state.score }}</strong>
           </span>
           <span>
-            Best <strong class="text-highlighted">{{ state.best }}</strong>
+            Best <strong class="text-foreground-highlighted">{{ state.best }}</strong>
           </span>
         </div>
       </div>
@@ -174,7 +174,7 @@ function updateState(nextState: Record<string, unknown>) {
       >
         The game could not load. Reload the page to try again.
       </p>
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         Click, tap, or press Space to flap. No account needed.
       </p>
     </div>

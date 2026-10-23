@@ -7,7 +7,7 @@ async function process() {
 <template>
   <ToolWorkbench description="Create a 64-pixel favicon PNG from any image locally.">
     <div class="grid gap-5">
-      <UFileUpload
+      <UiFileInput
         :model-value="file"
         accept="image/*"
         label="Choose source artwork"
@@ -15,12 +15,12 @@ async function process() {
         @update:model-value="select"
       />
       <div class="flex gap-2">
-        <UButton
+        <UiButton
           label="Create favicon"
           icon="i-tabler-star"
           :disabled="!file"
           @click="process"
-        /><UButton
+        /><UiButton
           color="neutral"
           variant="soft"
           label="Download favicon"
@@ -32,7 +32,7 @@ async function process() {
         v-if="outputUrl"
         :src="outputUrl"
         alt="Generated favicon"
-        class="border-default size-16 rounded-md border object-contain"
+        class="border-outline size-16 rounded-md border object-contain"
       />
     </div>
   </ToolWorkbench>

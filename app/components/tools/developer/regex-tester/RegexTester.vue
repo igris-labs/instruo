@@ -44,74 +44,77 @@ const output = computed(() => result.value.matches.map((match) => match.value).j
   >
     <div class="grid gap-6">
       <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_9rem]">
-        <UFormField
+        <UiField
           label="Pattern"
           description="Use JavaScript regular expression syntax."
           :error="result.error || undefined"
         >
-          <UInput
+          <UiInput
             v-model="pattern"
-            size="lg"
             class="w-full"
             placeholder="\\bword\\b"
           />
-        </UFormField>
-        <UFormField
+        </UiField>
+        <UiField
           label="Flags"
           description="For example, gi."
         >
-          <UInput
+          <UiInput
             v-model="flags"
-            size="lg"
             class="w-full font-mono"
             placeholder="gi"
           />
-        </UFormField>
+        </UiField>
       </div>
 
-      <UFormField label="Test text">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Test text"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="10"
           :maxrows="18"
           class="w-full"
           placeholder="Paste text to test…"
-          :ui="{ base: 'font-mono text-sm leading-6' }"
         />
-      </UFormField>
+      </UiField>
 
       <section
-        class="border-default/70 border-t pt-5"
+        class="border-outline/70 border-t pt-5"
         aria-live="polite"
       >
         <div class="flex items-center justify-between gap-4">
-          <h2 class="text-highlighted font-semibold">Matches</h2>
-          <span class="text-toned font-mono text-sm tabular-nums">{{ result.matches.length }}</span>
+          <h2 class="text-foreground-highlighted font-semibold">Matches</h2>
+          <span class="text-foreground-muted font-mono text-sm tabular-nums">{{
+            result.matches.length
+          }}</span>
         </div>
         <p
           v-if="!result.matches.length"
-          class="text-muted border-default mt-4 rounded-md border p-4 text-sm"
+          class="text-foreground-muted border-outline mt-4 rounded-md border p-4 text-sm"
         >
           No matches yet. Add test text or adjust the pattern.
         </p>
         <ol
           v-else
-          class="border-default/70 mt-4 border-t"
+          class="border-outline/70 mt-4 border-t"
         >
           <li
             v-for="match in result.matches"
             :key="`${match.index}-${match.value}`"
-            class="border-default/70 flex items-center justify-between gap-4 border-b py-3 font-mono text-sm"
+            class="border-outline/70 flex items-center justify-between gap-4 border-b py-3 font-mono text-sm"
           >
-            <code class="text-highlighted break-all">{{ match.value }}</code>
-            <span class="text-toned shrink-0">index {{ match.index }}</span>
+            <code class="text-foreground-highlighted break-all">{{ match.value }}</code>
+            <span class="text-foreground-muted shrink-0">index {{ match.index }}</span>
           </li>
         </ol>
       </section>
 
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy matches"

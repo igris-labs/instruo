@@ -17,39 +17,37 @@ const format = (value: number) =>
   <ToolWorkbench description="Estimate monthly loan payments and total repayment locally.">
     <div class="grid max-w-2xl gap-5">
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="Loan amount">
-          <UInput
-            v-model.number="principal"
-            type="number"
-            min="0"
+        <UiField label="Loan amount">
+          <UiNumberField
+            v-model="principal"
+            :step-snapping="false"
+            :min="0"
           />
-        </UFormField>
-        <UFormField label="Annual rate (%)">
-          <UInput
-            v-model.number="annualRate"
-            type="number"
-            min="0"
-            step="0.01"
+        </UiField>
+        <UiField label="Annual rate (%)">
+          <UiNumberField
+            v-model="annualRate"
+            :step-snapping="false"
+            :min="0"
+            :step="0.01"
           />
-        </UFormField>
-        <UFormField label="Term (months)">
-          <UInput
-            v-model.number="months"
-            type="number"
-            min="1"
+        </UiField>
+        <UiField label="Term (months)">
+          <UiNumberField
+            v-model="months"
+            :step-snapping="false"
+            :min="1"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="grid gap-3 sm:grid-cols-2">
-        <UAlert
-          color="primary"
-          variant="subtle"
+        <UiNotice
+          tone="primary"
           title="Estimated monthly payment"
           :description="format(monthly)"
         />
-        <UAlert
-          color="neutral"
-          variant="subtle"
+        <UiNotice
+          tone="neutral"
           title="Total repayment"
           :description="format(total)"
         />

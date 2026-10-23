@@ -86,47 +86,56 @@ run();
   <ToolWorkbench description="Evaluate common JSONPath expressions against JSON in your browser.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(14rem,0.55fr)]">
-        <UFormField label="JSON document">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="JSON document"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :rows="12"
             class="w-full font-mono"
           />
-        </UFormField>
-        <UFormField label="JSONPath">
-          <UInput
+        </UiField>
+        <UiField label="JSONPath">
+          <UiInput
             v-model="path"
             class="w-full font-mono"
             placeholder="$.users[*].name"
           />
-          <p class="text-muted mt-2 text-xs">Supports properties, indexes, and [*] wildcards.</p>
-        </UFormField>
+          <p class="text-foreground-muted mt-2 text-xs">
+            Supports properties, indexes, and [*] wildcards.
+          </p>
+        </UiField>
       </div>
-      <UButton
+      <UiButton
         label="Run query"
         icon="i-tabler-player-play-filled"
         class="w-fit"
         @click="run"
       />
-      <UAlert
+      <UiNotice
         v-if="error"
-        color="error"
-        variant="subtle"
+        tone="error"
         icon="i-tabler-alert-circle"
         title="Invalid query"
         :description="error"
       />
-      <UFormField label="Result">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Result"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="result"
           :rows="10"
           readonly
           class="w-full font-mono"
           placeholder="Matching values appear here."
         />
-      </UFormField>
+      </UiField>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy result"

@@ -1,94 +1,141 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from "@nuxt/ui";
-
+defineProps<{ workspace?: boolean }>();
 const route = useRoute();
-
-const items = computed<NavigationMenuItem[]>(() => [
-  { label: "Home", to: "/", active: route.path === "/" },
-  { label: "Tools", to: "/tools", active: route.path.startsWith("/tools") },
-  { label: "Games", to: "/games", active: route.path.startsWith("/games") },
-]);
+const mounted = useMounted();
+const searchOpen = useState("app-search-open", () => false);
+const sidebarOpen = useState("resource-sidebar-open", () => false);
+const menuOpen = ref(false);
+const kind = computed(() => (route.path.startsWith("/tools") ? "tools" : "games"));
+const items = computed(() =>
+  [
+    { label: "Home", to: "/" },
+    { label: "Tools", to: "/tools" },
+    { label: "Games", to: "/games" },
+  ].map((item) => ({
+    ...item,
+    value: item.to,
+    active: item.to === "/" ? route.path === "/" : route.path.startsWith(item.to),
+  })),
+);
 </script>
-
 <template>
-  <UHeader
-    mode="drawer"
-    class="border-muted bg-default/95 sticky top-0 border-b backdrop-blur-md transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-    :ui="{
-      container: 'h-16 max-w-368 px-5 sm:px-8 lg:px-10',
-      content: 'bg-default rounded-lg',
-      body: 'px-5 pb-6',
-      toggle: 'rounded-md',
-    }"
+  <div
+    class="bg-default"
+    :class="workspace ? 'border-outline/60 border-b' : ''"
   >
-    <template #left>
-      <NuxtLink
-        to="/"
-        class="focus-visible:outline-primary flex min-h-11 items-center gap-2.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2"
-        aria-label="Instruo home"
+    <div
+      class="flex items-center justify-between"
+      :class="workspace ? 'h-12 pr-3' : 'mx-auto h-16 max-w-6xl px-5 sm:px-8'"
+    >
+      <div
+        class="flex h-full items-center"
+        :class="workspace ? '' : 'gap-10'"
       >
-        <img
-          src="/logo.svg"
-          alt=""
-          width="28"
-          height="28"
-          class="size-7 shrink-0"
+        <div
+          class="flex h-full shrink-0 items-center gap-2"
+          :class="workspace ? 'lg:border-outline/60 px-4 lg:w-62 lg:border-r' : ''"
+        >
+          <UiButton
+            v-if="workspace"
+            variant="ghost"
+            icon="i-tabler-menu-2"
+            :aria-label="`Browse ${kind}`"
+            :aria-expanded="sidebarOpen"
+            :disabled="!mounted"
+            class="lg:hidden"
+            @click="sidebarOpen = true"
+          />
+          <NuxtLink
+            to="/"
+            aria-label="Instruo home"
+            class="focus-visible:outline-info inline-flex items-center gap-2 rounded-md text-sm font-semibold focus-visible:outline-2"
+          >
+            <img
+              src="/logo.svg"
+              alt=""
+              width="24"
+              height="24"
+              class="size-6"
+            />Instruo
+          </NuxtLink>
+        </div>
+        <UiNavigationMenu
+          :items="items"
+          aria-label="Main navigation"
+          class="hidden sm:block"
+          :class="workspace ? 'ml-5' : ''"
+          :ui="{
+            list: 'gap-5',
+            link: 'text-sm text-foreground-muted data-akaza-active:text-foreground hover:text-foreground hover:bg-transparent px-0 min-h-8 rounded-sm',
+          }"
         />
-        <span class="text-highlighted text-base font-semibold tracking-tight">Instruo</span>
-      </NuxtLink>
-    </template>
-
-    <UNavigationMenu
-      :items="items"
-      variant="link"
-      color="neutral"
-      :ui="{
-        link: 'min-h-9 rounded-md px-3 text-sm font-medium transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] data-[active]:bg-elevated data-[active]:text-highlighted',
-      }"
-    />
-
-    <template #right>
-      <UContentSearchButton
-        label="Search tools and games"
-        :collapsed="false"
-        color="neutral"
-        variant="soft"
-        class="bg-muted/70 text-muted hover:bg-muted hover:text-highlighted hidden min-w-60 justify-between text-left lg:flex"
-      />
-      <UContentSearchButton
-        aria-label="Search tools and games"
-        class="lg:hidden"
-      />
-      <UColorModeButton />
-      <UButton
-        icon="i-tabler-brand-github"
-        aria-label="View Instruo on GitHub"
-        color="neutral"
-        variant="ghost"
-        to="https://github.com/rahulv-official/instruo"
-        target="_blank"
-        rel="noopener noreferrer"
-      />
-    </template>
-
-    <template #body>
-      <UNavigationMenu
-        :items="items"
-        orientation="vertical"
-        variant="link"
-        color="neutral"
-      />
-      <USeparator class="my-4" />
-      <UButton
-        label="View source on GitHub"
-        icon="i-tabler-brand-github"
-        color="neutral"
-        variant="outline"
-        to="https://github.com/rahulv-official/instruo"
-        target="_blank"
-        rel="noopener noreferrer"
-        block
-      />
-    </template>
-  </UHeader>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <UiButton
+          variant="ghost"
+          icon="i-tabler-search"
+          aria-label="Search tools and games"
+          :disabled="!mounted"
+          class="text-foreground-muted"
+          @click="searchOpen = true"
+        />
+        <ThemeToggle />
+        <a
+          href="https://github.com/igris-labs/instruo"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instruo on GitHub"
+          class="text-foreground-muted hover:text-foreground focus-visible:outline-info relative inline-flex size-7 items-center justify-center rounded-md focus-visible:outline-2 pointer-coarse:before:absolute pointer-coarse:before:size-11"
+          ><UiIcon
+            name="i-tabler-brand-github"
+            class="size-5"
+        /></a>
+        <UiButton
+          v-if="!workspace"
+          variant="ghost"
+          icon="i-tabler-menu-2"
+          aria-label="Open navigation"
+          :disabled="!mounted"
+          class="sm:hidden"
+          :aria-expanded="menuOpen"
+          @click="menuOpen = true"
+        />
+      </div>
+    </div>
+    <UiDrawer
+      v-model="menuOpen"
+      side="right"
+      title="Navigation"
+      :ui="{ content: 'w-72 bg-default', body: 'p-4' }"
+    >
+      <template #header="{ close, titleId }">
+        <div class="flex w-full items-center justify-between p-4">
+          <h2
+            :id="titleId"
+            class="text-sm font-semibold"
+          >
+            Instruo
+          </h2>
+          <UiButton
+            variant="ghost"
+            icon="i-tabler-x"
+            aria-label="Close navigation"
+            @click="close"
+          />
+        </div>
+      </template>
+      <template #body>
+        <UiNavigationMenu
+          :items="items"
+          orientation="vertical"
+          aria-label="Mobile navigation"
+          :ui="{
+            list: 'flex-col items-stretch gap-2',
+            link: 'min-h-11 px-3 text-sm data-akaza-active:bg-muted',
+          }"
+          @click="menuOpen = false"
+        />
+      </template>
+    </UiDrawer>
+  </div>
 </template>

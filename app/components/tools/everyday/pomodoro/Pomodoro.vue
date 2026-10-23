@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
   >
     <div class="grid max-w-xl justify-items-center gap-6">
       <div class="flex flex-wrap justify-center gap-2">
-        <UButton
+        <UiButton
           v-for="item in [
             { label: 'Focus', value: 'focus' },
             { label: 'Short break', value: 'short' },
@@ -54,34 +54,33 @@ onBeforeUnmount(() => {
           ]"
           :key="item.value"
           :label="item.label"
-          :color="mode === item.value ? 'primary' : 'neutral'"
+          :color="mode === item.value ? 'neutral' : 'neutral'"
           :variant="mode === item.value ? 'solid' : 'outline'"
           @click="setMode(item.value as Mode)"
         />
       </div>
       <output
-        class="text-highlighted font-mono text-7xl font-semibold tracking-tight tabular-nums"
+        class="text-foreground-highlighted font-mono text-7xl font-semibold tracking-tight tabular-nums"
         aria-live="polite"
         >{{ display }}</output
       >
-      <UProgress
+      <UiProgress
         :model-value="progress"
-        color="primary"
         class="w-full"
         aria-label="Timer progress"
       />
       <div class="flex gap-2">
-        <UButton
+        <UiButton
           v-if="!running"
           label="Start"
           icon="i-tabler-player-play-filled"
           @click="start"
-        /><UButton
+        /><UiButton
           v-else
           label="Pause"
           icon="i-tabler-player-pause"
           @click="pause"
-        /><UButton
+        /><UiButton
           color="neutral"
           variant="ghost"
           label="Reset"

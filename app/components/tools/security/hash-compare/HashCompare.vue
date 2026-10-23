@@ -43,8 +43,8 @@ async function compare() {
 <template>
   <ToolWorkbench description="Compare two strings with a browser cryptographic digest.">
     <div class="grid gap-5">
-      <UFormField label="Comparison mode">
-        <USelect
+      <UiField label="Comparison mode">
+        <UiSelect
           v-model="mode"
           :items="[
             { label: 'Compare two values', value: 'values' },
@@ -52,36 +52,44 @@ async function compare() {
           ]"
           class="w-full sm:max-w-xs"
         />
-      </UFormField>
-      <UFormField label="Digest algorithm">
-        <USelect
+      </UiField>
+      <UiField label="Digest algorithm">
+        <UiSelect
           v-model="algorithm"
           :items="['SHA-256', 'SHA-384', 'SHA-512']"
           class="w-full sm:max-w-xs"
         />
-      </UFormField>
+      </UiField>
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label="Value to hash">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Value to hash"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="first"
             :rows="7"
             placeholder="Paste a value"
           />
-        </UFormField>
-        <UFormField :label="mode === 'hash' ? 'Expected hexadecimal hash' : 'Second value'">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          :label="mode === 'hash' ? 'Expected hexadecimal hash' : 'Second value'"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="second"
             :rows="7"
             :placeholder="mode === 'hash' ? 'e3b0c442…' : 'Paste a second value'"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UButton
+      <UiButton
         label="Compare values"
         icon="i-tabler-git-compare"
         class="w-fit"
         @click="compare"
-      /><UTextarea
+      /><UiTextarea
         v-model="output"
         :rows="4"
         readonly

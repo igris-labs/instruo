@@ -71,77 +71,68 @@ onMounted(useCurrentTime);
     <div class="grid gap-8 lg:grid-cols-2 lg:gap-10">
       <section class="grid content-start gap-5">
         <div>
-          <p class="text-highlighted font-semibold">Timestamp to date</p>
-          <p class="text-muted mt-1 text-sm leading-6">
+          <p class="text-foreground-highlighted font-semibold">Timestamp to date</p>
+          <p class="text-foreground-muted mt-1 text-sm leading-6">
             Read a Unix timestamp in seconds or milliseconds.
           </p>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_11rem]">
-          <UFormField
+          <UiField
             label="Timestamp"
             :error="
               timestampInput && !timestampResult ? 'Enter a valid Unix timestamp.' : undefined
             "
-            :ui="{ container: 'mt-2' }"
           >
-            <UInput
+            <UiInput
               v-model="timestampInput"
               inputmode="numeric"
               placeholder="1710000000"
-              size="lg"
               class="w-full"
             />
-          </UFormField>
-          <UFormField
-            label="Unit"
-            :ui="{ container: 'mt-2' }"
-          >
-            <USelect
+          </UiField>
+          <UiField label="Unit">
+            <UiSelect
               :model-value="timestampUnit"
               :items="unitItems"
-              value-key="value"
-              label-key="label"
-              size="lg"
               class="w-full"
-              :ui="{ base: 'rounded-md', content: 'rounded-md', item: 'before:rounded-md' }"
               @update:model-value="setUnit"
             />
-          </UFormField>
+          </UiField>
         </div>
 
         <dl
-          class="border-default/70 divide-default/70 divide-y overflow-hidden rounded-lg border-y"
+          class="border-outline/70 divide-outline/70 divide-y overflow-hidden rounded-lg border-y"
         >
           <div class="grid gap-1 py-4">
-            <dt class="text-toned text-xs">ISO 8601</dt>
-            <dd class="text-highlighted font-mono text-sm break-all">
+            <dt class="text-foreground-muted text-xs">ISO 8601</dt>
+            <dd class="text-foreground-highlighted font-mono text-sm break-all">
               {{ timestampResult?.iso || "Waiting for a valid timestamp." }}
             </dd>
           </div>
           <div class="grid gap-1 py-4">
-            <dt class="text-toned text-xs">Local time</dt>
-            <dd class="text-highlighted font-mono text-sm">
+            <dt class="text-foreground-muted text-xs">Local time</dt>
+            <dd class="text-foreground-highlighted font-mono text-sm">
               {{ timestampResult?.local || "Not available" }}
             </dd>
           </div>
           <div class="grid gap-1 py-4">
-            <dt class="text-toned text-xs">UTC</dt>
-            <dd class="text-highlighted font-mono text-sm">
+            <dt class="text-foreground-muted text-xs">UTC</dt>
+            <dd class="text-foreground-highlighted font-mono text-sm">
               {{ timestampResult?.utc || "Not available" }}
             </dd>
           </div>
         </dl>
 
         <div class="flex flex-wrap justify-end gap-2">
-          <UButton
+          <UiButton
             label="Use current time"
             color="neutral"
             variant="ghost"
             icon="i-tabler-clock"
             @click="useCurrentTime"
           />
-          <UButton
+          <UiButton
             color="neutral"
             variant="soft"
             label="Copy ISO time"
@@ -153,47 +144,45 @@ onMounted(useCurrentTime);
       </section>
 
       <section
-        class="border-default/70 grid content-start gap-5 border-t pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"
+        class="border-outline/70 grid content-start gap-5 border-t pt-8 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"
       >
         <div>
-          <p class="text-highlighted font-semibold">Date to timestamp</p>
-          <p class="text-muted mt-1 text-sm leading-6">
+          <p class="text-foreground-highlighted font-semibold">Date to timestamp</p>
+          <p class="text-foreground-muted mt-1 text-sm leading-6">
             The selected value is interpreted in your local time zone.
           </p>
         </div>
 
-        <UFormField
+        <UiField
           label="Local date and time"
           :error="dateInput && !dateResult ? 'Choose a valid date and time.' : undefined"
-          :ui="{ container: 'mt-2' }"
         >
-          <UInput
+          <UiInput
             v-model="dateInput"
             type="datetime-local"
-            size="lg"
             class="w-full"
           />
-        </UFormField>
+        </UiField>
 
         <dl
-          class="border-default/70 divide-default/70 divide-y overflow-hidden rounded-lg border-y"
+          class="border-outline/70 divide-outline/70 divide-y overflow-hidden rounded-lg border-y"
         >
           <div class="grid gap-1 py-4">
-            <dt class="text-toned text-xs">Seconds</dt>
-            <dd class="text-highlighted font-mono text-lg tabular-nums">
+            <dt class="text-foreground-muted text-xs">Seconds</dt>
+            <dd class="text-foreground-highlighted font-mono text-lg tabular-nums">
               {{ dateResult?.seconds || "Not available" }}
             </dd>
           </div>
           <div class="grid gap-1 py-4">
-            <dt class="text-toned text-xs">Milliseconds</dt>
-            <dd class="text-highlighted font-mono text-lg tabular-nums">
+            <dt class="text-foreground-muted text-xs">Milliseconds</dt>
+            <dd class="text-foreground-highlighted font-mono text-lg tabular-nums">
               {{ dateResult?.milliseconds || "Not available" }}
             </dd>
           </div>
         </dl>
 
         <div class="flex flex-wrap justify-end gap-2">
-          <UButton
+          <UiButton
             color="neutral"
             variant="soft"
             label="Copy seconds"

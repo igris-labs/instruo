@@ -32,41 +32,40 @@ const output = computed(() =>
 <template>
   <ToolWorkbench description="Parse a URL into readable parts without sending it anywhere.">
     <div class="grid gap-6">
-      <UFormField
+      <UiField
         label="URL"
         description="Include https://, http://, or another supported protocol."
         :error="result.error || undefined"
       >
-        <UInput
+        <UiInput
           v-model="input"
-          size="xl"
           class="w-full"
           placeholder="https://example.com/path?query=1#section"
         />
-      </UFormField>
+      </UiField>
 
       <dl
         v-if="fields.length"
-        class="border-default/70 grid overflow-hidden rounded-lg border-t border-l sm:grid-cols-2"
+        class="border-outline/70 grid overflow-hidden rounded-lg border-t border-l sm:grid-cols-2"
       >
         <div
           v-for="[label, value] in fields"
           :key="label"
-          class="border-default/70 grid gap-2 border-r border-b p-4"
+          class="border-outline/70 grid gap-2 border-r border-b p-4"
         >
-          <dt class="text-toned font-mono text-xs">{{ label }}</dt>
-          <dd class="text-highlighted font-mono text-sm break-all">{{ value }}</dd>
+          <dt class="text-foreground-muted font-mono text-xs">{{ label }}</dt>
+          <dd class="text-foreground-highlighted font-mono text-sm break-all">{{ value }}</dd>
         </div>
       </dl>
       <p
         v-else
-        class="text-muted border-default/70 rounded-lg border p-5 text-sm"
+        class="text-foreground-muted border-outline/70 rounded-lg border p-5 text-sm"
       >
         Parsed URL parts will appear here.
       </p>
 
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy parts"

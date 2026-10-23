@@ -33,38 +33,45 @@ const balanced = computed(
   >
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_10rem]">
-        <UFormField label="GraphQL document">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="GraphQL document"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :rows="12"
             class="w-full font-mono"
           />
-        </UFormField>
-        <UFormField label="Indent">
-          <USelect
+        </UiField>
+        <UiField label="Indent">
+          <UiSelect
             v-model="indent"
             :items="['2', '4']"
             class="w-full"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UAlert
+      <UiNotice
         v-if="!balanced"
-        color="error"
-        variant="subtle"
+        tone="error"
         title="Unbalanced braces"
         description="Check opening and closing braces before copying."
       />
-      <UFormField label="Formatted query">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Formatted query"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="formatted"
           :rows="14"
           readonly
           class="w-full font-mono"
         />
-      </UFormField>
+      </UiField>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           label="Copy query"
           icon="i-tabler-copy"
           color="neutral"

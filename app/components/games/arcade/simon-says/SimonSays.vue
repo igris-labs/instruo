@@ -198,16 +198,15 @@ onBeforeUnmount(() => {
         class="simon-state"
       >
         <div class="simon-state-copy">
-          <UIcon
+          <UiIcon
             name="i-tabler-brain"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="simon-eyebrow">Signal board</p>
           <h2>Waking the sequence</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -219,20 +218,19 @@ onBeforeUnmount(() => {
         class="simon-state simon-state--ready"
       >
         <div class="simon-ready-copy">
-          <UBadge
+          <UiBadge
             label="Endless memory run"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
           <p class="simon-eyebrow">Watch · remember · repeat</p>
           <h2>Hold the pattern.<br />Trust your memory.</h2>
           <p>Four sounds. One growing sequence. A single wrong pad ends the run.</p>
-          <UButton
+          <UiButton
             label="Start sequence"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="start"
           />
         </div>
@@ -310,7 +308,7 @@ onBeforeUnmount(() => {
                 :aria-label="`${pad.label} pad${activePad === index ? ', active' : ''}`"
                 @click="pressPad(index)"
               >
-                <UIcon
+                <UiIcon
                   :name="`i-tabler-circle-number-${index + 1}`"
                   class="simon-pad-icon"
                   aria-hidden="true"
@@ -321,12 +319,11 @@ onBeforeUnmount(() => {
 
             <footer class="simon-footer">
               <p>Sound and keyboard-free touch play. Wait for your turn.</p>
-              <UButton
+              <UiButton
                 label="Restart run"
                 color="neutral"
                 variant="ghost"
                 icon="i-tabler-refresh"
-                size="sm"
                 @click="start"
               />
             </footer>
@@ -336,7 +333,7 @@ onBeforeUnmount(() => {
             v-if="isLost"
             class="simon-result"
           >
-            <UIcon
+            <UiIcon
               name="i-tabler-alert-triangle"
               class="text-error size-9"
               aria-hidden="true"
@@ -347,10 +344,10 @@ onBeforeUnmount(() => {
               You reached level <strong>{{ level }}</strong
               >.
             </p>
-            <UButton
+            <UiButton
               label="Try again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="start"
             />
           </div>

@@ -7,22 +7,21 @@ const result = computed(() => ((Number(value.value) || 0) * (Number(percent.valu
 <template>
   <ToolWorkbench description="Calculate a percentage of any number without leaving the page.">
     <div class="grid max-w-xl gap-5 sm:grid-cols-2">
-      <UFormField label="Number">
-        <UInput
-          v-model.number="value"
-          type="number"
+      <UiField label="Number">
+        <UiNumberField
+          v-model="value"
+          :step-snapping="false"
         />
-      </UFormField>
-      <UFormField label="Percentage">
-        <UInput
-          v-model.number="percent"
-          type="number"
+      </UiField>
+      <UiField label="Percentage">
+        <UiNumberField
+          v-model="percent"
+          :step-snapping="false"
         />
-      </UFormField>
-      <UAlert
+      </UiField>
+      <UiNotice
         class="sm:col-span-2"
-        color="primary"
-        variant="subtle"
+        tone="primary"
         title="Answer"
         :description="`${percent}% of ${value} = ${result}`"
       />

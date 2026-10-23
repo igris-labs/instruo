@@ -59,39 +59,47 @@ async function decrypt() {
     description="Encrypt or decrypt text with AES-GCM and a password using Web Crypto."
   >
     <div class="grid gap-5">
-      <UFormField
+      <UiField
         label="Password"
-        help="The password stays in memory and is used to derive an AES-256 key."
+        description="The password stays in memory and is used to derive an AES-256 key."
       >
-        <UInput
+        <UiInput
           v-model="password"
           type="password"
           placeholder="Encryption password"
         />
-      </UFormField>
+      </UiField>
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label="Input">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Input"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :rows="10"
             placeholder="Plaintext or encrypted JSON payload"
           />
-        </UFormField>
-        <UFormField label="Output">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Output"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="output"
             :rows="10"
             readonly
             placeholder="Result appears here."
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex flex-wrap justify-end gap-2">
-        <UButton
+        <UiButton
           label="Encrypt"
           icon="i-tabler-lock"
           @click="encrypt"
-        /><UButton
+        /><UiButton
           label="Decrypt"
           color="neutral"
           variant="outline"

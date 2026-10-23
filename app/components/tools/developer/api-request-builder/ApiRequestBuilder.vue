@@ -105,74 +105,83 @@ const output = computed(
   >
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[9rem_minmax(0,1fr)]">
-        <UFormField label="Method">
-          <USelect
+        <UiField label="Method">
+          <UiSelect
             v-model="method"
             :items="methods"
             class="w-full"
           />
-        </UFormField>
-        <UFormField label="Request URL">
-          <UInput
+        </UiField>
+        <UiField label="Request URL">
+          <UiInput
             v-model="url"
             class="w-full font-mono"
             placeholder="https://api.example.com/users"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Query parameters"
-          help="One key=value pair per line."
+          description="One key=value pair per line."
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="query"
             :rows="6"
             class="w-full font-mono"
             placeholder="page=1"
           />
-        </UFormField>
-        <UFormField
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
           label="Headers"
-          help="One Header: value pair per line."
+          description="One Header: value pair per line."
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="headers"
             :rows="6"
             class="w-full font-mono"
             placeholder="Accept: application/json"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UFormField
+      <UiField
+        v-slot="{ controlProps }"
         label="Body"
-        help="Used for methods other than GET."
+        description="Used for methods other than GET."
       >
-        <UTextarea
+        <UiTextarea
+          v-bind="controlProps"
           v-model="body"
           :rows="6"
           class="w-full font-mono"
           placeholder="{'name':'Ada'}"
         />
-      </UFormField>
+      </UiField>
       <div class="grid gap-3 sm:grid-cols-[12rem_minmax(0,1fr)_auto] sm:items-end">
-        <UFormField label="Export as">
-          <USelect
+        <UiField label="Export as">
+          <UiSelect
             v-model="format"
             :items="formats"
-            value-key="value"
             class="w-full"
           />
-        </UFormField>
-        <UFormField label="Generated request">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Generated request"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             :rows="5"
             readonly
             class="w-full font-mono"
           />
-        </UFormField>
-        <UButton
+        </UiField>
+        <UiButton
           label="Copy"
           icon="i-tabler-copy"
           color="neutral"

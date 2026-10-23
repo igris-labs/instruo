@@ -45,42 +45,42 @@ const summary = computed(() =>
     description="Find a meeting time across time zones. Reference time uses your device's local timezone."
   >
     <div class="grid gap-5">
-      <UFormField label="Reference time"
-        ><UInput
+      <UiField label="Reference time"
+        ><UiInput
           v-model="dateTime"
           type="datetime-local"
           class="max-w-sm"
-      /></UFormField>
+      /></UiField>
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField
+        <UiField
           v-for="(zone, index) in selectedZones"
           :key="index"
           :label="labels[index]!"
-          ><USelect
+          ><UiSelect
             v-model="selectedZones[index]"
             :items="zones"
             class="w-full"
-        /></UFormField>
+        /></UiField>
       </div>
       <div class="grid gap-3 sm:grid-cols-2">
         <div
           v-for="(zone, index) in selectedZones"
           :key="`${zone}-${index}`"
-          class="border-muted bg-muted/20 rounded-md border p-4"
+          class="border-outline bg-muted/20 rounded-md border p-4"
         >
           <div class="flex items-center justify-between gap-3">
-            <p class="text-muted text-sm">{{ zone }}</p>
+            <p class="text-foreground-muted text-sm">{{ zone }}</p>
             <span
               class="text-xs"
-              :class="hour(zone) >= 9 && hour(zone) < 18 ? 'text-success' : 'text-muted'"
+              :class="hour(zone) >= 9 && hour(zone) < 18 ? 'text-success' : 'text-foreground-muted'"
               >{{ hour(zone) >= 9 && hour(zone) < 18 ? "Work hours" : "Outside work hours" }}</span
             >
           </div>
-          <p class="text-highlighted mt-3 text-lg font-semibold">{{ format(zone) }}</p>
+          <p class="text-foreground-highlighted mt-3 text-lg font-semibold">{{ format(zone) }}</p>
         </div>
       </div>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           label="Copy time summary"
           icon="i-tabler-copy"
           color="neutral"

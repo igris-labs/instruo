@@ -8,17 +8,17 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Clean up or compact small JavaScript snippets locally.">
     <div class="grid gap-5">
-      <USelect
+      <UiSelect
         v-model="mode"
         :items="['format', 'minify']"
         class="w-full sm:max-w-xs"
       />
       <div class="grid gap-5 lg:grid-cols-2">
-        <UTextarea
+        <UiTextarea
           v-model="input"
           :rows="16"
           placeholder="Paste JavaScript…"
-        /><UTextarea
+        /><UiTextarea
           :model-value="output"
           :rows="16"
           readonly
@@ -26,7 +26,7 @@ const { copyText } = useCopyToClipboard();
         />
       </div>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy JavaScript"

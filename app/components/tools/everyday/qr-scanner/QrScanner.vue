@@ -37,27 +37,25 @@ async function scan(file: File | null | undefined) {
 <template>
   <ToolWorkbench description="Scan a QR code from an image using your browser's native detector.">
     <div class="grid max-w-xl gap-5">
-      <UFileUpload
+      <UiFileInput
         :model-value="selectedFile"
         accept="image/*"
         label="Choose a QR image"
         description="Drop a screenshot or image here, or browse this device. Nothing is uploaded."
         @update:model-value="scan"
       />
-      <UAlert
+      <UiNotice
         v-if="scanning"
-        color="neutral"
-        variant="subtle"
+        tone="neutral"
         title="Scanning…"
       />
-      <UAlert
+      <UiNotice
         v-if="error"
-        color="error"
-        variant="subtle"
+        tone="error"
         title="Scanner unavailable"
         :description="error"
       />
-      <UTextarea
+      <UiTextarea
         v-if="result"
         :model-value="result"
         :rows="4"

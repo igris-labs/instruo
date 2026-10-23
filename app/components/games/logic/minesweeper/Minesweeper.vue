@@ -273,16 +273,15 @@ onBeforeUnmount(() => {
         class="minesweeper-state"
       >
         <div class="minesweeper-state-copy">
-          <UIcon
+          <UiIcon
             name="i-tabler-bomb"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="minesweeper-eyebrow">Field scanner</p>
           <h2>Mapping the minefield</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -294,9 +293,9 @@ onBeforeUnmount(() => {
         class="minesweeper-state minesweeper-state--ready"
       >
         <div class="minesweeper-ready-copy">
-          <UBadge
+          <UiBadge
             label="Three field sizes"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
@@ -305,25 +304,21 @@ onBeforeUnmount(() => {
           <p>
             Choose a level, mark suspicious squares, and clear the field without touching a mine.
           </p>
-          <UFormField
+          <UiField
             label="Field difficulty"
             class="minesweeper-ready-field"
           >
-            <USelect
+            <UiSelect
               :model-value="level"
               :items="levelItems"
-              value-key="value"
-              label-key="label"
-              size="lg"
               class="w-full sm:w-72"
               @update:model-value="changeLevel"
             />
-          </UFormField>
-          <UButton
+          </UiField>
+          <UiButton
             label="Start field"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="begin"
           />
         </div>
@@ -415,13 +410,13 @@ onBeforeUnmount(() => {
                   @click="selectCell(index)"
                   @contextmenu.prevent="toggleFlag(index)"
                 >
-                  <UIcon
+                  <UiIcon
                     v-if="cell.flagged && !cell.open"
                     name="i-tabler-flag"
                     class="minesweeper-cell-icon"
                     aria-hidden="true"
                   />
-                  <UIcon
+                  <UiIcon
                     v-else-if="cell.mine && cell.open"
                     name="i-tabler-bomb"
                     class="minesweeper-cell-icon"
@@ -434,38 +429,34 @@ onBeforeUnmount(() => {
 
             <div class="minesweeper-controls">
               <div class="minesweeper-mode-controls">
-                <UButton
+                <UiButton
                   label="Reveal"
                   icon="i-tabler-pointer"
-                  :color="inputMode === 'reveal' ? 'primary' : 'neutral'"
+                  :color="inputMode === 'reveal' ? 'neutral' : 'neutral'"
                   :variant="inputMode === 'reveal' ? 'solid' : 'outline'"
-                  size="sm"
                   @click="inputMode = 'reveal'"
                 />
-                <UButton
+                <UiButton
                   label="Flag"
                   icon="i-tabler-flag"
-                  :color="inputMode === 'flag' ? 'primary' : 'neutral'"
+                  :color="inputMode === 'flag' ? 'neutral' : 'neutral'"
                   :variant="inputMode === 'flag' ? 'solid' : 'outline'"
-                  size="sm"
                   @click="inputMode = 'flag'"
                 />
               </div>
               <div class="minesweeper-action-controls">
-                <UButton
+                <UiButton
                   label="Change level"
                   icon="i-tabler-adjustments"
                   color="neutral"
                   variant="ghost"
-                  size="sm"
                   @click="reset()"
                 />
-                <UButton
+                <UiButton
                   label="New field"
                   icon="i-tabler-refresh"
                   color="neutral"
                   variant="outline"
-                  size="sm"
                   @click="begin"
                 />
               </div>
@@ -481,7 +472,7 @@ onBeforeUnmount(() => {
             class="minesweeper-result"
             :class="{ 'minesweeper-result--lost': phase === 'lost' }"
           >
-            <UIcon
+            <UiIcon
               :name="phase === 'won' ? 'i-tabler-trophy' : 'i-tabler-bomb'"
               :class="phase === 'won' ? 'text-success' : 'text-error'"
               class="size-9"
@@ -494,10 +485,10 @@ onBeforeUnmount(() => {
             <p>
               {{ phase === "won" ? `Cleared in ${formattedTime}.` : "Every mine is now marked." }}
             </p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="begin"
             />
           </div>

@@ -14,36 +14,35 @@ const money = (value: number) =>
   <ToolWorkbench description="Split a bill and tip fairly across your group.">
     <div class="grid max-w-2xl gap-5">
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="Bill total">
-          <UInput
-            v-model.number="bill"
-            type="number"
-            min="0"
+        <UiField label="Bill total">
+          <UiNumberField
+            v-model="bill"
+            :step-snapping="false"
+            :min="0"
           />
-        </UFormField>
-        <UFormField label="Tip (%)">
-          <UInput
-            v-model.number="tipPercent"
-            type="number"
-            min="0"
+        </UiField>
+        <UiField label="Tip (%)">
+          <UiNumberField
+            v-model="tipPercent"
+            :step-snapping="false"
+            :min="0"
           />
-        </UFormField>
-        <UFormField label="People">
-          <UInput
-            v-model.number="people"
-            type="number"
-            min="1"
-            step="1"
+        </UiField>
+        <UiField label="People">
+          <UiNumberField
+            v-model="people"
+            :step-snapping="false"
+            :min="1"
+            :step="1"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UAlert
-        color="primary"
-        variant="subtle"
+      <UiNotice
+        tone="primary"
         title="Per person"
         :description="money(perPerson)"
       />
-      <p class="text-muted text-sm">
+      <p class="text-foreground-muted text-sm">
         Tip: {{ money(tip) }} · Total: {{ money(Number(bill) + tip) }}
       </p>
     </div>

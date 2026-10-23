@@ -79,46 +79,44 @@ onMounted(generatePassword);
 <template>
   <ToolWorkbench description="Generated with your browser's cryptographic random number generator.">
     <div class="grid gap-6">
-      <div class="border-default/70 bg-muted/20 rounded-lg border p-5 sm:p-6">
+      <div class="border-outline/70 bg-muted/20 rounded-lg border p-5 sm:p-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
-          <span class="text-toned font-mono text-xs">Generated password</span>
+          <span class="text-foreground-muted font-mono text-xs">Generated password</span>
           <div class="flex items-center gap-2">
-            <UBadge
+            <UiBadge
               :label="strength.label"
-              :color="strength.color"
-              variant="soft"
+              :tone="strength.color"
+              variant="subtle"
             />
-            <span class="text-toned font-mono text-xs">{{ entropyBits }} bits</span>
+            <span class="text-foreground-muted font-mono text-xs">{{ entropyBits }} bits</span>
           </div>
         </div>
         <output
-          class="text-highlighted mt-6 block min-h-16 font-mono text-2xl leading-9 font-semibold break-all sm:text-3xl"
+          class="text-foreground-highlighted mt-6 block min-h-16 font-mono text-2xl leading-9 font-semibold break-all sm:text-3xl"
         >
           {{ password }}
         </output>
       </div>
 
       <div class="grid gap-6 lg:grid-cols-[minmax(0,18rem)_1fr]">
-        <UFormField
+        <UiField
           label="Length"
           description="Between 8 and 128 characters."
-          :ui="{ container: 'mt-2' }"
         >
-          <UInputNumber
+          <UiNumberField
             :model-value="length"
             :min="8"
             :max="128"
-            size="lg"
             class="w-full"
             @update:model-value="setLength"
           />
-        </UFormField>
+        </UiField>
 
         <fieldset>
-          <legend class="text-highlighted text-sm font-medium">Character sets</legend>
-          <p class="text-muted mt-1 text-sm">Keep at least one set enabled.</p>
+          <legend class="text-foreground-highlighted text-sm font-medium">Character sets</legend>
+          <p class="text-foreground-muted mt-1 text-sm">Keep at least one set enabled.</p>
           <div class="mt-3 flex flex-wrap gap-x-6 gap-y-3">
-            <UCheckbox
+            <UiCheckbox
               v-for="option in optionItems"
               :key="option.key"
               :model-value="settings[option.key]"
@@ -129,15 +127,15 @@ onMounted(generatePassword);
         </fieldset>
       </div>
 
-      <div class="border-default/70 flex flex-wrap justify-end gap-2 border-t pt-5">
-        <UButton
+      <div class="border-outline/70 flex flex-wrap justify-end gap-2 border-t pt-5">
+        <UiButton
           label="Generate again"
           color="neutral"
           variant="ghost"
           icon="i-tabler-refresh"
           @click="generatePassword"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy password"

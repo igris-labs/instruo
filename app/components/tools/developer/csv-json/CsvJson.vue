@@ -49,29 +49,35 @@ const result = computed(() => {
     description="Convert simple comma-separated rows into a JSON array in your browser."
   >
     <div class="grid gap-6 lg:grid-cols-2">
-      <UFormField label="CSV input">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="CSV input"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="14"
           class="w-full font-mono"
           placeholder="name,score"
-        /> </UFormField
-      ><UFormField
+        /> </UiField
+      ><UiField
+        v-slot="{ controlProps }"
         label="JSON output"
         :error="result.error || undefined"
       >
-        <UTextarea
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="result.output"
           readonly
           :rows="14"
           class="w-full font-mono"
           placeholder="[]"
         />
-      </UFormField>
+      </UiField>
     </div>
     <div class="mt-5 flex justify-end">
-      <UButton
+      <UiButton
         color="neutral"
         variant="soft"
         label="Copy JSON"

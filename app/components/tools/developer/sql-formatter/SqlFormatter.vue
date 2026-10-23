@@ -24,19 +24,26 @@ function formatSql(value: string) {
     description="Format common SQL clauses locally with readable line breaks and indentation."
   >
     <div class="grid gap-6 lg:grid-cols-2">
-      <UFormField label="SQL input">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="SQL input"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="14"
           :maxrows="24"
           class="w-full"
           placeholder="select id, name from users where active = true order by name;"
-          :ui="{ base: 'font-mono text-sm leading-6' }"
         />
-      </UFormField>
-      <UFormField label="Formatted SQL">
-        <UTextarea
+      </UiField>
+      <UiField
+        v-slot="{ controlProps }"
+        label="Formatted SQL"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="output"
           readonly
           autoresize
@@ -44,12 +51,11 @@ function formatSql(value: string) {
           :maxrows="24"
           class="w-full"
           placeholder="Formatted query appears here."
-          :ui="{ base: 'font-mono text-sm leading-6' }"
         />
-      </UFormField>
+      </UiField>
     </div>
     <div class="mt-5 flex justify-end">
-      <UButton
+      <UiButton
         color="neutral"
         variant="soft"
         label="Copy SQL"

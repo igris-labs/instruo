@@ -47,24 +47,26 @@ function updateState(next: Record<string, unknown>) {
     description="Turn over cards, remember their positions, and clear every pair. Everything runs locally in your browser."
   >
     <div class="mx-auto grid max-w-xl gap-5">
-      <header class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <header class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <div>
-          <p class="text-highlighted text-sm font-semibold">Memory Match</p>
-          <p class="text-muted mt-1 font-mono text-xs">Shape Vault · local puzzle run</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Memory Match</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Shape Vault · local puzzle run</p>
         </div>
-        <div class="text-muted flex gap-3 font-mono text-xs">
+        <div class="text-foreground-muted flex gap-3 font-mono text-xs">
           <span
-            ><strong class="text-highlighted">{{ state.pairs }}/{{ state.totalPairs }}</strong>
+            ><strong class="text-foreground-highlighted"
+              >{{ state.pairs }}/{{ state.totalPairs }}</strong
+            >
             pairs</span
           >
           <span
-            ><strong class="text-highlighted">{{ formattedTime }}</strong></span
+            ><strong class="text-foreground-highlighted">{{ formattedTime }}</strong></span
           >
         </div>
       </header>
 
       <div
-        class="border-default relative overflow-hidden rounded-lg border"
+        class="border-outline relative overflow-hidden rounded-lg border"
         data-phaser-game-shell
         style="--phaser-game-loading-bg: #181528"
       >
@@ -91,22 +93,22 @@ function updateState(next: Record<string, unknown>) {
           class="bg-default/70 absolute inset-0 z-10 grid place-items-center p-5"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="bg-primary text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="bg-primary text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               aria-hidden="true"
             >
               <Icon name="i-tabler-cards" />
             </div>
-            <h2 class="text-highlighted text-xl font-semibold">Match the shapes</h2>
-            <p class="text-muted text-sm leading-6">
+            <h2 class="text-foreground-highlighted text-xl font-semibold">Match the shapes</h2>
+            <p class="text-foreground-muted text-sm leading-6">
               Reveal two cards at a time. Matching shapes lock in with a burst; mismatches turn back
               after a short pause.
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.start()"
             >
               <NuxtImg
@@ -125,7 +127,7 @@ function updateState(next: Record<string, unknown>) {
                 Start game</span
               >
             </button>
-            <p class="text-muted font-mono text-xs">Tap cards · arrows + Enter</p>
+            <p class="text-foreground-muted font-mono text-xs">Tap cards · arrows + Enter</p>
           </div>
         </div>
 
@@ -137,29 +139,29 @@ function updateState(next: Record<string, unknown>) {
           aria-labelledby="memory-match-over-title"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="bg-success text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="bg-success text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               aria-hidden="true"
             >
               <Icon name="i-tabler-confetti" />
             </div>
             <h2
               id="memory-match-over-title"
-              class="text-highlighted text-xl font-semibold"
+              class="text-foreground-highlighted text-xl font-semibold"
             >
               Shape vault complete
             </h2>
-            <p class="text-highlighted font-mono text-5xl font-bold tabular-nums">
+            <p class="text-foreground-highlighted font-mono text-5xl font-bold tabular-nums">
               {{ formattedTime }}
             </p>
-            <p class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
+            <p class="text-foreground-muted font-mono text-xs tracking-[0.18em] uppercase">
               {{ state.moves }} moves · {{ state.pairs }} pairs
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.restart()"
             >
               <NuxtImg
@@ -186,9 +188,8 @@ function updateState(next: Record<string, unknown>) {
           class="bg-default absolute inset-0 z-20 grid place-items-center p-5"
           role="alert"
         >
-          <UAlert
-            color="error"
-            variant="subtle"
+          <UiNotice
+            tone="error"
             title="Game unavailable"
             description="Reload the page and try once more."
             icon="i-tabler-alert-circle"
@@ -196,7 +197,7 @@ function updateState(next: Record<string, unknown>) {
         </div>
       </div>
 
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         Find all eight pairs · no account needed
       </p>
     </div>

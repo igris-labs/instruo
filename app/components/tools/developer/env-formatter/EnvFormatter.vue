@@ -31,28 +31,36 @@ const { copyText } = useCopyToClipboard();
   >
     <div class="grid gap-5">
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label=".env input">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label=".env input"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :rows="14"
             class="w-full font-mono"
           />
-        </UFormField>
-        <UFormField label="Formatted preview">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Formatted preview"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="preview"
             :rows="14"
             readonly
             class="w-full font-mono"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex flex-wrap items-center justify-between gap-3">
-        <UCheckbox
+        <UiCheckbox
           v-model="redact"
           label="Redact secret-looking values in preview"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy formatted .env"
@@ -61,7 +69,7 @@ const { copyText } = useCopyToClipboard();
           @click="copyText(formatted)"
         />
       </div>
-      <p class="text-muted text-sm">
+      <p class="text-foreground-muted text-sm">
         Formatting never writes to disk or sends your environment variables anywhere.
       </p>
     </div>

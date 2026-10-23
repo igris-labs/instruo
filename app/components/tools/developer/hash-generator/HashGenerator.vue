@@ -64,64 +64,57 @@ function clear() {
 <template>
   <ToolWorkbench description="Create a SHA digest locally. Output updates as you type.">
     <div class="grid gap-5">
-      <UFormField
+      <UiField
         label="Algorithm"
         :description="
           algorithm === 'SHA-1'
             ? 'SHA-1 is retained for compatibility, not new security designs.'
             : `${selectedAlgorithm.label} cryptographic digest.`
         "
-        :ui="{ container: 'mt-2' }"
       >
-        <USelect
+        <UiSelect
           :model-value="algorithm"
           :items="algorithmItems"
-          value-key="value"
-          label-key="label"
-          size="lg"
           class="w-full sm:max-w-xs"
-          :ui="{ base: 'rounded-md', content: 'rounded-md', item: 'before:rounded-md' }"
           @update:model-value="setAlgorithm"
         />
-      </UFormField>
+      </UiField>
 
       <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Input"
           :description="`${byteCount} UTF-8 bytes.`"
-          :ui="{ container: 'mt-2' }"
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="input"
             placeholder="Enter text to hash…"
             :rows="10"
             class="w-full"
-            :ui="{ base: 'min-h-56 font-mono text-sm leading-6 sm:min-h-72' }"
             @update:model-value="setInput"
           />
-        </UFormField>
+        </UiField>
 
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Digest"
           description="Lowercase hexadecimal output."
           :error="errorMessage || undefined"
-          :ui="{ container: 'mt-2' }"
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             readonly
             placeholder="Digest appears here."
             :rows="10"
             class="w-full"
-            :ui="{
-              base: 'min-h-56 break-all font-mono text-sm leading-6 sm:min-h-72',
-            }"
           />
-        </UFormField>
+        </UiField>
       </div>
 
-      <div class="border-default/70 flex flex-wrap justify-end gap-2 border-t pt-4">
-        <UButton
+      <div class="border-outline/70 flex flex-wrap justify-end gap-2 border-t pt-4">
+        <UiButton
           color="neutral"
           variant="ghost"
           label="Clear"
@@ -129,7 +122,7 @@ function clear() {
           :disabled="!input"
           @click="clear"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy digest"

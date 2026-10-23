@@ -212,16 +212,15 @@ onBeforeUnmount(() => {
         class="mastermind-state"
       >
         <div class="mastermind-state-card">
-          <UIcon
+          <UiIcon
             name="i-tabler-lock-code"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="mastermind-eyebrow">Code room</p>
           <h2>Preparing the lock</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -233,20 +232,19 @@ onBeforeUnmount(() => {
         class="mastermind-state mastermind-state--ready"
       >
         <div class="mastermind-ready-copy">
-          <UBadge
+          <UiBadge
             label="Classic code room"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
           <p class="mastermind-eyebrow">Six colors · eight tries</p>
           <h2>Read the clues.<br />Crack the vault.</h2>
           <p>Place the pegs, read the feedback, and narrow the possibilities one row at a time.</p>
-          <UButton
+          <UiButton
             label="Start game"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="startGame"
           />
         </div>
@@ -285,9 +283,9 @@ onBeforeUnmount(() => {
                   {{ statusText }}
                 </p>
               </div>
-              <UBadge
+              <UiBadge
                 :label="`${attempts.length}/${maxAttempts}`"
-                color="neutral"
+                tone="neutral"
                 variant="subtle"
                 class="mastermind-count"
               />
@@ -398,30 +396,27 @@ onBeforeUnmount(() => {
 
               <div class="mastermind-actions">
                 <div class="flex items-center gap-2">
-                  <UButton
+                  <UiButton
                     label="Clear"
                     icon="i-tabler-backspace"
                     color="neutral"
                     variant="ghost"
-                    size="sm"
                     :disabled="guessCount === 0"
                     @click="clearSelectedSlot"
                   />
-                  <UButton
+                  <UiButton
                     label="Check"
                     icon="i-tabler-check"
-                    color="primary"
-                    size="sm"
+                    color="neutral"
                     :disabled="!canSubmit"
                     @click="submit"
                   />
                 </div>
-                <UButton
+                <UiButton
                   label="New code"
                   icon="i-tabler-refresh"
                   color="neutral"
                   variant="ghost"
-                  size="sm"
                   @click="startGame"
                 />
               </div>
@@ -439,7 +434,7 @@ onBeforeUnmount(() => {
             v-if="isDone"
             class="mastermind-result"
           >
-            <UIcon
+            <UiIcon
               :name="isWon ? 'i-tabler-lock-open-2' : 'i-tabler-lock-exclamation'"
               class="text-primary size-9"
               aria-hidden="true"
@@ -459,10 +454,10 @@ onBeforeUnmount(() => {
               />
             </div>
             <p class="sr-only">Secret code: {{ codeLabel }}</p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="startGame"
             />
           </div>
@@ -470,7 +465,7 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <p class="text-muted mt-4 text-sm leading-6">
+    <p class="text-foreground-muted mt-4 text-sm leading-6">
       Runs locally in this tab. No code or guesses leave your browser.
     </p>
   </ToolWorkbench>

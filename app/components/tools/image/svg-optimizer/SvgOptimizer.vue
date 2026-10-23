@@ -12,17 +12,17 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Remove comments and unnecessary whitespace from SVG markup.">
     <div class="grid gap-5 lg:grid-cols-2">
-      <UTextarea
+      <UiTextarea
         v-model="input"
         :rows="16"
         placeholder="Paste SVG markup…"
-      /><UTextarea
+      /><UiTextarea
         :model-value="output"
         :rows="16"
         readonly
       />
       <div class="flex justify-end lg:col-span-2">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy SVG"

@@ -1,7 +1,10 @@
 <script setup lang="ts">
-const props = defineProps<{ mode: "format" | "minify" }>();
+const props = withDefaults(
+  defineProps<{ mode: "format" | "minify"; initialValue?: string; rows?: number }>(),
+  { initialValue: "", rows: 14 },
+);
 
-const input = ref("");
+const input = ref(props.initialValue);
 const placeholder = '{"project":"instruo","open":true}';
 const { copyText } = useCopyToClipboard();
 
@@ -31,36 +34,36 @@ const errorMessage = computed(() => result.value.error);
   >
     <div class="grid gap-6">
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="JSON input"
           :error="errorMessage || undefined"
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :placeholder="placeholder"
-            autoresize
-            :rows="14"
-            :maxrows="22"
-            class="w-full"
-            :ui="{ base: 'font-mono text-sm leading-6' }"
+            :rows="rows"
+            class="w-full font-mono leading-6"
           />
-        </UFormField>
-        <UFormField label="Valid JSON output">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Valid JSON output"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             readonly
             placeholder="Valid output appears here."
-            autoresize
-            :rows="14"
-            :maxrows="22"
-            class="w-full"
-            :ui="{ base: 'font-mono text-sm leading-6' }"
+            :rows="rows"
+            class="w-full font-mono leading-6"
           />
-        </UFormField>
+        </UiField>
       </div>
 
       <div class="flex flex-wrap justify-end gap-2">
-        <UButton
+        <UiButton
           color="neutral"
           variant="ghost"
           label="Clear"
@@ -68,7 +71,7 @@ const errorMessage = computed(() => result.value.error);
           :disabled="!input"
           @click="input = ''"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy output"

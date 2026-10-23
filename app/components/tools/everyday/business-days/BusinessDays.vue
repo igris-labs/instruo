@@ -32,32 +32,34 @@ const result = computed(() => {
   <ToolWorkbench description="Count working days between dates with custom weekends and holidays.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Start date"
-          ><UInput
+        <UiField label="Start date"
+          ><UiInput
             v-model="start"
             type="date"
             class="w-full"
-        /></UFormField>
-        <UFormField label="End date"
-          ><UInput
+        /></UiField>
+        <UiField label="End date"
+          ><UiInput
             v-model="end"
             type="date"
             class="w-full"
-        /></UFormField>
+        /></UiField>
       </div>
-      <UFormField
+      <UiField
+        v-slot="{ controlProps }"
         label="Holiday dates"
-        help="One YYYY-MM-DD date per line or separated by spaces."
-        ><UTextarea
+        description="One YYYY-MM-DD date per line or separated by spaces."
+        ><UiTextarea
+          v-bind="controlProps"
           v-model="holidays"
           :rows="4"
           class="w-full font-mono"
-      /></UFormField>
+      /></UiField>
       <div class="flex flex-wrap items-center gap-4">
-        <UCheckbox
+        <UiCheckbox
           v-model="includeEndpoints"
           label="Include start and end dates"
-        /><span class="text-muted text-sm"
+        /><span class="text-foreground-muted text-sm"
           >Weekend:
           <label
             v-for="day in [0, 6]"
@@ -70,10 +72,9 @@ const result = computed(() => {
           ></span
         >
       </div>
-      <UAlert
+      <UiNotice
         v-if="result.error"
-        color="error"
-        variant="subtle"
+        tone="error"
         title="Check dates"
         :description="result.error"
       />
@@ -82,16 +83,22 @@ const result = computed(() => {
         class="grid gap-3 sm:grid-cols-3"
       >
         <div class="bg-muted/20 rounded-md p-4">
-          <p class="text-muted text-xs">Working days</p>
-          <p class="text-highlighted mt-1 text-3xl font-semibold">{{ result.working }}</p>
+          <p class="text-foreground-muted text-xs">Working days</p>
+          <p class="text-foreground-highlighted mt-1 text-3xl font-semibold">
+            {{ result.working }}
+          </p>
         </div>
         <div class="bg-muted/20 rounded-md p-4">
-          <p class="text-muted text-xs">Calendar days</p>
-          <p class="text-highlighted mt-1 text-3xl font-semibold">{{ result.calendar }}</p>
+          <p class="text-foreground-muted text-xs">Calendar days</p>
+          <p class="text-foreground-highlighted mt-1 text-3xl font-semibold">
+            {{ result.calendar }}
+          </p>
         </div>
         <div class="bg-muted/20 rounded-md p-4">
-          <p class="text-muted text-xs">Holidays skipped</p>
-          <p class="text-highlighted mt-1 text-3xl font-semibold">{{ result.skippedHolidays }}</p>
+          <p class="text-foreground-muted text-xs">Holidays skipped</p>
+          <p class="text-foreground-highlighted mt-1 text-3xl font-semibold">
+            {{ result.skippedHolidays }}
+          </p>
         </div>
       </div>
     </div>

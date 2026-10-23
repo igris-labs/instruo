@@ -53,37 +53,37 @@ function download() {
   <ToolWorkbench description="Convert an image into crisp pixel art with local canvas rendering.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_12rem] sm:items-end">
-        <UFormField label="Image"
+        <UiField label="Image"
           ><input
             type="file"
             accept="image/*"
-            class="border-muted bg-muted/20 text-default file:bg-elevated file:text-default w-full rounded-md border p-2 text-sm file:mr-3 file:rounded file:border-0 file:px-3 file:py-1.5"
+            class="border-outline bg-muted/20 text-foreground file:bg-elevated file:text-foreground w-full rounded-md border p-2 text-sm file:mr-3 file:rounded file:border-0 file:px-3 file:py-1.5"
             @change="onFile"
-        /></UFormField>
-        <UFormField label="Pixel size"
-          ><UInput
-            v-model.number="pixelSize"
-            type="number"
-            min="2"
-            max="64"
+        /></UiField>
+        <UiField label="Pixel size"
+          ><UiNumberField
+            v-model="pixelSize"
+            :step-snapping="false"
+            :min="2"
+            :max="64"
             class="w-full"
             @update:model-value="render"
-        /></UFormField>
+        /></UiField>
       </div>
-      <div class="border-muted bg-muted/20 overflow-auto rounded-md border p-3">
+      <div class="border-outline bg-muted/20 overflow-auto rounded-md border p-3">
         <canvas
           ref="canvas"
           class="mx-auto block max-h-[65vh] max-w-full"
         />
         <p
           v-if="!image"
-          class="text-muted py-16 text-center text-sm"
+          class="text-foreground-muted py-16 text-center text-sm"
         >
           Pixel-art preview appears here.
         </p>
       </div>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           label="Download PNG"
           icon="i-tabler-download"
           :disabled="!image"
@@ -91,7 +91,7 @@ function download() {
         />
       </div>
       <p
-        class="text-muted text-sm"
+        class="text-foreground-muted text-sm"
         role="status"
       >
         {{ status }}

@@ -30,17 +30,19 @@ function nodeIndex(id: string) {
   >
     <div class="grid gap-5 lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.2fr)]">
       <div class="grid content-start gap-3">
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Mermaid source"
-          help="Supports basic flowchart A --> B edges."
+          description="Supports basic flowchart A --> B edges."
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="source"
             :rows="14"
             class="w-full font-mono"
           />
-        </UFormField>
-        <UButton
+        </UiField>
+        <UiButton
           label="Copy source"
           icon="i-tabler-copy"
           color="neutral"
@@ -49,7 +51,7 @@ function nodeIndex(id: string) {
           @click="copyText(output)"
         />
       </div>
-      <div class="border-muted bg-muted/10 min-h-80 overflow-auto rounded-md border p-3">
+      <div class="border-outline bg-muted/10 min-h-80 overflow-auto rounded-md border p-3">
         <svg
           viewBox="0 0 800 420"
           class="h-full min-h-72 w-full"

@@ -13,26 +13,24 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Escape literal text or copy useful starter patterns for matching.">
     <div class="grid gap-5">
-      <USelect
+      <UiSelect
         v-model="kind"
         :items="[
           { label: 'Escape literal', value: 'escape' },
           { label: 'Email starter', value: 'email' },
           { label: 'URL starter', value: 'url' },
         ]"
-        value-key="value"
-        label-key="label"
         class="w-full sm:max-w-xs"
-      /><UInput
+      /><UiInput
         v-model="input"
         placeholder="Text to escape"
-      /><UInput
+      /><UiInput
         :model-value="output"
         readonly
         class="font-mono"
       />
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy pattern"

@@ -34,20 +34,22 @@ async function calculate() {
     description="Calculate an OpenSSH public-key SHA-256 fingerprint without sending the key anywhere."
   >
     <div class="grid gap-5">
-      <UFormField
+      <UiField
+        v-slot="{ controlProps }"
         label="OpenSSH public key"
-        help="Format: ssh-ed25519 AAAA… optional-comment"
-        ><UTextarea
+        description="Format: ssh-ed25519 AAAA… optional-comment"
+        ><UiTextarea
+          v-bind="controlProps"
           v-model="publicKey"
           :rows="5"
           class="w-full font-mono"
-      /></UFormField>
+      /></UiField>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Calculate fingerprint"
           icon="i-tabler-fingerprint"
           @click="calculate"
-        /><UButton
+        /><UiButton
           label="Copy fingerprint"
           icon="i-tabler-copy"
           color="neutral"
@@ -57,20 +59,20 @@ async function calculate() {
         />
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Key type"
-          ><UInput
+        <UiField label="Key type"
+          ><UiInput
             v-model="keyType"
-            readonly /></UFormField
-        ><UFormField label="SHA-256 fingerprint"
-          ><UInput
+            readonly /></UiField
+        ><UiField label="SHA-256 fingerprint"
+          ><UiInput
             v-model="fingerprint"
             readonly
             class="font-mono"
-        /></UFormField>
+        /></UiField>
       </div>
       <p
         v-if="status"
-        class="text-muted text-sm"
+        class="text-foreground-muted text-sm"
         role="status"
       >
         {{ status }}

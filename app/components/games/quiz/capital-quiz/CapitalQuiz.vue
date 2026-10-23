@@ -218,7 +218,7 @@ function nextQuestion() {
   >
     <div class="mx-auto grid max-w-2xl gap-6 text-center">
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-b pb-4 text-left"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-b pb-4 text-left"
       >
         <p
           class="flex items-center gap-2 text-sm leading-6"
@@ -227,12 +227,12 @@ function nextQuestion() {
               ? 'text-success'
               : selected
                 ? 'text-error'
-                : 'text-toned'
+                : 'text-foreground-muted'
           "
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             :name="
               finished || (selected && isCorrect)
                 ? 'i-tabler-circle-check'
@@ -245,7 +245,7 @@ function nextQuestion() {
           />
           {{ statusText }}
         </p>
-        <div class="text-toned flex items-center gap-3 font-mono text-sm tabular-nums">
+        <div class="text-foreground-muted flex items-center gap-3 font-mono text-sm tabular-nums">
           <span>{{ progressLabel }} · {{ score }} points</span>
           <span
             v-if="streak > 1"
@@ -256,20 +256,21 @@ function nextQuestion() {
       </div>
 
       <template v-if="!finished && question">
-        <div class="border-default/70 bg-muted/20 grid min-h-44 content-center gap-3 border p-8">
-          <span class="text-muted text-xs font-semibold tracking-[0.14em] uppercase">Country</span>
-          <h2 class="text-highlighted text-3xl font-semibold sm:text-4xl">
+        <div class="border-outline/70 bg-muted/20 grid min-h-44 content-center gap-3 border p-8">
+          <span class="text-foreground-muted text-xs font-semibold tracking-[0.14em] uppercase"
+            >Country</span
+          >
+          <h2 class="text-foreground-highlighted text-3xl font-semibold sm:text-4xl">
             {{ question.country }}
           </h2>
         </div>
         <div class="grid gap-2 sm:grid-cols-2">
-          <UButton
+          <UiButton
             v-for="option in question.options"
             :key="option"
             :label="option"
             color="neutral"
             variant="outline"
-            size="lg"
             class="justify-start"
             :class="
               selected === option
@@ -284,26 +285,26 @@ function nextQuestion() {
         </div>
         <div
           v-if="selected"
-          class="border-default/60 bg-muted/15 border-l-primary/50 grid gap-1 border-l-2 px-4 py-3 text-left"
+          class="border-outline/60 bg-muted/15 border-l-primary/50 grid gap-1 border-l-2 px-4 py-3 text-left"
         >
-          <span class="text-muted text-xs font-semibold tracking-[0.12em] uppercase"
+          <span class="text-foreground-muted text-xs font-semibold tracking-[0.12em] uppercase"
             >Field note</span
           >
-          <p class="text-toned text-sm leading-6">{{ question.fact }}</p>
+          <p class="text-foreground-muted text-sm leading-6">{{ question.fact }}</p>
         </div>
       </template>
 
       <div
         v-else
-        class="border-default/70 bg-muted/20 grid gap-4 border p-8"
+        class="border-outline/70 bg-muted/20 grid gap-4 border p-8"
       >
-        <UIcon
+        <UiIcon
           name="i-tabler-world-check"
           class="text-success mx-auto size-8"
           aria-hidden="true"
         />
-        <h2 class="text-highlighted text-2xl font-semibold">Round complete</h2>
-        <p class="text-toned">
+        <h2 class="text-foreground-highlighted text-2xl font-semibold">Round complete</h2>
+        <p class="text-foreground-muted">
           {{ score }}/{{ roundQuestions.length }} capitals correct. Best round: {{ bestScore }}/{{
             roundSize
           }}.
@@ -311,20 +312,20 @@ function nextQuestion() {
       </div>
 
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5 text-left"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5 text-left"
       >
-        <p class="text-muted text-sm leading-6">
+        <p class="text-foreground-muted text-sm leading-6">
           New rounds reshuffle the local bank. No account or network request.
         </p>
         <div class="flex flex-wrap gap-2">
-          <UButton
+          <UiButton
             label="New round"
             icon="i-tabler-dice-5"
             color="neutral"
             variant="ghost"
             @click="newRound"
           />
-          <UButton
+          <UiButton
             :label="finished ? 'Play another' : 'Next question'"
             color="neutral"
             variant="outline"

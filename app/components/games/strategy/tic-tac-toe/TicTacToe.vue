@@ -147,24 +147,24 @@ function changeMode(value: string | undefined) {
                 ? 'text-success'
                 : isDraw
                   ? 'text-warning'
-                  : 'text-highlighted'
+                  : 'text-foreground-highlighted'
           "
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             v-if="playerLost"
             name="i-tabler-circle-x"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="playerWon || (mode === 'local' && winner)"
             name="i-tabler-circle-check"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="isDraw"
             name="i-tabler-circle-minus"
             class="size-4 shrink-0"
@@ -190,11 +190,11 @@ function changeMode(value: string | undefined) {
             v-for="(mark, index) in board"
             :key="index"
             type="button"
-            class="focus-visible:ring-primary border-default/70 hover:bg-elevated/50 flex min-h-0 min-w-0 items-center justify-center overflow-hidden border-r border-b font-mono text-[clamp(2.5rem,12vw,4rem)] leading-none font-semibold transition-colors focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none"
+            class="focus-visible:ring-primary border-outline/70 hover:bg-elevated/50 flex min-h-0 min-w-0 items-center justify-center overflow-hidden border-r border-b font-mono text-[clamp(2.5rem,12vw,4rem)] leading-none font-semibold transition-colors focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none"
             :class="[
               index % 3 === 2 ? 'border-r-0' : '',
               index >= 6 ? 'border-b-0' : '',
-              line?.includes(index) ? 'bg-success/15 text-success' : 'text-highlighted',
+              line?.includes(index) ? 'bg-success/15 text-success' : 'text-foreground-highlighted',
             ]"
             :disabled="Boolean(mark) || finished || computerThinking"
             :aria-label="mark ? `Square ${index + 1}, ${mark}` : `Square ${index + 1}, empty`"
@@ -206,25 +206,21 @@ function changeMode(value: string | undefined) {
       </div>
 
       <div
-        class="border-default/70 grid gap-4 border-t pt-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end"
+        class="border-outline/70 grid gap-4 border-t pt-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end"
       >
-        <UFormField
+        <UiField
           label="Opponent"
           :description="selectedMode.description"
-          :ui="{ container: 'mt-2' }"
         >
-          <USelect
+          <UiSelect
             :model-value="mode"
             :items="modeOptions"
-            value-key="value"
-            label-key="label"
-            size="lg"
             class="w-full"
             @update:model-value="changeMode"
           />
-        </UFormField>
+        </UiField>
 
-        <UButton
+        <UiButton
           label="New round"
           color="neutral"
           variant="outline"

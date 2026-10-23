@@ -99,51 +99,51 @@ onBeforeUnmount(() => {
     description="Generate six-digit TOTP codes locally from a Base32 secret or otpauth URI."
   >
     <div class="grid max-w-2xl gap-5">
-      <UFormField label="Secret or otpauth URI">
-        <UInput
+      <UiField label="Secret or otpauth URI">
+        <UiInput
           v-model="secret"
           class="w-full font-mono"
           placeholder="JBSWY3DPEHPK3PXP"
           @keyup.enter="generate"
         />
-      </UFormField>
+      </UiField>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Generate code"
           icon="i-tabler-key"
           @click="generate"
         />
-        <UButton
+        <UiButton
           label="Read URI"
           color="neutral"
           variant="outline"
           @click="importUri"
         />
       </div>
-      <UAlert
+      <UiNotice
         v-if="error"
-        color="error"
-        variant="subtle"
+        tone="error"
         icon="i-tabler-alert-circle"
         title="Could not generate code"
         :description="error"
       />
-      <div class="border-default bg-elevated grid gap-3 rounded-lg border p-5 text-center">
-        <span class="text-muted text-sm">{{ issuer || account || "Authenticator code" }}</span>
+      <div class="border-outline bg-elevated grid gap-3 rounded-lg border p-5 text-center">
+        <span class="text-foreground-muted text-sm">{{
+          issuer || account || "Authenticator code"
+        }}</span>
         <output
-          class="text-highlighted font-mono text-5xl font-semibold tracking-[0.25em] tabular-nums"
+          class="text-foreground-highlighted font-mono text-5xl font-semibold tracking-[0.25em] tabular-nums"
           aria-live="polite"
           >{{ code || "-".repeat(digits) }}</output
         >
-        <UProgress
+        <UiProgress
           :model-value="progress"
-          color="primary"
           aria-label="Code lifetime"
         />
-        <span class="text-muted text-sm"
+        <span class="text-foreground-muted text-sm"
           >Refreshes in {{ remaining }}s · {{ algorithm }} · {{ digits }} digits</span
         >
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy code"
@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
           @click="copyText(code)"
         />
       </div>
-      <p class="text-muted text-sm">
+      <p class="text-foreground-muted text-sm">
         TOTP secrets are sensitive. Use this tool on a trusted device and never share the secret.
       </p>
     </div>

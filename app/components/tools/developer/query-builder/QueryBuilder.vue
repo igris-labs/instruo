@@ -28,15 +28,15 @@ function removeRow(index: number) {
         :key="index"
         class="grid gap-2 sm:grid-cols-[1fr_1fr_auto]"
       >
-        <UInput
+        <UiInput
           v-model="row.key"
           placeholder="Key"
           aria-label="Query key"
-        /><UInput
+        /><UiInput
           v-model="row.value"
           placeholder="Value"
           aria-label="Query value"
-        /><UButton
+        /><UiButton
           icon="i-tabler-x"
           color="neutral"
           variant="ghost"
@@ -45,13 +45,13 @@ function removeRow(index: number) {
         />
       </div>
       <div class="flex justify-between gap-4">
-        <UButton
+        <UiButton
           label="Add parameter"
           color="neutral"
           variant="outline"
           icon="i-tabler-plus"
           @click="addRow"
-        /><code class="border-default/70 min-w-0 rounded-md border p-3 text-sm break-all">{{
+        /><code class="border-outline/70 min-w-0 rounded-md border p-3 text-sm break-all">{{
           query || "query=values"
         }}</code>
       </div>

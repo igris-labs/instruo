@@ -81,38 +81,44 @@ generate();
   >
     <div class="grid gap-5">
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label="JSON document">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="JSON document"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="source"
             :rows="12"
             class="w-full font-mono"
           />
-        </UFormField>
-        <UFormField
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
           label="JSON Schema"
-          help="Edit generated schema before validating."
+          description="Edit generated schema before validating."
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="schema"
             :rows="12"
             class="w-full font-mono"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Generate schema"
           icon="i-tabler-sparkles"
           @click="generate"
         />
-        <UButton
+        <UiButton
           label="Validate JSON"
           icon="i-tabler-shield-check"
           color="neutral"
           variant="soft"
           @click="validate"
         />
-        <UButton
+        <UiButton
           label="Copy schema"
           icon="i-tabler-copy"
           color="neutral"
@@ -121,10 +127,9 @@ generate();
           @click="copyText(schema)"
         />
       </div>
-      <UAlert
+      <UiNotice
         v-if="status"
-        color="primary"
-        variant="subtle"
+        tone="primary"
         title="Schema status"
         :description="status"
       />

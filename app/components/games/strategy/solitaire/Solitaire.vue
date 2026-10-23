@@ -443,25 +443,28 @@ onBeforeUnmount(() => pauseTimer());
   >
     <div class="mx-auto grid max-w-4xl gap-5">
       <header
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-b pb-4"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-b pb-4"
       >
         <div>
-          <p class="text-highlighted text-sm font-semibold">Solitaire</p>
-          <p class="text-muted mt-1 font-mono text-xs">Klondike · local deck</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Solitaire</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Klondike · local deck</p>
         </div>
-        <div class="text-muted flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs tabular-nums">
+        <div
+          class="text-foreground-muted flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs tabular-nums"
+        >
           <span
-            ><strong class="text-highlighted">{{ foundationCount }}/52</strong> cards</span
+            ><strong class="text-foreground-highlighted">{{ foundationCount }}/52</strong>
+            cards</span
           >
           <span
-            ><strong class="text-highlighted">{{ timeLabel }}</strong></span
+            ><strong class="text-foreground-highlighted">{{ timeLabel }}</strong></span
           >
           <span
-            ><strong class="text-highlighted">{{ moves }}</strong> moves</span
+            ><strong class="text-foreground-highlighted">{{ moves }}</strong> moves</span
           >
           <span
             v-if="bestScore"
-            class="text-muted/80"
+            class="text-foreground-muted/80"
             >best {{ bestScore }}</span
           >
         </div>
@@ -469,49 +472,43 @@ onBeforeUnmount(() => pauseTimer());
 
       <div class="flex flex-wrap items-center justify-between gap-3">
         <p
-          class="text-toned min-h-5 text-sm"
+          class="text-foreground-muted min-h-5 text-sm"
           role="status"
           aria-live="polite"
         >
           {{ dialogCopy }}
         </p>
         <div class="flex flex-wrap items-end gap-2">
-          <UFormField label="Deal style">
-            <USelect
+          <UiField label="Deal style">
+            <UiSelect
               :model-value="mode"
               :items="modeItems"
-              value-key="value"
-              label-key="label"
-              size="sm"
               class="w-44"
               :disabled="status === 'playing'"
               @update:model-value="changeMode"
             />
-          </UFormField>
-          <UButton
+          </UiField>
+          <UiButton
             label="Hint"
             icon="i-tabler-bulb"
             color="neutral"
             variant="outline"
-            size="sm"
             :disabled="status !== 'playing'"
             @click="hint"
           />
-          <UButton
+          <UiButton
             label="Undo"
             icon="i-tabler-arrow-back-up"
             color="neutral"
             variant="outline"
-            size="sm"
             :disabled="!canUndo"
             @click="undo"
           />
-          <UButton
+          <UiButton
             label="New deal"
             icon="i-tabler-refresh"
             color="neutral"
             variant="ghost"
-            size="sm"
             @click="newDeal"
           />
         </div>
@@ -713,10 +710,9 @@ onBeforeUnmount(() => pauseTimer());
                 · best score</span
               >
             </p>
-            <UButton
+            <UiButton
               :label="status === 'ready' ? 'Deal cards' : 'Deal again'"
               :icon="status === 'ready' ? 'i-tabler-player-play-filled' : 'i-tabler-refresh'"
-              size="lg"
               class="mx-auto"
               @click="status === 'ready' ? start() : newDeal()"
             />
@@ -724,7 +720,7 @@ onBeforeUnmount(() => pauseTimer());
           </div>
         </div>
       </section>
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         Build four foundations · local deck · no account needed
       </p>
     </div>

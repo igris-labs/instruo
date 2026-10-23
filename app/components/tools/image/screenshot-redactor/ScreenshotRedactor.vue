@@ -328,23 +328,22 @@ function download() {
   <ToolWorkbench description="Redact screenshots locally before sharing them. Nothing is uploaded.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_12rem] sm:items-end">
-        <UFormField label="Image"
+        <UiField label="Image"
           ><input
             type="file"
             accept="image/*"
-            class="border-muted bg-muted/20 text-default file:bg-elevated file:text-default w-full rounded-md border p-2 px-3 text-sm file:mr-3 file:rounded file:border-0 file:px-3 file:py-1.5"
+            class="border-outline bg-muted/20 text-foreground file:bg-elevated file:text-foreground w-full rounded-md border p-2 px-3 text-sm file:mr-3 file:rounded file:border-0 file:px-3 file:py-1.5"
             @change="onFile"
-        /></UFormField>
-        <UFormField :label="selectedRegion ? 'Selected effect' : 'Effect for new areas'"
-          ><USelect
+        /></UiField>
+        <UiField :label="selectedRegion ? 'Selected effect' : 'Effect for new areas'"
+          ><UiSelect
             v-model="activeMode"
             :items="modes"
-            value-key="value"
             class="w-full"
-        /></UFormField>
+        /></UiField>
       </div>
       <div class="flex flex-wrap items-center justify-between gap-3">
-        <p class="text-muted text-sm">
+        <p class="text-foreground-muted text-sm">
           <template v-if="selectedRegion">
             Selected area: drag to move it, use the effect menu to change it, or press Delete.
           </template>
@@ -353,25 +352,24 @@ function download() {
           </template>
         </p>
         <div class="flex items-center gap-2">
-          <UBadge
+          <UiBadge
             v-if="regions.length"
-            color="neutral"
-            variant="soft"
+            tone="neutral"
+            variant="subtle"
           >
             {{ regions.length }} {{ regions.length === 1 ? "area" : "areas" }}
-          </UBadge>
-          <UButton
+          </UiBadge>
+          <UiButton
             v-if="selectedRegion"
             label="Delete selected"
             icon="i-tabler-trash"
             color="neutral"
             variant="outline"
-            size="sm"
             @click="deleteSelected"
           />
         </div>
       </div>
-      <div class="border-muted bg-muted/20 overflow-auto rounded-md border p-3">
+      <div class="border-outline bg-muted/20 overflow-auto rounded-md border p-3">
         <canvas
           ref="canvas"
           class="focus-visible:ring-primary/50 mx-auto block max-h-[65vh] max-w-full touch-none outline-none focus-visible:ring-2"
@@ -387,20 +385,20 @@ function download() {
         />
         <p
           v-if="!image"
-          class="text-muted py-16 text-center text-sm"
+          class="text-foreground-muted py-16 text-center text-sm"
         >
           Image preview appears here.
         </p>
       </div>
       <div class="flex flex-wrap justify-end gap-2">
-        <UButton
+        <UiButton
           label="Clear redactions"
           icon="i-tabler-eraser"
           color="neutral"
           variant="outline"
           :disabled="!regions.length"
           @click="clearRegions"
-        /><UButton
+        /><UiButton
           label="Download PNG"
           icon="i-tabler-download"
           :disabled="!image"
@@ -408,7 +406,7 @@ function download() {
         />
       </div>
       <p
-        class="text-muted text-sm"
+        class="text-foreground-muted text-sm"
         role="status"
       >
         {{ status }}

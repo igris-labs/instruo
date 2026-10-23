@@ -68,16 +68,16 @@ function toggleSound() {
     description="Clear seeded neon mazes, eat power pellets, and outrun the ghosts. No account needed."
   >
     <div class="mx-auto grid max-w-xl gap-5">
-      <header class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <header class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <div>
-          <p class="text-highlighted text-sm font-semibold">Maze Chase</p>
-          <p class="text-muted mt-1 font-mono text-xs">Neon Arcade · ten seeded mazes</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Maze Chase</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Neon Arcade · ten seeded mazes</p>
         </div>
-        <div class="text-muted flex items-center gap-3 font-mono text-xs">
+        <div class="text-foreground-muted flex items-center gap-3 font-mono text-xs">
           <button
             v-if="loaded"
             type="button"
-            class="text-muted hover:text-highlighted focus-visible:ring-primary border-default grid size-9 place-items-center border transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            class="text-foreground-muted hover:text-foreground-highlighted focus-visible:ring-primary border-outline grid size-9 place-items-center border transition-colors focus-visible:ring-2 focus-visible:outline-none"
             :aria-pressed="soundMuted"
             :aria-label="soundMuted ? 'Turn sound on' : 'Mute sound'"
             @click="toggleSound"
@@ -88,13 +88,13 @@ function toggleSound() {
             />
           </button>
           <span
-            >Level <strong class="text-highlighted">{{ state.level }}/10</strong></span
+            >Level <strong class="text-foreground-highlighted">{{ state.level }}/10</strong></span
           >
         </div>
       </header>
 
       <div
-        class="border-default relative overflow-hidden rounded-lg border"
+        class="border-outline relative overflow-hidden rounded-lg border"
         data-phaser-game-shell
         style="--phaser-game-loading-bg: #080b22"
       >
@@ -121,22 +121,22 @@ function toggleSound() {
           class="bg-default/70 absolute inset-0 z-10 grid place-items-center p-5"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="bg-primary text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="bg-primary text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               aria-hidden="true"
             >
               <Icon name="i-tabler-ghost-2" />
             </div>
-            <h2 class="text-highlighted text-xl font-semibold">Enter the maze</h2>
-            <p class="text-muted text-sm leading-6">
+            <h2 class="text-foreground-highlighted text-xl font-semibold">Enter the maze</h2>
+            <p class="text-foreground-muted text-sm leading-6">
               Clear every pellet, grab a power pellet, and turn the chase around while the ghosts
               are blue.
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.start()"
             >
               <NuxtImg
@@ -155,7 +155,9 @@ function toggleSound() {
                 Start chase
               </span>
             </button>
-            <p class="text-muted font-mono text-xs">Swipe or arrows / WASD · Space starts</p>
+            <p class="text-foreground-muted font-mono text-xs">
+              Swipe or arrows / WASD · Space starts
+            </p>
           </div>
         </div>
 
@@ -167,10 +169,10 @@ function toggleSound() {
           aria-labelledby="maze-chase-over-title"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               :class="state.won ? 'bg-success' : 'bg-error'"
               aria-hidden="true"
             >
@@ -178,20 +180,20 @@ function toggleSound() {
             </div>
             <h2
               id="maze-chase-over-title"
-              class="text-highlighted text-xl font-semibold"
+              class="text-foreground-highlighted text-xl font-semibold"
             >
               {{ resultTitle }}
             </h2>
-            <p class="text-muted text-sm leading-6">{{ resultCopy }}</p>
-            <p class="text-highlighted font-mono text-5xl font-bold tabular-nums">
+            <p class="text-foreground-muted text-sm leading-6">{{ resultCopy }}</p>
+            <p class="text-foreground-highlighted font-mono text-5xl font-bold tabular-nums">
               {{ state.score }}
             </p>
-            <p class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
+            <p class="text-foreground-muted font-mono text-xs tracking-[0.18em] uppercase">
               Best {{ state.best }} · Level {{ state.level }}
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.restart()"
             >
               <NuxtImg
@@ -218,9 +220,8 @@ function toggleSound() {
           class="bg-default absolute inset-0 z-20 grid place-items-center p-5"
           role="alert"
         >
-          <UAlert
-            color="error"
-            variant="subtle"
+          <UiNotice
+            tone="error"
             title="Game unavailable"
             description="Reload the page and try once more."
             icon="i-tabler-alert-triangle"
@@ -228,7 +229,7 @@ function toggleSound() {
         </div>
       </div>
 
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         {{ progressCopy }} · score {{ state.score }} · no account needed
       </p>
     </div>

@@ -38,23 +38,23 @@ function updateState(next: Record<string, unknown>) {
     description="Stack falling pieces, clear lines, and climb levels. Keyboard and touch controls work locally in your browser."
   >
     <div class="mx-auto grid max-w-[45rem] gap-5">
-      <header class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <header class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <div>
-          <p class="text-highlighted text-sm font-semibold">Tetris</p>
-          <p class="text-muted mt-1 font-mono text-xs">Stack Lab · local run</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Tetris</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Stack Lab · local run</p>
         </div>
-        <div class="text-muted flex gap-3 font-mono text-xs">
+        <div class="text-foreground-muted flex gap-3 font-mono text-xs">
           <span
-            >Score <strong class="text-highlighted">{{ state.score }}</strong></span
+            >Score <strong class="text-foreground-highlighted">{{ state.score }}</strong></span
           >
           <span
-            >Level <strong class="text-highlighted">{{ state.level }}</strong></span
+            >Level <strong class="text-foreground-highlighted">{{ state.level }}</strong></span
           >
         </div>
       </header>
 
       <div
-        class="border-default relative overflow-hidden rounded-lg border"
+        class="border-outline relative overflow-hidden rounded-lg border"
         data-phaser-game-shell
         style="--phaser-game-loading-bg: #151d2b"
       >
@@ -81,22 +81,22 @@ function updateState(next: Record<string, unknown>) {
           class="bg-default/70 absolute inset-0 z-10 grid place-items-center p-5"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="bg-primary text-inverted mx-auto grid size-14 place-items-center text-2xl font-bold"
+              class="bg-primary text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl font-bold"
               aria-hidden="true"
             >
               <Icon name="i-tabler-arrows-move" />
             </div>
-            <h2 class="text-highlighted text-xl font-semibold">Keep the well clear</h2>
-            <p class="text-muted text-sm leading-6">
+            <h2 class="text-foreground-highlighted text-xl font-semibold">Keep the well clear</h2>
+            <p class="text-foreground-muted text-sm leading-6">
               Move and rotate each piece, then clear complete rows. The board gets faster every ten
               lines.
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.start()"
             >
               <NuxtImg
@@ -115,7 +115,7 @@ function updateState(next: Record<string, unknown>) {
                 Start game</span
               >
             </button>
-            <p class="text-muted font-mono text-xs">
+            <p class="text-foreground-muted font-mono text-xs">
               ← → / A D move · ↑ / W rotate · Space hard drop · swipe or tap
             </p>
           </div>
@@ -129,32 +129,32 @@ function updateState(next: Record<string, unknown>) {
           aria-labelledby="tetris-over-title"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-3 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-3 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="bg-error text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="bg-error text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               aria-hidden="true"
             >
               <Icon name="i-tabler-alert-triangle" />
             </div>
             <h2
               id="tetris-over-title"
-              class="text-highlighted text-xl font-semibold"
+              class="text-foreground-highlighted text-xl font-semibold"
             >
               Stack topped out
             </h2>
-            <p class="text-highlighted font-mono text-5xl font-bold tabular-nums">
+            <p class="text-foreground-highlighted font-mono text-5xl font-bold tabular-nums">
               {{ state.score }}
             </p>
-            <p class="text-muted font-mono text-xs tracking-[0.18em] uppercase">
+            <p class="text-foreground-muted font-mono text-xs tracking-[0.18em] uppercase">
               Final score · {{ state.lines }} lines cleared
             </p>
-            <p class="text-muted text-sm">
+            <p class="text-foreground-muted text-sm">
               Level {{ state.level }} reached. Best score: {{ state.best }}.
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.restart()"
             >
               <NuxtImg
@@ -181,9 +181,8 @@ function updateState(next: Record<string, unknown>) {
           class="bg-default absolute inset-0 z-20 grid place-items-center p-5"
           role="alert"
         >
-          <UAlert
-            color="error"
-            variant="subtle"
+          <UiNotice
+            tone="error"
             title="Game unavailable"
             description="Reload the page and try once more."
             icon="i-tabler-alert-circle"
@@ -191,7 +190,7 @@ function updateState(next: Record<string, unknown>) {
         </div>
       </div>
 
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         {{ state.lines }} lines cleared · level {{ state.level }} · no account needed
       </p>
     </div>

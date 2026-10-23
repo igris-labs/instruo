@@ -101,12 +101,12 @@ function tileState(row: number, column: number): TileState {
 
 function stateClasses(state: TileState) {
   return {
-    absent: "border-accented bg-accented text-muted",
-    active: "border-primary bg-primary/10 text-highlighted ring-4 ring-primary/15",
-    correct: "border-success bg-success/20 text-highlighted",
-    empty: "border-default bg-default text-highlighted",
-    filled: "border-accented bg-elevated/50 text-highlighted",
-    present: "border-warning bg-warning/25 text-highlighted",
+    absent: "border-outline bg-accented text-foreground-muted",
+    active: "border-primary bg-primary/10 text-foreground-highlighted ring-4 ring-primary/15",
+    correct: "border-success bg-success/20 text-foreground-highlighted",
+    empty: "border-outline bg-default text-foreground-highlighted",
+    filled: "border-outline bg-elevated/50 text-foreground-highlighted",
+    present: "border-warning bg-warning/25 text-foreground-highlighted",
   }[state];
 }
 
@@ -185,24 +185,24 @@ useEventListener("keydown", handleKeydown);
               ? 'text-error'
               : status === 'won'
                 ? 'text-success'
-                : 'text-toned'
+                : 'text-foreground-muted'
           "
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             v-if="status === 'lost'"
             name="i-tabler-circle-x"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="status === 'won'"
             name="i-tabler-circle-check"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="notice.error"
             name="i-tabler-alert-circle"
             class="size-4 shrink-0"
@@ -241,7 +241,7 @@ useEventListener("keydown", handleKeydown);
             <button
               v-if="rowIndex === 2"
               type="button"
-              class="focus-visible:ring-primary border-default/70 hover:bg-elevated/60 min-h-11 shrink-0 border px-1.5 font-mono text-[0.625rem] font-semibold focus-visible:ring-2 focus-visible:outline-none sm:px-3 sm:text-xs"
+              class="focus-visible:ring-primary border-outline/70 hover:bg-elevated/60 min-h-11 shrink-0 border px-1.5 font-mono text-[0.625rem] font-semibold focus-visible:ring-2 focus-visible:outline-none sm:px-3 sm:text-xs"
               @click="pressKey('ENTER')"
             >
               ENTER
@@ -250,7 +250,7 @@ useEventListener("keydown", handleKeydown);
               v-for="letter in row"
               :key="letter"
               type="button"
-              class="focus-visible:ring-primary border-default/70 hover:bg-elevated/60 min-h-11 min-w-0 flex-1 border px-0.5 font-mono text-[0.65rem] font-semibold transition-colors focus-visible:ring-2 focus-visible:outline-none sm:min-w-10 sm:px-1 sm:text-sm"
+              class="focus-visible:ring-primary border-outline/70 hover:bg-elevated/60 min-h-11 min-w-0 flex-1 border px-0.5 font-mono text-[0.65rem] font-semibold transition-colors focus-visible:ring-2 focus-visible:outline-none sm:min-w-10 sm:px-1 sm:text-sm"
               :class="stateClasses(keyStates.get(letter) ?? 'empty')"
               :aria-label="`Letter ${letter}`"
               @click="pressKey(letter)"
@@ -260,7 +260,7 @@ useEventListener("keydown", handleKeydown);
             <button
               v-if="rowIndex === 2"
               type="button"
-              class="focus-visible:ring-primary border-default/70 hover:bg-elevated/60 min-h-11 shrink-0 border px-1.5 font-mono text-[0.625rem] font-semibold focus-visible:ring-2 focus-visible:outline-none sm:px-3 sm:text-xs"
+              class="focus-visible:ring-primary border-outline/70 hover:bg-elevated/60 min-h-11 shrink-0 border px-1.5 font-mono text-[0.625rem] font-semibold focus-visible:ring-2 focus-visible:outline-none sm:px-3 sm:text-xs"
               aria-label="Delete letter"
               @click="pressKey('BACKSPACE')"
             >
@@ -270,7 +270,7 @@ useEventListener("keydown", handleKeydown);
         </div>
       </div>
 
-      <div class="border-default/70 mt-7 border-t pt-5">
+      <div class="border-outline/70 mt-7 border-t pt-5">
         <div
           class="grid gap-3 sm:grid-cols-3"
           aria-label="Color guide"
@@ -281,8 +281,8 @@ useEventListener("keydown", handleKeydown);
             >
               A
             </span>
-            <span class="text-muted">
-              <strong class="text-highlighted block">Green</strong>
+            <span class="text-foreground-muted">
+              <strong class="text-foreground-highlighted block">Green</strong>
               correct spot
             </span>
           </div>
@@ -292,26 +292,26 @@ useEventListener("keydown", handleKeydown);
             >
               R
             </span>
-            <span class="text-muted">
-              <strong class="text-highlighted block">Yellow</strong>
+            <span class="text-foreground-muted">
+              <strong class="text-foreground-highlighted block">Yellow</strong>
               wrong spot
             </span>
           </div>
           <div class="flex items-center gap-3 text-sm">
             <span
-              class="border-accented bg-accented text-muted flex size-9 shrink-0 items-center justify-center border-2 font-mono font-semibold"
+              class="border-outline bg-accented text-foreground-muted flex size-9 shrink-0 items-center justify-center border-2 font-mono font-semibold"
             >
               E
             </span>
-            <span class="text-muted">
-              <strong class="text-highlighted block">Gray</strong>
+            <span class="text-foreground-muted">
+              <strong class="text-foreground-highlighted block">Gray</strong>
               not in word
             </span>
           </div>
         </div>
 
         <div class="mt-5 flex justify-end">
-          <UButton
+          <UiButton
             label="New word"
             color="neutral"
             variant="outline"

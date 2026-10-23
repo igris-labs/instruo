@@ -12,8 +12,8 @@ useSeoMeta({
   <Catalogue
     :items="tools ?? []"
     kind="tool"
-    title="The right tool, without the detour."
-    description="Search by task, browse a category, or reopen something recent. Every result opens ready to use."
+    title="Tools"
+    description="Find the utility for your next task. Open it and get to work."
     search-placeholder="Search tools, categories, or tasks…"
   />
 </template>

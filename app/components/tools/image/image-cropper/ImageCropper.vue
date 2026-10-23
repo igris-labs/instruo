@@ -22,7 +22,7 @@ async function process() {
 <template>
   <ToolWorkbench description="Crop an image by pixel coordinates in your browser.">
     <div class="grid gap-5">
-      <UFileUpload
+      <UiFileInput
         :model-value="file"
         accept="image/*"
         label="Choose an image"
@@ -35,39 +35,39 @@ async function process() {
         "
       />
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="X">
-          <UInput
-            v-model.number="x"
-            type="number"
-            min="0"
-          /> </UFormField
-        ><UFormField label="Y">
-          <UInput
-            v-model.number="y"
-            type="number"
-            min="0"
-          /> </UFormField
-        ><UFormField label="Width">
-          <UInput
-            v-model.number="cropWidth"
-            type="number"
-            min="1"
-          /> </UFormField
-        ><UFormField label="Height">
-          <UInput
-            v-model.number="cropHeight"
-            type="number"
-            min="1"
+        <UiField label="X">
+          <UiNumberField
+            v-model="x"
+            :step-snapping="false"
+            :min="0"
+          /> </UiField
+        ><UiField label="Y">
+          <UiNumberField
+            v-model="y"
+            :step-snapping="false"
+            :min="0"
+          /> </UiField
+        ><UiField label="Width">
+          <UiNumberField
+            v-model="cropWidth"
+            :step-snapping="false"
+            :min="1"
+          /> </UiField
+        ><UiField label="Height">
+          <UiNumberField
+            v-model="cropHeight"
+            :step-snapping="false"
+            :min="1"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex gap-2">
-        <UButton
+        <UiButton
           label="Crop"
           icon="i-tabler-crop"
           :disabled="!file"
           @click="process"
-        /><UButton
+        /><UiButton
           color="neutral"
           variant="soft"
           label="Download"
@@ -79,7 +79,7 @@ async function process() {
         v-if="outputUrl"
         :src="outputUrl"
         alt="Cropped image"
-        class="border-default max-h-72 w-fit rounded-md border object-contain"
+        class="border-outline max-h-72 w-fit rounded-md border object-contain"
       />
     </div>
   </ToolWorkbench>

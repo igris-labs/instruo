@@ -34,8 +34,8 @@ const { copyText } = useCopyToClipboard();
   <ToolWorkbench description="Compose a practical .gitignore from project-specific templates.">
     <div class="grid gap-5 lg:grid-cols-[minmax(14rem,0.35fr)_minmax(0,1fr)]">
       <div class="grid content-start gap-3">
-        <p class="text-highlighted text-sm font-medium">Include templates</p>
-        <UCheckbox
+        <p class="text-foreground-highlighted text-sm font-medium">Include templates</p>
+        <UiCheckbox
           v-for="template in templates"
           :key="template.key"
           v-model="enabled[template.key]"
@@ -43,7 +43,7 @@ const { copyText } = useCopyToClipboard();
         />
       </div>
       <div class="grid gap-3">
-        <UTextarea
+        <UiTextarea
           :model-value="output"
           :rows="16"
           readonly
@@ -51,7 +51,7 @@ const { copyText } = useCopyToClipboard();
           placeholder="Choose a template."
         />
         <div class="flex justify-end">
-          <UButton
+          <UiButton
             color="neutral"
             variant="soft"
             label="Copy .gitignore"

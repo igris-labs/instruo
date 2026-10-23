@@ -9,7 +9,6 @@ interface CatalogueEntry {
   icon?: string;
   art?: string;
 }
-
 const props = defineProps<{
   items: CatalogueEntry[];
   kind: "tool" | "game";
@@ -17,475 +16,341 @@ const props = defineProps<{
   description: string;
   searchPlaceholder: string;
 }>();
-
 const route = useRoute();
-const search = ref("");
+const mounted = useMounted();
+const search = ref(typeof route.query.q === "string" ? route.query.q : "");
 const recentPaths = useLocalStorage<string[]>(`instruo-recent-${props.kind}s`, []);
-
 const categoryOptions = computed(() => [
-  { label: "All", value: "all", count: props.items.length },
+  { label: "All categories", value: "all" },
   ...[...new Set(props.items.map((item) => item.category))]
-    .toSorted((a, b) => a.localeCompare(b))
-    .map((category) => ({
-      label: category === "Developer" ? "Developer Tools" : category,
-      value: category,
-      count: props.items.filter((item) => item.category === category).length,
-    })),
+    .toSorted()
+    .map((category) => ({ label: category, value: category })),
 ]);
-
-const categories = computed(() => categoryOptions.value.map((option) => option.value));
-
 const selectedCategory = computed({
-  get: () => {
-    const category = typeof route.query.category === "string" ? route.query.category : "all";
-    return categories.value.includes(category) ? category : "all";
-  },
+  get: () =>
+    categoryOptions.value.some((option) => option.value === route.query.category)
+      ? String(route.query.category)
+      : "all",
   set: (category: string) => {
-    navigateTo({
-      path: route.path,
-      query: category === "all" ? {} : { category },
-    });
+    const query = { ...route.query };
+    if (category === "all") delete query.category;
+    else query.category = category;
+    navigateTo({ path: route.path, query });
   },
 });
-
-const filteredItems = computed(() => {
-  const query = search.value.trim().toLowerCase();
-
-  return props.items
-    .filter((item) => selectedCategory.value === "all" || item.category === selectedCategory.value)
-    .filter((item) => {
-      if (!query) return true;
-      return [item.title, item.description, item.category, ...item.tags]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase()
-        .includes(query);
-    })
-    .toSorted((a, b) => a.title.localeCompare(b.title));
-});
-
-const toolGroups = computed(() => {
-  const groups = new Map<string, CatalogueEntry[]>();
-  for (const item of filteredItems.value) {
-    const group = groups.get(item.category) ?? [];
-    group.push(item);
-    groups.set(item.category, group);
-  }
-  return [...groups.entries()].toSorted(([a], [b]) => a.localeCompare(b));
-});
-
+const filteredItems = computed(() =>
+  props.items
+    .filter(
+      (item) =>
+        (selectedCategory.value === "all" || item.category === selectedCategory.value) &&
+        [item.title, item.description, item.category, ...item.tags]
+          .join(" ")
+          .toLowerCase()
+          .includes(search.value.trim().toLowerCase()),
+    )
+    .toSorted((a, b) => a.title.localeCompare(b.title)),
+);
 const recentItems = computed(() =>
   recentPaths.value
     .map((path) => props.items.find((item) => item.path === path))
     .filter((item): item is CatalogueEntry => Boolean(item))
     .slice(0, 4),
 );
-
-const featuredGamePaths = [
-  "/games/arcade/flappy-bird",
-  "/games/arcade/tetris",
-  "/games/logic/sokoban",
-];
-
-const featuredGames = computed(() =>
-  featuredGamePaths
-    .map((path) => props.items.find((item) => item.path === path))
-    .filter((item): item is CatalogueEntry => Boolean(item)),
+const startingPoints = computed(() =>
+  [
+    {
+      path: "/tools/developer/json-formatter",
+      category: "Developer",
+      label: "Format JSON",
+      detail: "Make data readable",
+      icon: "i-tabler-braces",
+    },
+    {
+      path: "/tools/image/image-resizer",
+      category: "Image",
+      label: "Resize an image",
+      detail: "Get the right dimensions",
+      icon: "i-tabler-photo",
+    },
+    {
+      path: "/tools/security/password-generator",
+      category: "Security",
+      label: "Generate a password",
+      detail: "Create a secure value",
+      icon: "i-tabler-key",
+    },
+  ].filter((task) => props.items.some((item) => item.path === task.path)),
 );
-
-const showFeaturedGames = computed(
-  () => props.kind === "game" && !search.value.trim() && selectedCategory.value === "all",
+const categoryDetails: Record<string, string> = {
+  Developer: "Inspect data, work with APIs, and prepare code.",
+  "Encoder Decoder": "Move between formats without losing the meaning.",
+  Everyday: "Work out dates, measurements, and everyday numbers.",
+  Image: "Resize, convert, and prepare your images.",
+  Productivity: "Make a decision and keep your day moving.",
+  Security: "Generate, inspect, and verify sensitive values.",
+  Text: "Clean up words, lines, and everything in between.",
+};
+const groups = computed(() =>
+  categoryOptions.value.slice(1).flatMap((category) => {
+    const matches = filteredItems.value.filter((item) => item.category === category.value);
+    if (!matches.length) return [];
+    const limited = selectedCategory.value === "all" && !search.value.trim();
+    return [
+      {
+        category: category.label,
+        total: matches.length,
+        items: limited ? matches.slice(0, 6) : matches,
+      },
+    ];
+  }),
 );
-
-const visibleGames = computed(() => {
-  if (!showFeaturedGames.value) return filteredItems.value;
-  // const featured = new Set(featuredGamePaths);
-  return filteredItems.value; //.filter((item) => !featured.has(item.path));
-});
-
-function remember(item: CatalogueEntry) {
+function remember(item: Pick<CatalogueEntry, "path">) {
   recentPaths.value = [item.path, ...recentPaths.value.filter((path) => path !== item.path)].slice(
     0,
     8,
   );
 }
-
 function clearFilters() {
   search.value = "";
   selectedCategory.value = "all";
 }
-
 onKeyStroke("/", (event) => {
-  const target = event.target;
-  if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
+  if (
+    event.metaKey ||
+    event.ctrlKey ||
+    event.altKey ||
+    (event.target instanceof HTMLElement &&
+      event.target.closest("input, textarea, select, [contenteditable]"))
+  )
+    return;
   event.preventDefault();
-  document.querySelector<HTMLInputElement>(`[aria-label="Search ${props.kind}s"]`)?.focus();
+  document.getElementById(`catalogue-search-${props.kind}`)?.focus();
 });
 </script>
 
 <template>
-  <UContainer class="py-10 sm:py-12 lg:py-14">
-    <header class="grid gap-7 pb-8 lg:grid-cols-12 lg:items-end">
-      <div class="lg:col-span-8">
-        <p class="text-toned flex items-center gap-2 text-sm">
-          <UIcon
-            :name="kind === 'tool' ? 'i-tabler-tools' : 'i-tabler-device-gamepad-2'"
-            class="size-4"
-            aria-hidden="true"
-          />
-          {{ kind === "tool" ? "Browser tools" : "Browser games" }}
-        </p>
-        <h1
-          class="text-highlighted mt-4 max-w-4xl text-4xl leading-[0.98] font-semibold tracking-tighter text-balance sm:text-5xl lg:text-6xl"
-        >
-          {{ title }}
-        </h1>
-        <p class="text-muted mt-5 max-w-2xl text-base leading-7 sm:text-lg">
-          {{ description }}
-        </p>
-      </div>
-      <div class="lg:col-span-4 lg:text-right">
-        <p class="text-toned font-mono text-sm tabular-nums">
-          {{ items.length }} {{ kind === "tool" ? "tools" : "games" }}
-        </p>
-      </div>
+  <div class="mx-auto w-full max-w-6xl px-5 pt-10 pb-20 sm:px-8 sm:pt-14">
+    <header class="max-w-2xl">
+      <h1 class="text-3xl font-semibold tracking-[-0.035em]">{{ title }}</h1>
+      <p class="text-foreground-muted mt-4 text-base leading-7">{{ description }}</p>
     </header>
-
-    <template v-if="kind === 'tool'">
-      <div class="mt-8 grid gap-8 lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:gap-10">
-        <aside>
-          <div class="lg:sticky lg:top-20">
-            <UFormField
-              label="Category"
-              class="lg:hidden"
-            >
-              <USelect
-                v-model="selectedCategory"
-                :items="categoryOptions"
-                value-key="value"
-                label-key="label"
-                class="bg-elevated! w-full"
-              />
-            </UFormField>
-
-            <nav
-              class="hidden lg:grid lg:gap-1"
-              aria-label="Tool categories"
-            >
-              <button
-                v-for="category in categoryOptions"
-                :key="category.value"
-                type="button"
-                class="focus-visible:outline-primary grid min-h-9 grid-cols-[1fr_auto] items-center gap-3 rounded-md px-3 text-left text-sm transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2"
-                :class="
-                  selectedCategory === category.value
-                    ? 'bg-elevated text-highlighted font-medium'
-                    : 'text-muted hover:bg-elevated/70 hover:text-highlighted'
-                "
-                :aria-pressed="selectedCategory === category.value"
-                @click="selectedCategory = category.value"
-              >
-                <span>{{ category.label }}</span>
-                <span class="text-dimmed font-mono text-xs tabular-nums">{{ category.count }}</span>
-              </button>
-            </nav>
-
-            <div class="border-muted mt-6 hidden border-t pt-5 lg:block">
-              <p class="text-muted text-xs leading-5">
-                Press <UKbd value="/" /> anywhere on this page to search.
-              </p>
-            </div>
-          </div>
-        </aside>
-
-        <div class="min-w-0">
-          <div class="bg-default sticky top-16 z-20 -mx-1 px-1 pb-5">
-            <div class="flex items-center gap-3">
-              <UInput
-                v-model="search"
-                :placeholder="searchPlaceholder"
-                icon="i-tabler-search"
-                size="xl"
-                aria-label="Search tools"
-                class="w-full"
-              >
-                <template #trailing>
-                  <UKbd
-                    value="/"
-                    class="hidden sm:inline-flex"
-                  />
-                </template>
-              </UInput>
-              <UButton
-                v-if="search || selectedCategory !== 'all'"
-                label="Clear"
-                color="neutral"
-                variant="ghost"
-                @click="clearFilters"
-              />
-            </div>
-            <p
-              class="text-dimmed mt-2 text-sm"
-              aria-live="polite"
-            >
-              {{ filteredItems.length }} {{ filteredItems.length === 1 ? "result" : "results" }}
-            </p>
-          </div>
-
+    <section
+      v-if="
+        kind === 'tool' && selectedCategory === 'all' && !search.trim() && startingPoints.length
+      "
+      aria-label="Common tasks"
+      class="bg-muted/70 mt-8 rounded-lg p-4 sm:p-5"
+    >
+      <h2 class="text-foreground-muted mb-4 text-xs font-medium">Start with a common task</h2>
+      <div class="grid gap-2 sm:grid-cols-3 sm:gap-5">
+        <NuxtLink
+          v-for="task in startingPoints"
+          :key="task.path"
+          :to="task.path"
+          class="group hover:bg-elevated focus-visible:outline-info flex min-w-0 items-center gap-3 rounded-md p-2 transition-colors duration-150 focus-visible:outline-2 motion-reduce:transition-none"
+          @click="remember(task)"
+        >
+          <UiIcon
+            :name="task.icon"
+            class="size-7 shrink-0"
+            :class="toolIconClass(task.category)"
+          />
+          <span class="min-w-0"
+            ><span class="block text-sm font-medium">{{ task.label }}</span
+            ><span class="text-foreground-muted mt-1 block text-xs leading-5">{{
+              task.detail
+            }}</span></span
+          >
+        </NuxtLink>
+      </div>
+    </section>
+    <div class="mt-10 grid items-start gap-8 lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-12">
+      <nav
+        :aria-label="kind === 'tool' ? 'Tool categories' : 'Game categories'"
+        class="sticky top-6 hidden lg:block"
+      >
+        <p class="text-foreground-dimmed mb-3 px-2 text-xs">Browse by category</p>
+        <UiButton
+          v-for="category in categoryOptions"
+          :key="category.value"
+          variant="ghost"
+          :aria-pressed="selectedCategory === category.value"
+          :disabled="!mounted"
+          class="mb-1 flex w-full justify-between gap-2 px-2 text-sm"
+          :class="
+            selectedCategory === category.value
+              ? 'bg-muted text-foreground'
+              : 'text-foreground-muted hover:bg-muted/60'
+          "
+          @click="selectedCategory = category.value"
+        >
+          {{ category.value === "all" ? `All ${kind}s` : category.label }}
+          <span class="text-foreground-dimmed text-xs tabular-nums">{{
+            category.value === "all"
+              ? items.length
+              : items.filter((item) => item.category === category.value).length
+          }}</span>
+        </UiButton>
+      </nav>
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-3">
+          <UiInput
+            :id="`catalogue-search-${kind}`"
+            v-model="search"
+            icon="i-tabler-search"
+            :placeholder="searchPlaceholder"
+            :aria-label="`Search ${kind}s`"
+            class="min-w-0 flex-1 sm:max-w-sm"
+            :ui="{ root: 'bg-muted' }"
+          />
+          <UiButton
+            v-if="search || selectedCategory !== 'all'"
+            variant="ghost"
+            label="Clear"
+            @click="clearFilters"
+          />
+          <span
+            class="text-foreground-muted ml-auto text-xs tabular-nums"
+            role="status"
+            >{{ filteredItems.length }} {{ kind }}s</span
+          >
+          <UiSelect
+            v-model="selectedCategory"
+            :items="categoryOptions"
+            aria-label="Category"
+            class="w-full lg:hidden"
+          />
+        </div>
+        <ClientOnly>
           <section
             v-if="recentItems.length && !search && selectedCategory === 'all'"
-            aria-labelledby="recent-tools-heading"
-            class="mb-9"
+            aria-label="Recently opened"
+            class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2"
           >
-            <div class="mb-3 flex items-center justify-between gap-4">
-              <h2
-                id="recent-tools-heading"
-                class="text-highlighted text-base font-semibold"
-              >
-                Recently opened
-              </h2>
-              <button
-                type="button"
-                class="text-muted hover:text-highlighted focus-visible:outline-primary rounded-sm text-xs focus-visible:outline-2"
-                @click="recentPaths = []"
-              >
-                Clear history
-              </button>
-            </div>
-            <div class="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+            <h2 class="text-foreground-dimmed text-xs">Recent</h2>
+            <NuxtLink
+              v-for="item in recentItems"
+              :key="item.id"
+              :to="item.path"
+              class="text-foreground-muted hover:text-foreground focus-visible:outline-info rounded-sm text-xs leading-7 focus-visible:outline-2"
+              @click="remember(item)"
+              >{{ item.title }}</NuxtLink
+            >
+            <UiButton
+              variant="ghost"
+              icon="i-tabler-x"
+              aria-label="Clear history"
+              @click="recentPaths = []"
+            />
+          </section>
+        </ClientOnly>
+        <div
+          v-if="filteredItems.length"
+          class="mt-9 space-y-12"
+        >
+          <section
+            v-for="group in groups"
+            :key="group.category"
+            :aria-label="group.category"
+          >
+            <header
+              class="mb-5 flex items-start justify-between gap-4"
+              :class="kind === 'tool' ? 'border-outline/60 border-b pb-5' : ''"
+            >
+              <div class="min-w-0">
+                <h2
+                  class="font-semibold tracking-tight"
+                  :class="kind === 'tool' ? 'text-2xl' : 'text-lg'"
+                >
+                  {{ group.category }}
+                  <span class="text-foreground-dimmed ml-1 text-xs font-normal tabular-nums"
+                    >{{ group.total }} {{ group.total === 1 ? kind : `${kind}s` }}</span
+                  >
+                </h2>
+                <p
+                  v-if="kind === 'tool' && categoryDetails[group.category]"
+                  class="text-foreground-muted mt-1 text-sm leading-6"
+                >
+                  {{ categoryDetails[group.category] }}
+                </p>
+              </div>
+              <UiButton
+                v-if="group.items.length < group.total"
+                variant="ghost"
+                :label="`View all ${group.total}`"
+                :aria-label="`View all ${group.category} ${kind}s`"
+                :disabled="!mounted"
+                trailing-icon="i-tabler-arrow-right"
+                @click="selectedCategory = group.category"
+              />
+            </header>
+            <div
+              class="grid gap-x-6"
+              :class="
+                kind === 'game' ? 'grid-cols-2 gap-y-7 xl:grid-cols-3' : 'gap-y-1 md:grid-cols-2'
+              "
+            >
               <NuxtLink
-                v-for="item in recentItems"
+                v-for="item in group.items"
                 :key="item.id"
                 :to="item.path"
-                class="bg-elevated focus-visible:outline-primary hover:bg-muted/45 flex min-h-20 items-center gap-3 rounded-md px-4 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline-2 focus-visible:outline-offset-2"
+                :aria-label="kind === 'game' ? `Play ${item.title}` : undefined"
+                class="group focus-visible:outline-info min-w-0 rounded-md transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
+                :class="
+                  kind === 'tool'
+                    ? 'hover:bg-muted/60 -mx-2 flex min-h-24 items-start gap-4 px-2 py-4'
+                    : ''
+                "
                 @click="remember(item)"
               >
-                <UIcon
-                  :name="item.icon || 'i-tabler-tools'"
-                  class="text-toned size-5 shrink-0"
-                  aria-hidden="true"
+                <GamePreview
+                  v-if="kind === 'game'"
+                  :path="item.path"
+                  :title="item.title"
+                  :category="item.category"
+                  :art="item.art"
+                  class="rounded-md"
                 />
-                <span class="text-highlighted line-clamp-2 text-sm font-medium">{{
-                  item.title
-                }}</span>
-              </NuxtLink>
-            </div>
-          </section>
-
-          <template v-if="filteredItems.length">
-            <section
-              v-for="[category, entries] in toolGroups"
-              :key="category"
-              :aria-labelledby="`tool-group-${category.replaceAll(' ', '-').toLowerCase()}`"
-              class="mb-9 last:mb-0"
-            >
-              <header class="mb-3 flex items-center justify-between gap-4">
-                <h2
-                  :id="`tool-group-${category.replaceAll(' ', '-').toLowerCase()}`"
-                  class="text-highlighted text-lg font-semibold tracking-tight"
+                <UiIcon
+                  v-else
+                  :name="item.icon || 'i-tabler-tool'"
+                  class="mt-0.5 size-6 shrink-0"
+                  :class="toolIconClass(item.category)"
+                />
+                <div
+                  class="min-w-0 flex-1"
+                  :class="kind === 'game' ? 'pt-3' : ''"
                 >
-                  {{ category === "Developer" ? "Developer Tools" : category }}
-                </h2>
-                <span class="text-dimmed font-mono text-xs tabular-nums">{{ entries.length }}</span>
-              </header>
-
-              <div
-                class="bg-elevated grid overflow-hidden rounded-lg shadow-[inset_0_0_0_1px_var(--ui-border-muted)] md:grid-cols-2"
-              >
-                <NuxtLink
-                  v-for="item in entries"
-                  :key="item.id"
-                  :to="item.path"
-                  class="group border-muted bg-elevated focus-visible:outline-primary hover:bg-muted/40 grid min-h-22 grid-cols-[auto_1fr_auto] items-center gap-3 border-b p-4 transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:z-10 focus-visible:outline-2 focus-visible:-outline-offset-2 md:odd:border-r"
-                  @click="remember(item)"
-                >
-                  <span
-                    class="bg-muted text-toned flex size-9 items-center justify-center rounded-md"
+                  <h3
+                    class="decoration-outline text-sm font-medium underline-offset-4 group-hover:underline"
                   >
-                    <UIcon
-                      :name="item.icon || 'i-tabler-tools'"
-                      class="size-4.5"
-                      aria-hidden="true"
-                    />
-                  </span>
-                  <span class="min-w-0">
-                    <span class="text-highlighted block truncate text-sm font-semibold">{{
-                      item.title
-                    }}</span>
-                    <span class="text-muted mt-1 block truncate text-xs">{{
-                      item.description
-                    }}</span>
-                  </span>
-                  <UIcon
-                    name="i-tabler-arrow-up-right"
-                    class="text-dimmed size-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    aria-hidden="true"
-                  />
-                </NuxtLink>
-              </div>
-            </section>
-          </template>
-        </div>
-      </div>
-    </template>
-
-    <template v-else>
-      <section
-        v-if="showFeaturedGames && featuredGames.length"
-        class="mt-9"
-        aria-labelledby="featured-games-heading"
-      >
-        <div class="mb-4 flex items-end justify-between gap-6">
-          <div>
-            <h2
-              id="featured-games-heading"
-              class="text-highlighted text-xl font-semibold tracking-tight"
-            >
-              Start here
-            </h2>
-            <p class="text-muted mt-1 text-sm">
-              Three games with distinct controls and play styles.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid gap-4 lg:grid-cols-12">
-          <NuxtLink
-            v-for="(item, index) in featuredGames"
-            :key="item.id"
-            :to="item.path"
-            :aria-label="`Play ${item.title}`"
-            class="group bg-elevated focus-visible:outline-primary overflow-hidden rounded-[10px] shadow-[inset_0_0_0_1px_var(--ui-border-muted)] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[inset_0_0_0_1px_var(--ui-border),0_18px_45px_rgb(0_0_0/0.12)] focus-visible:outline-2 focus-visible:outline-offset-2"
-            :class="index === 0 ? 'lg:col-span-6' : 'lg:col-span-3'"
-            @click="remember(item)"
-          >
-            <article class="flex h-full min-h-72 flex-col">
-              <GamePreview
-                :path="item.path"
-                :title="item.title"
-                :category="item.category"
-                :icon="item.icon"
-                :art="item.art"
-                featured
-                class="min-h-44 flex-1"
-              />
-              <div class="flex items-end justify-between gap-4 p-5">
-                <div class="min-w-0">
-                  <h3 class="text-highlighted text-xl font-semibold tracking-tight">
                     {{ item.title }}
                   </h3>
                   <p
-                    v-if="index === 0"
-                    class="text-muted mt-2 line-clamp-2 text-sm leading-5"
+                    class="text-foreground-muted mt-1 text-sm leading-6"
+                    :class="kind === 'tool' ? 'line-clamp-2' : ''"
                   >
-                    {{ item.description }}
+                    {{ kind === "game" ? item.category : item.description }}
                   </p>
                 </div>
-                <UIcon
-                  name="i-tabler-arrow-up-right"
-                  class="text-dimmed size-5 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  aria-hidden="true"
-                />
-              </div>
-            </article>
-          </NuxtLink>
-        </div>
-      </section>
-
-      <section
-        aria-label="Game filters"
-        class="bg-muted/45 mt-8 rounded-lg p-4 sm:p-5"
-      >
-        <div class="grid gap-4 lg:grid-cols-[minmax(18rem,32rem)_minmax(0,1fr)] lg:items-center">
-          <UInput
-            v-model="search"
-            :placeholder="searchPlaceholder"
-            icon="i-tabler-search"
-            size="xl"
-            aria-label="Search games"
-            class="bg-elevated! w-full"
-          >
-            <template #trailing>
-              <UKbd
-                value="/"
-                class="hidden sm:inline-flex"
-              />
-            </template>
-          </UInput>
-
-          <div class="flex gap-1 overflow-x-auto lg:justify-end">
-            <UButton
-              v-for="category in categoryOptions"
-              :key="category.value"
-              :label="category.label"
-              color="neutral"
-              :variant="selectedCategory === category.value ? 'soft' : 'ghost'"
-              size="sm"
-              :aria-pressed="selectedCategory === category.value"
-              class="shrink-0"
-              @click="selectedCategory = category.value"
-            />
-          </div>
-        </div>
-        <p
-          class="text-dimmed mt-3 text-sm"
-          aria-live="polite"
-        >
-          {{ filteredItems.length }} {{ filteredItems.length === 1 ? "result" : "results" }}
-        </p>
-      </section>
-
-      <div
-        v-if="visibleGames.length"
-        class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-      >
-        <NuxtLink
-          v-for="item in visibleGames"
-          :key="item.id"
-          :to="item.path"
-          :aria-label="`Play ${item.title}`"
-          class="group bg-elevated focus-visible:outline-primary overflow-hidden rounded-lg shadow-[inset_0_0_0_1px_var(--ui-border-muted)] transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[inset_0_0_0_1px_var(--ui-border),0_16px_38px_rgb(0_0_0/0.1)] focus-visible:outline-2 focus-visible:outline-offset-2"
-          @click="remember(item)"
-        >
-          <article>
-            <div class="relative aspect-4/3">
-              <GamePreview
-                :path="item.path"
-                :title="item.title"
-                :category="item.category"
-                :icon="item.icon"
-                :art="item.art"
-              />
-              <UIcon
-                name="i-tabler-arrow-up-right"
-                class="absolute top-3 right-3 size-4 text-white/65 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                aria-hidden="true"
-              />
+              </NuxtLink>
             </div>
-            <div class="p-4">
-              <h2 class="text-highlighted truncate text-base font-semibold">{{ item.title }}</h2>
-              <p class="text-muted mt-1.5 line-clamp-2 text-sm leading-5">{{ item.description }}</p>
-            </div>
-          </article>
-        </NuxtLink>
+          </section>
+        </div>
+        <div
+          v-else
+          class="bg-muted mt-9 rounded-lg px-6 py-12"
+        >
+          <h2 class="text-base font-medium">No matching {{ kind }}s</h2>
+          <p class="text-foreground-muted mt-2 text-sm">Try another search or category.</p>
+          <UiButton
+            variant="outline"
+            label="Clear filters"
+            class="mt-4"
+            @click="clearFilters"
+          />
+        </div>
       </div>
-    </template>
-
-    <UEmpty
-      v-if="!filteredItems.length"
-      icon="i-tabler-search-off"
-      title="No matching items"
-      description="Try another term or show every category."
-      class="border-muted bg-elevated mt-8 rounded-lg border py-16"
-    >
-      <template #actions>
-        <UButton
-          label="Clear filters"
-          color="neutral"
-          variant="outline"
-          @click="clearFilters"
-        />
-      </template>
-    </UEmpty>
-  </UContainer>
+    </div>
+  </div>
 </template>

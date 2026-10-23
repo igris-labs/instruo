@@ -435,9 +435,9 @@ onBeforeUnmount(() => pauseTimer());
     <div class="mx-auto grid max-w-7xl gap-4">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3">
-          <UBadge
+          <UiBadge
             label="Daily grid 01"
-            color="neutral"
+            tone="neutral"
             variant="subtle"
           />
           <span class="text-sm text-zinc-600 dark:text-zinc-400"
@@ -455,33 +455,24 @@ onBeforeUnmount(() => pauseTimer());
             />{{ timeLabel }}</span
           >
           <span>{{ progressLabel }}</span>
-          <UButton
+          <UiButton
             class="lg:hidden"
             label="Clues"
             icon="i-tabler-list"
             color="neutral"
             variant="outline"
-            size="sm"
             @click="showMobileClues = !showMobileClues"
           />
         </div>
       </div>
 
-      <UCard
-        :ui="{
-          root: 'overflow-hidden border border-black/20 bg-white text-black dark:border-white/20 dark:bg-black dark:text-white',
-          header:
-            'border-b border-black/10 bg-white px-4 py-3 sm:px-5 dark:border-white/15 dark:bg-black',
-          body: 'p-0',
-        }"
-      >
-        <template #header>
+      <section class="border-outline bg-elevated overflow-hidden rounded-lg border">
+        <header class="border-outline border-b px-4 py-3">
           <div class="flex items-center justify-between gap-3">
-            <UButton
+            <UiButton
               icon="i-tabler-chevron-left"
               color="neutral"
               variant="ghost"
-              size="sm"
               aria-label="Previous clue"
               @click="nextEntry(-1)"
             />
@@ -490,16 +481,15 @@ onBeforeUnmount(() => pauseTimer());
                 >{{ activeEntry?.number }} {{ activeEntry?.direction }}</strong
               ><span class="text-zinc-600 dark:text-zinc-400"> · {{ activeClue }}</span>
             </p>
-            <UButton
+            <UiButton
               icon="i-tabler-chevron-right"
               color="neutral"
               variant="ghost"
-              size="sm"
               aria-label="Next clue"
               @click="nextEntry(1)"
             />
           </div>
-        </template>
+        </header>
 
         <div class="grid lg:grid-cols-[minmax(0,1fr)_22rem]">
           <section
@@ -561,38 +551,34 @@ onBeforeUnmount(() => pauseTimer());
                 {{ feedback }}
               </p>
               <div class="flex flex-wrap gap-2">
-                <UButton
+                <UiButton
                   label="Check"
                   icon="i-tabler-check"
                   color="neutral"
                   variant="solid"
-                  size="sm"
                   :disabled="completed"
                   @click="checkPuzzle"
                 />
-                <UButton
+                <UiButton
                   label="Reveal letter"
                   icon="i-tabler-bulb"
                   color="neutral"
                   variant="outline"
-                  size="sm"
                   :disabled="completed"
                   @click="revealLetter"
                 />
-                <UButton
+                <UiButton
                   label="Reveal word"
                   color="neutral"
                   variant="outline"
-                  size="sm"
                   :disabled="completed"
                   @click="revealWord"
                 />
-                <UButton
+                <UiButton
                   label="Reset"
                   icon="i-tabler-refresh"
                   color="neutral"
                   variant="ghost"
-                  size="sm"
                   @click="reset"
                 />
               </div>
@@ -607,42 +593,38 @@ onBeforeUnmount(() => pauseTimer());
                 :key="row"
                 class="flex justify-center gap-1"
               >
-                <UButton
+                <UiButton
                   v-for="letter in row"
                   :key="letter"
                   :label="letter"
                   color="neutral"
                   variant="soft"
-                  size="sm"
                   class="min-w-7 px-1.5 font-mono"
                   :disabled="completed"
                   @click="placeLetter(letter)"
                 />
               </div>
               <div class="flex justify-center gap-1">
-                <UButton
+                <UiButton
                   label="Delete"
                   icon="i-tabler-backspace"
                   color="neutral"
                   variant="soft"
-                  size="sm"
                   :disabled="completed"
                   @click="clearLetter"
-                /><UButton
+                /><UiButton
                   label="Switch direction"
                   icon="i-tabler-arrows-left-right"
                   color="neutral"
                   variant="soft"
-                  size="sm"
                   :disabled="completed"
                   @click="direction = direction === 'across' ? 'down' : 'across'"
                 />
               </div>
             </div>
-            <UAlert
+            <UiNotice
               v-if="completed"
-              color="neutral"
-              variant="subtle"
+              tone="neutral"
               icon="i-tabler-confetti"
               title="Puzzle complete"
               :description="feedback"
@@ -658,9 +640,9 @@ onBeforeUnmount(() => pauseTimer());
                 <h2 class="text-base font-semibold text-black dark:text-white">Clues</h2>
                 <p class="mt-1 text-xs text-zinc-600 dark:text-zinc-400">{{ clueStatusLabel }}</p>
               </div>
-              <UBadge
+              <UiBadge
                 :label="progressLabel"
-                color="neutral"
+                tone="neutral"
                 variant="subtle"
               />
             </div>
@@ -752,23 +734,19 @@ onBeforeUnmount(() => pauseTimer());
             </div>
           </aside>
 
-          <USlideover
-            v-model:open="showMobileClues"
+          <UiDrawer
+            v-model="showMobileClues"
             side="right"
             title="Clues"
             description="Browse Across and Down clues."
-            :ui="{
-              content: 'w-[min(92vw,24rem)] bg-white text-black dark:bg-black dark:text-white',
-              body: 'p-0',
-            }"
           >
             <template #body>
               <div class="grid gap-4 p-4 sm:p-5">
                 <div class="flex items-center justify-between gap-3">
                   <p class="text-xs text-zinc-600 dark:text-zinc-400">{{ clueStatusLabel }}</p>
-                  <UBadge
+                  <UiBadge
                     :label="progressLabel"
-                    color="neutral"
+                    tone="neutral"
                     variant="subtle"
                   />
                 </div>
@@ -860,9 +838,9 @@ onBeforeUnmount(() => pauseTimer());
                 </div>
               </div>
             </template>
-          </USlideover>
+          </UiDrawer>
         </div>
-      </UCard>
+      </section>
 
       <div
         class="flex flex-wrap items-center justify-between gap-3 px-1 text-xs text-zinc-600 dark:text-zinc-400"
@@ -871,18 +849,17 @@ onBeforeUnmount(() => pauseTimer());
         <div class="flex items-center gap-3">
           <span
             >Open definitions by
-            <ULink
+            <NuxtLink
               class="text-black underline dark:text-white"
               to="https://wordsohard.com/api"
               target="_blank"
               rel="noopener"
-              >WordSoHard</ULink
+              >WordSoHard</NuxtLink
             ></span
-          ><UButton
+          ><UiButton
             label="Reveal puzzle"
             color="neutral"
             variant="ghost"
-            size="xs"
             :disabled="completed"
             @click="revealPuzzle"
           />

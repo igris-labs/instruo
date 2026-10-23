@@ -32,12 +32,12 @@ async function generate() {
   <ToolWorkbench description="Generate an RSA-OAEP 2048-bit public and private key pair locally.">
     <div class="grid gap-5">
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Generate key pair"
           icon="i-tabler-key"
           :loading="loading"
           @click="generate"
-        /><UButton
+        /><UiButton
           color="neutral"
           variant="soft"
           label="Copy keys"
@@ -45,15 +45,19 @@ async function generate() {
           @click="copyBrowserText(output)"
         />
       </div>
-      <UFormField label="Generated PEM key pair">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Generated PEM key pair"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="output"
           :rows="20"
           readonly
           class="font-mono text-xs"
           placeholder="PEM keys appear here."
         />
-      </UFormField>
+      </UiField>
     </div>
   </ToolWorkbench>
 </template>

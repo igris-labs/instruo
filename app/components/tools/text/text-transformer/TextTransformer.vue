@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { RadioGroupItem } from "@nuxt/ui";
+interface RadioGroupItem {
+  label: string;
+  value: string;
+  description?: string;
+}
 
 type TransformerMode = "case" | "dedupe" | "reverse" | "slug" | "sort" | "whitespace";
 
@@ -108,28 +112,35 @@ function sortLines(value: string, selectedOperation: string) {
 <template>
   <ToolWorkbench :description="`${labels[mode]} updates as you type.`">
     <div class="grid gap-6">
-      <URadioGroup
+      <UiRadioGroup
         v-if="options.length"
         v-model="operation"
-        :items="options"
+        :options="options"
         orientation="horizontal"
         aria-label="Transformation"
       />
 
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label="Input">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Input"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             placeholder="Type or paste text…"
             autoresize
             :rows="12"
             :maxrows="18"
             class="w-full"
-            :ui="{ base: 'font-mono text-sm leading-6' }"
           />
-        </UFormField>
-        <UFormField label="Output">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Output"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             readonly
             placeholder="Output appears here."
@@ -137,13 +148,12 @@ function sortLines(value: string, selectedOperation: string) {
             :rows="12"
             :maxrows="18"
             class="w-full"
-            :ui="{ base: 'font-mono text-sm leading-6' }"
           />
-        </UFormField>
+        </UiField>
       </div>
 
       <div class="flex flex-wrap justify-end gap-2">
-        <UButton
+        <UiButton
           color="neutral"
           variant="ghost"
           label="Clear"
@@ -151,7 +161,7 @@ function sortLines(value: string, selectedOperation: string) {
           :disabled="!input"
           @click="input = ''"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy output"

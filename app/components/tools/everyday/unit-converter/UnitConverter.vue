@@ -84,11 +84,11 @@ const result = computed(() =>
       <div class="grid items-end gap-5 sm:grid-cols-[minmax(0,1.6fr)_auto_minmax(12rem,1fr)]">
         <div class="grid gap-5">
           <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.85fr)]">
-            <UFormField
+            <UiField
               label="Category"
               class="w-full"
             >
-              <USelect
+              <UiSelect
                 v-model="category"
                 :items="[
                   { label: 'Length', value: 'length' },
@@ -96,10 +96,8 @@ const result = computed(() =>
                   { label: 'Temperature', value: 'temperature' },
                 ]"
                 class="w-full"
-                value-key="value"
-                label-key="label"
               />
-            </UFormField>
+            </UiField>
             <div
               class="hidden sm:block"
               aria-hidden="true"
@@ -107,27 +105,26 @@ const result = computed(() =>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(10rem,0.85fr)]">
-            <UFormField label="Amount">
-              <UInput
-                v-model.number="amount"
-                type="number"
-                min="0"
-                inputmode="decimal"
+            <UiField label="Amount">
+              <UiNumberField
+                v-model="amount"
+                :step-snapping="false"
+                :min="0"
                 class="w-full"
               />
-            </UFormField>
-            <UFormField label="From">
-              <USelect
+            </UiField>
+            <UiField label="From">
+              <UiSelect
                 v-model="fromSelection"
                 :items="units"
                 class="w-full"
               />
-            </UFormField>
+            </UiField>
           </div>
         </div>
 
         <div
-          class="text-muted hidden items-center justify-center pb-2 sm:flex"
+          class="text-foreground-muted hidden items-center justify-center pb-2 sm:flex"
           aria-hidden="true"
         >
           <Icon
@@ -136,25 +133,27 @@ const result = computed(() =>
           />
         </div>
 
-        <UFormField label="To">
-          <USelect
+        <UiField label="To">
+          <UiSelect
             v-model="toSelection"
             :items="units"
             class="w-full"
           />
-        </UFormField>
+        </UiField>
       </div>
 
       <div
-        class="border-muted bg-muted/35 rounded-md border px-4 py-4 sm:flex sm:items-center sm:justify-between sm:gap-6"
+        class="border-outline bg-muted/35 rounded-md border px-4 py-4 sm:flex sm:items-center sm:justify-between sm:gap-6"
       >
         <div>
-          <p class="text-muted text-sm font-medium">Result</p>
-          <p class="text-highlighted mt-1 font-mono text-xl font-semibold tracking-tight">
+          <p class="text-foreground-muted text-sm font-medium">Result</p>
+          <p
+            class="text-foreground-highlighted mt-1 font-mono text-xl font-semibold tracking-tight"
+          >
             {{ result }} {{ targetUnit }}
           </p>
         </div>
-        <p class="text-dimmed mt-2 text-sm sm:mt-0">
+        <p class="text-foreground-dimmed mt-2 text-sm sm:mt-0">
           {{ amount || 0 }} {{ sourceUnit }} converted locally
         </p>
       </div>

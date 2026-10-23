@@ -37,27 +37,31 @@ const { copyText } = useCopyToClipboard();
   >
     <div class="grid gap-6 lg:grid-cols-2">
       <div class="grid gap-4">
-        <UFormField
+        <UiField
           v-for="key in directiveKeys"
           :key="key"
           :label="key"
         >
-          <UInput
+          <UiInput
             v-model="directives[key]"
             class="w-full font-mono"
             :placeholder="placeholderFor(key)"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="grid content-start gap-3">
-        <UFormField label="HTTP header value">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="HTTP header value"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="header"
             :rows="14"
             readonly
             class="w-full font-mono"
-          /> </UFormField
-        ><UButton
+          /> </UiField
+        ><UiButton
           color="neutral"
           variant="soft"
           label="Copy policy"
@@ -65,7 +69,7 @@ const { copyText } = useCopyToClipboard();
           class="w-fit"
           @click="copyText(header)"
         />
-        <p class="text-muted text-xs">
+        <p class="text-foreground-muted text-xs">
           Test a policy in report-only mode before enforcing it in production.
         </p>
       </div>

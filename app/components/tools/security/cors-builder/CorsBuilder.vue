@@ -24,44 +24,47 @@ const output = computed(() =>
   >
     <div class="grid gap-5 lg:grid-cols-2">
       <div class="grid gap-4">
-        <UFormField
+        <UiField
           label="Allowed origin"
-          help="Avoid * when credentials are enabled."
-          ><UInput
+          description="Avoid * when credentials are enabled."
+          ><UiInput
             v-model="origin"
             class="w-full font-mono"
-        /></UFormField>
-        <UFormField label="Allowed methods"
-          ><UInput
+        /></UiField>
+        <UiField label="Allowed methods"
+          ><UiInput
             v-model="methods"
             class="w-full font-mono"
-        /></UFormField>
-        <UFormField label="Allowed headers"
-          ><UInput
+        /></UiField>
+        <UiField label="Allowed headers"
+          ><UiInput
             v-model="headers"
             class="w-full font-mono"
-        /></UFormField>
-        <UFormField label="Preflight cache (seconds)"
-          ><UInput
-            v-model.number="maxAge"
-            type="number"
-            min="0"
+        /></UiField>
+        <UiField label="Preflight cache (seconds)"
+          ><UiNumberField
+            v-model="maxAge"
+            :step-snapping="false"
+            :min="0"
             class="w-full"
-        /></UFormField>
-        <UCheckbox
+        /></UiField>
+        <UiCheckbox
           v-model="credentials"
           label="Allow credentials"
         />
       </div>
       <div class="grid content-start gap-3">
-        <UFormField label="Response headers"
-          ><UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Response headers"
+          ><UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             :rows="12"
             readonly
             class="w-full font-mono"
-        /></UFormField>
-        <UButton
+        /></UiField>
+        <UiButton
           label="Copy headers"
           icon="i-tabler-copy"
           color="neutral"
@@ -69,7 +72,7 @@ const output = computed(() =>
           class="w-fit"
           @click="copyText(output)"
         />
-        <p class="text-muted text-xs">
+        <p class="text-foreground-muted text-xs">
           CORS is enforced by browsers; configure headers on your server or edge runtime.
         </p>
       </div>

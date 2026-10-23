@@ -31,27 +31,26 @@ const result = computed(() => {
 <template>
   <ToolWorkbench description="Convert a six-digit hex color to RGB and HSL values locally.">
     <div class="mx-auto grid max-w-xl gap-6">
-      <UFormField
+      <UiField
         label="Hex color"
         :error="result.error || undefined"
       >
-        <UInput
+        <UiInput
           v-model="input"
-          size="xl"
           class="w-full font-mono"
           placeholder="#f97316"
         />
-      </UFormField>
+      </UiField>
       <dl
-        class="border-default/70 grid overflow-hidden rounded-lg border-t border-l sm:grid-cols-2"
+        class="border-outline/70 grid overflow-hidden rounded-lg border-t border-l sm:grid-cols-2"
       >
-        <div class="border-default/70 grid gap-2 border-r border-b p-5">
-          <dt class="text-muted text-xs uppercase">RGB</dt>
-          <dd class="text-highlighted font-mono">{{ result.rgb || "—" }}</dd>
+        <div class="border-outline/70 grid gap-2 border-r border-b p-5">
+          <dt class="text-foreground-muted text-xs uppercase">RGB</dt>
+          <dd class="text-foreground-highlighted font-mono">{{ result.rgb || "—" }}</dd>
         </div>
-        <div class="border-default/70 grid gap-2 border-r border-b p-5">
-          <dt class="text-muted text-xs uppercase">HSL</dt>
-          <dd class="text-highlighted font-mono">{{ result.hsl || "—" }}</dd>
+        <div class="border-outline/70 grid gap-2 border-r border-b p-5">
+          <dt class="text-foreground-muted text-xs uppercase">HSL</dt>
+          <dd class="text-foreground-highlighted font-mono">{{ result.hsl || "—" }}</dd>
         </div>
       </dl>
     </div>

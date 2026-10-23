@@ -138,16 +138,15 @@ onBeforeUnmount(() => {
         class="target-sum-state"
       >
         <div class="target-sum-state-copy">
-          <UIcon
+          <UiIcon
             name="i-tabler-target-arrow"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="target-sum-eyebrow">The number carnival</p>
           <h2>Setting the target</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -159,20 +158,19 @@ onBeforeUnmount(() => {
         class="target-sum-state target-sum-state--ready"
       >
         <div class="target-sum-ready-copy">
-          <UBadge
+          <UiBadge
             label="6 tiles · 3 attempts"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
           <p class="target-sum-eyebrow">Aim · add · hit the mark</p>
           <h2>Find the pair.<br />Hit the target.</h2>
           <p>Choose two tiles whose values add up exactly. Swap a tile anytime before you check.</p>
-          <UButton
+          <UiButton
             label="Start game"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="startGame"
           />
         </div>
@@ -268,7 +266,7 @@ onBeforeUnmount(() => {
                 @click="choose(index)"
               >
                 <span>{{ number }}</span>
-                <UIcon
+                <UiIcon
                   v-if="selected.includes(index)"
                   name="i-tabler-check"
                   aria-hidden="true"
@@ -278,12 +276,11 @@ onBeforeUnmount(() => {
 
             <div class="target-sum-footer">
               <p>{{ attemptsLeft }} attempt{{ attemptsLeft === 1 ? "" : "s" }} left</p>
-              <UButton
+              <UiButton
                 label="New target"
                 icon="i-tabler-refresh"
                 color="neutral"
                 variant="ghost"
-                size="sm"
                 @click="startGame"
               />
             </div>
@@ -293,7 +290,7 @@ onBeforeUnmount(() => {
             v-if="isComplete"
             class="target-sum-result"
           >
-            <UIcon
+            <UiIcon
               :name="resultIcon"
               :class="feedbackTone === 'success' ? 'text-success' : 'text-error'"
               class="size-9"
@@ -302,10 +299,10 @@ onBeforeUnmount(() => {
             <p class="target-sum-eyebrow">Round complete</p>
             <h2>{{ resultTitle }}</h2>
             <p>{{ resultDescription }}</p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="startGame"
             />
           </div>

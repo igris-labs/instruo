@@ -10,17 +10,17 @@ const { copyText } = useCopyToClipboard();
     description="Format readable HTML or remove unnecessary whitespace before shipping it."
   >
     <div class="grid gap-5">
-      <USelect
+      <UiSelect
         v-model="mode"
         :items="['format', 'minify']"
         class="w-full sm:max-w-xs"
       />
       <div class="grid gap-5 lg:grid-cols-2">
-        <UTextarea
+        <UiTextarea
           v-model="input"
           :rows="16"
           placeholder="Paste HTML…"
-        /><UTextarea
+        /><UiTextarea
           :model-value="output"
           :rows="16"
           readonly
@@ -28,7 +28,7 @@ const { copyText } = useCopyToClipboard();
         />
       </div>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy HTML"

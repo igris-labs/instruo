@@ -41,44 +41,49 @@ async function generate() {
   >
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[12rem_minmax(0,1fr)]">
-        <UFormField label="Hash algorithm"
-          ><USelect
+        <UiField label="Hash algorithm"
+          ><UiSelect
             v-model="algorithm"
             :items="algorithms"
             class="w-full"
-        /></UFormField>
-        <UFormField label="Secret"
-          ><UInput
+        /></UiField>
+        <UiField label="Secret"
+          ><UiInput
             v-model="secret"
             type="password"
             class="w-full font-mono"
             placeholder="Shared secret"
-        /></UFormField>
+        /></UiField>
       </div>
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label="Message"
-          ><UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Message"
+          ><UiTextarea
+            v-bind="controlProps"
             v-model="message"
             :rows="8"
             class="w-full font-mono"
             placeholder="Message to sign"
-        /></UFormField>
-        <UFormField
+        /></UiField>
+        <UiField
+          v-slot="{ controlProps }"
           label="Expected signature"
-          help="Optional. Paste a Base64 signature to verify."
-          ><UTextarea
+          description="Optional. Paste a Base64 signature to verify."
+          ><UiTextarea
+            v-bind="controlProps"
             v-model="expected"
             :rows="8"
             class="w-full font-mono"
             placeholder="Paste expected Base64 signature"
-        /></UFormField>
+        /></UiField>
       </div>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Generate / verify"
           icon="i-tabler-key"
           @click="generate"
-        /><UButton
+        /><UiButton
           label="Copy signature"
           icon="i-tabler-copy"
           color="neutral"
@@ -87,16 +92,16 @@ async function generate() {
           @click="copyText(signature)"
         />
       </div>
-      <UFormField label="Base64 signature"
-        ><UInput
+      <UiField label="Base64 signature"
+        ><UiInput
           v-model="signature"
           readonly
           class="w-full font-mono"
           placeholder="Signature appears here"
-      /></UFormField>
+      /></UiField>
       <p
         v-if="status"
-        class="text-muted text-sm"
+        class="text-foreground-muted text-sm"
         role="status"
       >
         {{ status }}

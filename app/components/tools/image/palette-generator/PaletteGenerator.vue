@@ -12,7 +12,7 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Create a five-step light-to-dark palette from one hex color.">
     <div class="grid gap-5">
-      <UInput
+      <UiInput
         v-model="color"
         placeholder="#3b82f6"
       />
@@ -28,7 +28,7 @@ const { copyText } = useCopyToClipboard();
           <span>{{ tone }}</span>
         </button>
       </div>
-      <UButton
+      <UiButton
         color="neutral"
         variant="soft"
         label="Copy palette"

@@ -13,40 +13,40 @@ const { copyText } = useCopyToClipboard();
   <ToolWorkbench description="Build a five-field cron schedule from familiar fields.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-5">
-        <UFormField label="Minute">
-          <UInput
+        <UiField label="Minute">
+          <UiInput
             v-model="minute"
             placeholder="*"
-          /> </UFormField
-        ><UFormField label="Hour">
-          <UInput
+          /> </UiField
+        ><UiField label="Hour">
+          <UiInput
             v-model="hour"
             placeholder="*"
-          /> </UFormField
-        ><UFormField label="Day">
-          <UInput
+          /> </UiField
+        ><UiField label="Day">
+          <UiInput
             v-model="day"
             placeholder="*"
-          /> </UFormField
-        ><UFormField label="Month">
-          <UInput
+          /> </UiField
+        ><UiField label="Month">
+          <UiInput
             v-model="month"
             placeholder="*"
-          /> </UFormField
-        ><UFormField label="Weekday">
-          <UInput
+          /> </UiField
+        ><UiField label="Weekday">
+          <UiInput
             v-model="weekday"
             placeholder="*"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UInput
+      <UiInput
         :model-value="expression"
         readonly
         class="font-mono"
       />
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy cron"

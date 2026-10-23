@@ -16,62 +16,59 @@ async function process() {
 <template>
   <ToolWorkbench description="Compress JPEG, PNG, or WebP images locally with Canvas.">
     <div class="grid gap-5">
-      <UFileUpload
+      <UiFileInput
         :model-value="file"
         accept="image/*"
         label="Choose an image"
         description="Drop a JPEG, PNG, or WebP here, or browse this device. Up to 25 MB."
         @update:model-value="select"
       />
-      <UAlert
+      <UiNotice
         v-if="error"
-        color="error"
-        variant="subtle"
+        tone="error"
         icon="i-tabler-alert-circle"
         title="Image not loaded"
         :description="error"
       />
       <div
         v-if="file"
-        class="text-muted grid gap-3 text-sm"
+        class="text-foreground-muted grid gap-3 text-sm"
       >
         <span>{{ file.name }} · {{ width }} × {{ height }} px</span
         ><img
           :src="sourceUrl"
           alt="Selected source"
-          class="border-default max-h-64 w-fit rounded-md border object-contain"
+          class="border-outline max-h-64 w-fit rounded-md border object-contain"
         />
       </div>
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Output format">
-          <USelect
+        <UiField label="Output format">
+          <UiSelect
             v-model="format"
             :items="[
               { label: 'WebP', value: 'image/webp' },
               { label: 'JPEG', value: 'image/jpeg' },
               { label: 'PNG', value: 'image/png' },
             ]"
-            value-key="value"
-            label-key="label"
-          /> </UFormField
-        ><UFormField label="Quality">
-          <UInput
-            v-model.number="quality"
-            type="number"
-            min="0.1"
-            max="1"
-            step="0.05"
+          /> </UiField
+        ><UiField label="Quality">
+          <UiNumberField
+            v-model="quality"
+            :step-snapping="false"
+            :min="0.1"
+            :max="1"
+            :step="0.05"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Compress image"
           icon="i-tabler-photo-down"
           :loading="processing"
           :disabled="!file"
           @click="process"
-        /><UButton
+        /><UiButton
           color="neutral"
           variant="soft"
           label="Download"
@@ -83,7 +80,7 @@ async function process() {
         v-if="outputUrl"
         :src="outputUrl"
         alt="Compressed result"
-        class="border-default max-h-64 w-fit rounded-md border object-contain"
+        class="border-outline max-h-64 w-fit rounded-md border object-contain"
       />
     </div>
   </ToolWorkbench>

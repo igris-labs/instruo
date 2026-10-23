@@ -273,11 +273,10 @@ const status = computed(() => {
     ? "Correct. Keep the streak alive."
     : `Not quite. ${currentQuestion.value?.options[currentQuestion.value.answer]} is right.`;
 });
-const progressLabel = computed(
-  () =>
-    roundQuestions.value.length
-      ? `${Math.min(questionIndex.value + 1, roundQuestions.value.length)}/${roundQuestions.value.length}`
-      : `—/${roundSize}`,
+const progressLabel = computed(() =>
+  roundQuestions.value.length
+    ? `${Math.min(questionIndex.value + 1, roundQuestions.value.length)}/${roundQuestions.value.length}`
+    : `—/${roundSize}`,
 );
 
 function decodeText(value: string) {
@@ -372,10 +371,10 @@ function nextQuestion() {
 
 function optionClass(index: number) {
   if (!isAnswered.value)
-    return "border-default/70 bg-default text-highlighted hover:bg-elevated/60";
+    return "border-outline/70 bg-default text-foreground-highlighted hover:bg-elevated/60";
   if (index === currentQuestion.value?.answer) return "border-success bg-success/15 text-success";
   if (index === selectedAnswer.value) return "border-error bg-error/15 text-error";
-  return "border-default/50 bg-default text-muted";
+  return "border-outline/50 bg-default text-foreground-muted";
 }
 
 if (import.meta.dev && questionBank.some((question) => !question.options[question.answer])) {
@@ -391,7 +390,7 @@ onMounted(loadQuestions);
   >
     <div class="mx-auto grid max-w-2xl gap-6">
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-b pb-4"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-b pb-4"
       >
         <p
           class="flex items-center gap-2 text-sm leading-6"
@@ -402,18 +401,18 @@ onMounted(loadQuestions);
                 ? 'text-success'
                 : isAnswered
                   ? 'text-error'
-                  : 'text-toned'
+                  : 'text-foreground-muted'
           "
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             v-if="(isComplete && score < 8) || (isAnswered && !isCorrect)"
             name="i-tabler-circle-x"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="isComplete || (isAnswered && isCorrect)"
             name="i-tabler-circle-check"
             class="size-4 shrink-0"
@@ -421,7 +420,7 @@ onMounted(loadQuestions);
           />
           {{ status }}
         </p>
-        <div class="text-toned flex items-center gap-3 font-mono text-sm tabular-nums">
+        <div class="text-foreground-muted flex items-center gap-3 font-mono text-sm tabular-nums">
           <span>{{ progressLabel }} · {{ score }} points</span>
           <span
             v-if="streak > 1"
@@ -431,44 +430,41 @@ onMounted(loadQuestions);
         </div>
       </div>
 
-      <UAlert
+      <UiNotice
         v-if="apiState === 'loading'"
-        color="neutral"
-        variant="subtle"
+        tone="neutral"
         icon="i-tabler-cloud-download"
         title="Fetching fresh questions"
         description="Open Trivia DB is loading a larger question pool for this round."
       />
 
-      <UAlert
+      <UiNotice
         v-else-if="apiState === 'fallback'"
-        color="warning"
-        variant="subtle"
+        tone="warning"
         icon="i-tabler-wifi-off"
         title="Offline question bank"
         :description="`${apiError} Showing local questions so you can keep playing.`"
       >
         <template #actions>
-          <UButton
+          <UiButton
             label="Try again"
             color="warning"
             variant="outline"
-            size="sm"
             icon="i-tabler-refresh"
             @click="loadQuestions"
           />
         </template>
-      </UAlert>
+      </UiNotice>
 
       <template v-if="!isComplete && currentQuestion">
         <div
-          class="border-default/70 bg-muted/20 grid min-h-44 content-center gap-4 border p-6 sm:min-h-52 sm:p-8"
+          class="border-outline/70 bg-muted/20 grid min-h-44 content-center gap-4 border p-6 sm:min-h-52 sm:p-8"
         >
-          <span class="text-muted text-xs font-semibold tracking-[0.14em] uppercase">{{
+          <span class="text-foreground-muted text-xs font-semibold tracking-[0.14em] uppercase">{{
             currentQuestion.topic
           }}</span>
           <h2
-            class="text-highlighted text-2xl leading-tight font-semibold text-balance sm:text-3xl"
+            class="text-foreground-highlighted text-2xl leading-tight font-semibold text-balance sm:text-3xl"
           >
             {{ currentQuestion.prompt }}
           </h2>
@@ -484,28 +480,32 @@ onMounted(loadQuestions);
             :disabled="isAnswered"
             @click="selectAnswer(index)"
           >
-            <span class="text-muted mr-3 font-mono">{{ String.fromCharCode(65 + index) }}</span
+            <span class="text-foreground-muted mr-3 font-mono">{{
+              String.fromCharCode(65 + index)
+            }}</span
             >{{ option }}
           </button>
         </div>
 
         <div
           v-if="isAnswered"
-          class="border-default/60 bg-muted/15 border-l-primary/50 grid gap-1 border-l-2 px-4 py-3"
+          class="border-outline/60 bg-muted/15 border-l-primary/50 grid gap-1 border-l-2 px-4 py-3"
         >
-          <span class="text-muted text-xs font-semibold tracking-[0.12em] uppercase">Why</span>
-          <p class="text-toned text-sm leading-6">{{ currentQuestion.explanation }}</p>
+          <span class="text-foreground-muted text-xs font-semibold tracking-[0.12em] uppercase"
+            >Why</span
+          >
+          <p class="text-foreground-muted text-sm leading-6">{{ currentQuestion.explanation }}</p>
         </div>
       </template>
 
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
       >
-          <p class="text-muted text-sm leading-6">
+        <p class="text-foreground-muted text-sm leading-6">
           Best round: {{ bestScore }}/{{ roundSize }}. Questions load locally into this tab.
         </p>
         <div class="flex flex-wrap gap-2">
-          <UButton
+          <UiButton
             label="New round"
             icon="i-tabler-dice-5"
             color="neutral"
@@ -513,7 +513,7 @@ onMounted(loadQuestions);
             :disabled="apiState === 'loading'"
             @click="newRound"
           />
-          <UButton
+          <UiButton
             :label="isComplete ? 'Play another' : 'Next question'"
             color="neutral"
             variant="outline"
@@ -524,16 +524,16 @@ onMounted(loadQuestions);
         </div>
       </div>
 
-      <p class="text-muted flex flex-wrap items-center justify-between gap-2 text-xs">
+      <p class="text-foreground-muted flex flex-wrap items-center justify-between gap-2 text-xs">
         <span>Fresh questions from Open Trivia DB. Answers stay in this browser.</span>
-        <ULink
+        <NuxtLink
           to="https://opentdb.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-toned underline-offset-4 hover:underline"
+          class="text-foreground-muted underline-offset-4 hover:underline"
         >
           Open Trivia DB · CC BY-SA 4.0
-        </ULink>
+        </NuxtLink>
       </p>
     </div>
   </ToolWorkbench>

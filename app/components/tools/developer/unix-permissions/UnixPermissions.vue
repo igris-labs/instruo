@@ -17,25 +17,24 @@ const result = computed(() => {
     description="Translate common three-digit Unix permissions into symbolic notation."
   >
     <div class="mx-auto grid max-w-xl gap-6">
-      <UFormField
+      <UiField
         label="Octal mode"
         description="Examples: 644, 755, 700."
         :error="result.error || undefined"
       >
-        <UInput
+        <UiInput
           v-model="input"
           inputmode="numeric"
           maxlength="3"
-          size="xl"
           class="w-full font-mono"
         />
-      </UFormField>
-      <div class="border-default/70 grid gap-3 rounded-lg border p-5">
-        <span class="text-muted text-xs uppercase">Symbolic mode</span
-        ><strong class="text-highlighted font-mono text-3xl">{{
+      </UiField>
+      <div class="border-outline/70 grid gap-3 rounded-lg border p-5">
+        <span class="text-foreground-muted text-xs uppercase">Symbolic mode</span
+        ><strong class="text-foreground-highlighted font-mono text-3xl">{{
           result.symbolic || "---------"
         }}</strong
-        ><code class="text-toned text-sm">{{ result.command || "chmod 755 file" }}</code>
+        ><code class="text-foreground-muted text-sm">{{ result.command || "chmod 755 file" }}</code>
       </div>
     </div>
   </ToolWorkbench>

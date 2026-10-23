@@ -45,7 +45,7 @@ function reset() {
 
 function keyClass(letter: string) {
   if (!guessedSet.value.has(letter))
-    return "border-default/70 bg-default text-highlighted hover:bg-elevated/60";
+    return "border-outline/70 bg-default text-foreground-highlighted hover:bg-elevated/60";
   return answer.value.includes(letter)
     ? "border-success bg-success/15 text-success"
     : "border-error bg-error/15 text-error";
@@ -70,20 +70,20 @@ onMounted(reset);
     description="Reveal a hidden word before six incorrect letters complete the drawing."
   >
     <div class="mx-auto grid max-w-2xl gap-6">
-      <div class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <div class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <p
           class="flex items-center gap-2 text-sm leading-6"
-          :class="isLost ? 'text-error' : isWon ? 'text-success' : 'text-toned'"
+          :class="isLost ? 'text-error' : isWon ? 'text-success' : 'text-foreground-muted'"
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             v-if="isLost"
             name="i-tabler-circle-x"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="isWon"
             name="i-tabler-circle-check"
             class="size-4 shrink-0"
@@ -91,18 +91,18 @@ onMounted(reset);
           />
           {{ status }}
         </p>
-        <span class="text-toned shrink-0 font-mono text-sm"
+        <span class="text-foreground-muted shrink-0 font-mono text-sm"
           >{{ wrongLetters.length }}/{{ maxMistakes }}</span
         >
       </div>
 
       <div class="grid gap-6 sm:grid-cols-[11rem_minmax(0,1fr)] sm:items-center">
         <div
-          class="border-default/70 bg-muted/20 flex aspect-square items-center justify-center border"
+          class="border-outline/70 bg-muted/20 flex aspect-square items-center justify-center border"
         >
           <svg
             viewBox="0 0 160 180"
-            class="text-muted h-full w-full p-5"
+            class="text-foreground-muted h-full w-full p-5"
             fill="none"
             stroke="currentColor"
             stroke-linecap="square"
@@ -154,15 +154,19 @@ onMounted(reset);
             <span
               v-for="(letter, index) in answer"
               :key="`${letter}-${index}`"
-              class="border-default/70 bg-muted/20 flex size-11 items-center justify-center border-b-2 font-mono text-xl font-semibold sm:size-12"
-              :class="guessedSet.has(letter) || isLost ? 'text-highlighted' : 'text-transparent'"
+              class="border-outline/70 bg-muted/20 flex size-11 items-center justify-center border-b-2 font-mono text-xl font-semibold sm:size-12"
+              :class="
+                guessedSet.has(letter) || isLost
+                  ? 'text-foreground-highlighted'
+                  : 'text-transparent'
+              "
             >
               {{ guessedSet.has(letter) || isLost ? letter : "_" }}
             </span>
           </div>
 
-          <p class="text-muted text-sm leading-6">
-            <strong class="text-highlighted">Misses:</strong>
+          <p class="text-foreground-muted text-sm leading-6">
+            <strong class="text-foreground-highlighted">Misses:</strong>
             {{ wrongLetters.length ? wrongLetters.join(", ") : "None" }}
           </p>
         </div>
@@ -190,10 +194,12 @@ onMounted(reset);
       </div>
 
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
       >
-        <p class="text-muted text-sm leading-6">Use keyboard or select letters on screen.</p>
-        <UButton
+        <p class="text-foreground-muted text-sm leading-6">
+          Use keyboard or select letters on screen.
+        </p>
+        <UiButton
           label="New word"
           color="neutral"
           variant="outline"

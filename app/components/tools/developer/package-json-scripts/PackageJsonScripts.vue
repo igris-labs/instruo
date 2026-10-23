@@ -34,16 +34,16 @@ function remove(index: number) {
     description="Build a clean package.json scripts block without hand-editing repeated JSON syntax."
   >
     <div class="grid gap-5">
-      <UFormField label="Package name">
-        <UInput
+      <UiField label="Package name">
+        <UiInput
           v-model="packageName"
           class="max-w-xl"
           placeholder="my-app"
         />
-      </UFormField>
+      </UiField>
       <div class="grid gap-3">
         <div
-          class="text-muted grid grid-cols-[minmax(8rem,0.35fr)_minmax(0,1fr)_2.5rem] gap-3 text-xs font-medium"
+          class="text-foreground-muted grid grid-cols-[minmax(8rem,0.35fr)_minmax(0,1fr)_2.5rem] gap-3 text-xs font-medium"
         >
           <span>Script</span><span>Command</span><span class="sr-only">Remove</span>
         </div>
@@ -52,16 +52,16 @@ function remove(index: number) {
           :key="index"
           class="grid grid-cols-[minmax(8rem,0.35fr)_minmax(0,1fr)_2.5rem] items-center gap-3"
         >
-          <UInput
+          <UiInput
             v-model="script.name"
             placeholder="test"
           />
-          <UInput
+          <UiInput
             v-model="script.command"
             class="font-mono"
             placeholder="vitest run"
           />
-          <UButton
+          <UiButton
             icon="i-tabler-trash"
             color="error"
             variant="ghost"
@@ -69,7 +69,7 @@ function remove(index: number) {
             @click="remove(index)"
           />
         </div>
-        <UButton
+        <UiButton
           label="Add script"
           icon="i-tabler-plus"
           color="neutral"
@@ -79,17 +79,25 @@ function remove(index: number) {
         />
       </div>
       <div class="grid gap-3 lg:grid-cols-2">
-        <UFormField label="package.json preview">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="package.json preview"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             :rows="12"
             readonly
             class="w-full font-mono"
           />
-        </UFormField>
+        </UiField>
         <div class="grid content-start gap-3">
-          <UFormField label="Run commands">
-            <UTextarea
+          <UiField
+            v-slot="{ controlProps }"
+            label="Run commands"
+          >
+            <UiTextarea
+              v-bind="controlProps"
               :model-value="
                 scripts
                   .filter((row) => row.name)
@@ -100,8 +108,8 @@ function remove(index: number) {
               readonly
               class="w-full font-mono"
             />
-          </UFormField>
-          <UButton
+          </UiField>
+          <UiButton
             label="Copy JSON"
             icon="i-tabler-copy"
             color="neutral"

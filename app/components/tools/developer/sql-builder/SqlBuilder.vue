@@ -14,33 +14,33 @@ const { copyText } = useCopyToClipboard();
   <ToolWorkbench description="Compose a readable SELECT query with filters, ordering, and a limit.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Table"><UInput v-model="table" /></UFormField
-        ><UFormField label="Columns"><UInput v-model="columns" /></UFormField
-        ><UFormField label="Where">
-          <UInput
+        <UiField label="Table"><UiInput v-model="table" /></UiField
+        ><UiField label="Columns"><UiInput v-model="columns" /></UiField
+        ><UiField label="Where">
+          <UiInput
             v-model="where"
             placeholder="active = true"
-          /> </UFormField
-        ><UFormField label="Order by">
-          <UInput
+          /> </UiField
+        ><UiField label="Order by">
+          <UiInput
             v-model="order"
             placeholder="created_at DESC"
-          /> </UFormField
-        ><UFormField label="Limit">
-          <UInput
+          /> </UiField
+        ><UiField label="Limit">
+          <UiNumberField
             v-model="limit"
-            type="number"
+            :step-snapping="false"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UTextarea
+      <UiTextarea
         :model-value="query"
         :rows="7"
         readonly
         class="font-mono"
       />
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy SQL"

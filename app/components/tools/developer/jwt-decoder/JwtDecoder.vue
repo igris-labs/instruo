@@ -30,37 +30,47 @@ function prettyDecode(value: string) {
     description="Decode JWT header and payload locally. This does not verify signatures."
   >
     <div class="grid gap-6">
-      <UFormField
+      <UiField
+        v-slot="{ controlProps }"
         label="JWT"
         description="Never paste a production token into a shared or untrusted device."
         :error="result.error || undefined"
       >
-        <UTextarea
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="6"
           class="w-full font-mono"
           placeholder="eyJhbGciOi..."
         />
-      </UFormField>
+      </UiField>
       <div class="grid gap-4 lg:grid-cols-2">
-        <UFormField label="Header">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Header"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="result.header"
             readonly
             :rows="8"
             class="w-full font-mono"
             placeholder="Decoded header appears here."
-          /> </UFormField
-        ><UFormField label="Payload">
-          <UTextarea
+          /> </UiField
+        ><UiField
+          v-slot="{ controlProps }"
+          label="Payload"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="result.payload"
             readonly
             :rows="8"
             class="w-full font-mono"
             placeholder="Decoded payload appears here."
           />
-        </UFormField>
+        </UiField>
       </div>
     </div>
   </ToolWorkbench>

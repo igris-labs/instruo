@@ -31,28 +31,32 @@ async function generate() {
   >
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[12rem_minmax(0,1fr)]">
-        <UFormField label="Algorithm">
-          <USelect
+        <UiField label="Algorithm">
+          <UiSelect
             v-model="algorithm"
             :items="algorithms"
             class="w-full"
           />
-        </UFormField>
-        <UFormField label="Resource content">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Resource content"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="content"
             :rows="8"
             class="w-full font-mono"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex flex-wrap gap-2">
-        <UButton
+        <UiButton
           label="Generate hash"
           icon="i-tabler-hash"
           @click="generate"
         />
-        <UButton
+        <UiButton
           label="Copy integrity"
           icon="i-tabler-copy"
           color="neutral"
@@ -61,17 +65,17 @@ async function generate() {
           @click="copyText(output)"
         />
       </div>
-      <UFormField label="integrity value">
-        <UInput
+      <UiField label="integrity value">
+        <UiInput
           v-model="output"
           readonly
           class="w-full font-mono"
           placeholder="sha384-…"
         />
-      </UFormField>
+      </UiField>
       <p
         v-if="status"
-        class="text-muted text-sm"
+        class="text-foreground-muted text-sm"
         role="status"
       >
         {{ status }}

@@ -23,28 +23,31 @@ const statistics = computed(() => {
 <template>
   <ToolWorkbench description="Every count updates as you type.">
     <div class="grid gap-6">
-      <UFormField label="Text to count">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Text to count"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           placeholder="Type or paste text…"
           autoresize
           :rows="12"
           :maxrows="20"
           class="w-full"
-          :ui="{ base: 'text-base leading-7' }"
         />
-      </UFormField>
+      </UiField>
 
       <dl
-        class="border-default/70 grid overflow-hidden rounded-lg border-t border-l sm:grid-cols-2 lg:grid-cols-3"
+        class="border-outline/70 grid overflow-hidden rounded-lg border-t border-l sm:grid-cols-2 lg:grid-cols-3"
       >
         <div
           v-for="statistic in statistics"
           :key="statistic.label"
-          class="border-default/70 border-r border-b p-5"
+          class="border-outline/70 border-r border-b p-5"
         >
-          <dt class="text-muted text-sm">{{ statistic.label }}</dt>
-          <dd class="text-highlighted mt-3 font-mono text-3xl tabular-nums">
+          <dt class="text-foreground-muted text-sm">{{ statistic.label }}</dt>
+          <dd class="text-foreground-highlighted mt-3 font-mono text-3xl tabular-nums">
             {{ statistic.value }}
           </dd>
         </div>

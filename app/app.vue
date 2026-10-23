@@ -1,25 +1,11 @@
 <script lang="ts" setup>
+import { createToastManager, provideToastManager } from "akaza-ui";
+
+provideToastManager(createToastManager());
 const colorMode = useColorMode();
 const title = "Instruo | Free browser tools for everyday tasks";
 const description =
   "Use fast, private utilities for text, encoding, data, and quick browser games. No account or installation required.";
-
-const [{ data: tools }, { data: games }] = await Promise.all([
-  useAsyncData("search_tools", () => queryCollectionSearchSections("tools")),
-  useAsyncData("search_games", () => queryCollectionSearchSections("games")),
-]);
-
-const [{ data: toolsNav }, { data: gamesNav }] = await Promise.all([
-  useAsyncData("search_tools_nav", () => queryCollectionNavigation("tools", ["icon"])),
-  useAsyncData("search_games_nav", () => queryCollectionNavigation("games", ["icon"])),
-]);
-
-const files = tools.value && games.value ? [...tools.value, ...games.value] : [];
-
-const nav = toolsNav.value && gamesNav.value ? [...toolsNav.value, ...gamesNav.value] : [];
-
-provide("tools_navigation", toolsNav.value);
-provide("games_navigation", gamesNav.value);
 
 useSeoMeta({
   title,
@@ -39,7 +25,7 @@ useHead({
   meta: [
     {
       name: "theme-color",
-      content: computed(() => (colorMode.value === "dark" ? "#08090a" : "#f4f5f7")),
+      content: computed(() => (colorMode.value === "dark" ? "#0a0a0a" : "#ffffff")),
     },
     { name: "color-scheme", content: "light dark" },
   ],
@@ -47,15 +33,10 @@ useHead({
 </script>
 
 <template>
-  <UApp>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-    <UContentSearch
-      :files="files"
-      :navigation="nav"
-      :color-mode="false"
-      placeholder="Search tools and games…"
-    />
-  </UApp>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+  <AppSearch />
+  <UiToast />
+  <UiOverlayProvider />
 </template>

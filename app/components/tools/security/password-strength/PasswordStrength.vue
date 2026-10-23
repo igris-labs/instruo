@@ -22,29 +22,27 @@ const label = computed(
     description="Check password length and character variety locally; the value is never stored."
   >
     <div class="grid max-w-xl gap-5">
-      <UFormField
+      <UiField
         label="Password"
-        help="This runs locally. It is a heuristic, not a breach database lookup."
+        description="This runs locally. It is a heuristic, not a breach database lookup."
       >
-        <UInput
+        <UiInput
           v-model="password"
           type="password"
-          size="xl"
           placeholder="Type a password to check"
         />
-      </UFormField>
-      <UProgress
+      </UiField>
+      <UiProgress
         :model-value="score"
         :max="5"
-        color="primary"
       />
       <div class="flex items-baseline justify-between">
         <strong class="text-xl">{{ label }}</strong
-        ><span class="text-muted text-sm">{{ password.length }} characters</span>
+        ><span class="text-foreground-muted text-sm">{{ password.length }} characters</span>
       </div>
-      <UAlert
+      <UiNotice
         icon="i-tabler-shield-check"
-        color="info"
+        tone="info"
         title="Tip"
         description="Long, unique passphrases are easier to remember and harder to guess."
       />

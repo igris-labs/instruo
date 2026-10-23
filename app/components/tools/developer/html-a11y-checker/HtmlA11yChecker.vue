@@ -63,21 +63,25 @@ const warnings = computed(
     description="Run a quick, privacy-safe accessibility pass over pasted HTML before deeper testing."
   >
     <div class="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
-      <UFormField label="HTML source">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="HTML source"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="html"
           :rows="20"
           class="w-full font-mono"
         />
-      </UFormField>
+      </UiField>
       <div class="grid content-start gap-4">
         <div class="grid grid-cols-2 gap-3">
           <div class="bg-muted/30 rounded-md p-4">
-            <p class="text-muted text-xs">Errors</p>
+            <p class="text-foreground-muted text-xs">Errors</p>
             <p class="text-error mt-1 text-2xl font-semibold">{{ errors }}</p>
           </div>
           <div class="bg-muted/30 rounded-md p-4">
-            <p class="text-muted text-xs">Warnings</p>
+            <p class="text-foreground-muted text-xs">Warnings</p>
             <p class="text-warning mt-1 text-2xl font-semibold">{{ warnings }}</p>
           </div>
         </div>
@@ -88,10 +92,10 @@ const warnings = computed(
           <li
             v-for="finding in findings"
             :key="finding.title"
-            class="border-muted bg-muted/20 rounded-md border p-4"
+            class="border-outline bg-muted/20 rounded-md border p-4"
           >
             <div class="flex items-start gap-3">
-              <UIcon
+              <UiIcon
                 :name="
                   finding.severity === 'error'
                     ? 'i-tabler-alert-circle'
@@ -111,7 +115,7 @@ const warnings = computed(
               />
               <div>
                 <p class="font-medium">{{ finding.title }}</p>
-                <p class="text-muted mt-1 text-sm">{{ finding.detail }}</p>
+                <p class="text-foreground-muted mt-1 text-sm">{{ finding.detail }}</p>
               </div>
             </div>
           </li>

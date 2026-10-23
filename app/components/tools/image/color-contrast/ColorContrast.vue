@@ -12,17 +12,17 @@ const ratio = computed(() => {
   <ToolWorkbench description="Check foreground and background contrast against WCAG text guidance.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Foreground"><UInput v-model="foreground" /></UFormField
-        ><UFormField label="Background"><UInput v-model="background" /></UFormField>
+        <UiField label="Foreground"><UiInput v-model="foreground" /></UiField
+        ><UiField label="Background"><UiInput v-model="background" /></UiField>
       </div>
       <div
-        class="border-default grid min-h-32 place-items-center rounded-lg border p-5 text-lg"
+        class="border-outline grid min-h-32 place-items-center rounded-lg border p-5 text-lg"
         :style="{ color: foreground, backgroundColor: background }"
       >
         Readable sample text
       </div>
-      <UAlert
-        :color="Number(ratio) >= 4.5 ? 'success' : 'warning'"
+      <UiNotice
+        :tone="Number(ratio) >= 4.5 ? 'success' : 'warning'"
         :title="`${ratio}:1 contrast ratio`"
         :description="
           Number(ratio) >= 7

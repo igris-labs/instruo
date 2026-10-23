@@ -3,7 +3,7 @@ title: Meeting Planner
 description: Compare one reference time across four time zones and spot working-hour overlaps.
 category: Everyday
 tags: [meeting, timezone, world clock, planning]
-icon: i-tabler-world-clock
+icon: i-tabler-world
 processing: local
 capabilityStatus: verified
 ---

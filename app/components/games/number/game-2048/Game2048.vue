@@ -37,17 +37,17 @@ function updateState(nextState: Record<string, unknown>) {
     description="Slide and merge matching tiles until you create 2048. Runs locally in your browser."
   >
     <div class="mx-auto grid max-w-xl gap-5">
-      <div class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <div class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <div>
-          <p class="text-highlighted text-sm font-semibold">2048</p>
-          <p class="text-muted mt-1 font-mono text-xs">Merge Lab · local puzzle run</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">2048</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Merge Lab · local puzzle run</p>
         </div>
-        <div class="text-muted flex gap-4 font-mono text-xs">
+        <div class="text-foreground-muted flex gap-4 font-mono text-xs">
           <span
-            >Score <strong class="text-highlighted">{{ state.score }}</strong></span
+            >Score <strong class="text-foreground-highlighted">{{ state.score }}</strong></span
           >
           <span
-            >Best <strong class="text-highlighted">{{ state.highest }}</strong></span
+            >Best <strong class="text-foreground-highlighted">{{ state.highest }}</strong></span
           >
         </div>
       </div>
@@ -183,7 +183,7 @@ function updateState(nextState: Record<string, unknown>) {
       >
         The game could not load. Reload the page to try again.
       </p>
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         Swipe the board, or use arrow keys and WASD. No account needed.
       </p>
     </div>

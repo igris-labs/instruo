@@ -23,32 +23,37 @@ const output = computed(
   >
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[12rem_minmax(0,1fr)]">
-        <UFormField label="ID prefix"
-          ><UInput
+        <UiField label="ID prefix"
+          ><UiInput
             v-model="prefix"
             class="w-full font-mono"
-        /></UFormField>
-        <UFormField
+        /></UiField>
+        <UiField
+          v-slot="{ controlProps }"
           label="SVG files"
-          help="Paste complete SVG elements one after another."
-          ><UTextarea
+          description="Paste complete SVG elements one after another."
+          ><UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :rows="10"
             class="w-full font-mono"
-        /></UFormField>
+        /></UiField>
       </div>
-      <p class="text-muted text-sm">
+      <p class="text-foreground-muted text-sm">
         {{ symbols.length }} symbol{{ symbols.length === 1 ? "" : "s" }} detected.
       </p>
-      <UFormField label="Sprite output"
-        ><UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Sprite output"
+        ><UiTextarea
+          v-bind="controlProps"
           :model-value="output"
           :rows="12"
           readonly
           class="w-full font-mono"
-      /></UFormField>
+      /></UiField>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           label="Copy sprite"
           icon="i-tabler-copy"
           color="neutral"

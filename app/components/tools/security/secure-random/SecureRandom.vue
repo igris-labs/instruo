@@ -23,30 +23,30 @@ function generate() {
   <ToolWorkbench description="Generate random strings using the browser Web Crypto API.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField
+        <UiField
           label="Length"
-          help="Choose from 1 to 512 characters."
+          description="Choose from 1 to 512 characters."
         >
-          <UInput
-            v-model.number="length"
-            type="number"
-            min="1"
-            max="512"
+          <UiNumberField
+            v-model="length"
+            :step-snapping="false"
+            :min="1"
+            :max="512"
           />
-        </UFormField>
-        <UFormField
+        </UiField>
+        <UiField
           label="Alphabet"
-          help="Characters are sampled uniformly from this set."
+          description="Characters are sampled uniformly from this set."
         >
-          <UInput v-model="alphabet" />
-        </UFormField>
+          <UiInput v-model="alphabet" />
+        </UiField>
       </div>
-      <UButton
+      <UiButton
         label="Generate"
         icon="i-tabler-dice"
         class="w-fit"
         @click="generate"
-      /><UTextarea
+      /><UiTextarea
         v-model="output"
         :rows="4"
         readonly

@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { RadioGroupItem } from "@nuxt/ui";
+interface RadioGroupItem {
+  label: string;
+  value: string;
+  description?: string;
+}
 
 type EncoderKind = "base64" | "binary" | "morse" | "url";
 
@@ -139,47 +143,47 @@ function decode(value: string) {
 <template>
   <ToolWorkbench :description="`${name} output updates as you type.`">
     <div class="grid gap-5">
-      <URadioGroup
+      <UiRadioGroup
         v-model="operation"
-        :items="operationItems"
+        :options="operationItems"
         orientation="horizontal"
         aria-label="Operation"
       />
 
       <div class="grid items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Input"
           :description="`Text or ${name} to ${operation}.`"
-          :ui="{ container: 'mt-2' }"
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="input"
             :placeholder="`Enter ${name} input…`"
             :rows="10"
             class="w-full"
-            :ui="{ base: 'min-h-56 font-mono text-sm leading-6 sm:min-h-72' }"
           />
-        </UFormField>
+        </UiField>
 
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Output"
           description="Read-only result."
           :error="errorMessage || undefined"
-          :ui="{ container: 'mt-2' }"
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             readonly
             :placeholder="errorMessage ? 'Fix the input to continue.' : 'Output appears here.'"
             :rows="10"
             class="w-full"
-            :ui="{ base: 'min-h-56 font-mono text-sm leading-6 sm:min-h-72' }"
           />
-        </UFormField>
+        </UiField>
       </div>
 
-      <div class="border-default/70 flex flex-wrap justify-end gap-2 border-t pt-4">
-        <UButton
+      <div class="border-outline/70 flex flex-wrap justify-end gap-2 border-t pt-4">
+        <UiButton
           color="neutral"
           variant="ghost"
           label="Clear"
@@ -187,7 +191,7 @@ function decode(value: string) {
           :disabled="!input"
           @click="input = ''"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy output"

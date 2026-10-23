@@ -40,16 +40,19 @@ const findings = computed<Finding[]>(() => {
     description="Find likely secrets in pasted code before they reach a commit or issue tracker."
   >
     <div class="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)]">
-      <UFormField label="Code or configuration"
-        ><UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Code or configuration"
+        ><UiTextarea
+          v-bind="controlProps"
           v-model="source"
           :rows="20"
           class="w-full font-mono"
-      /></UFormField>
+      /></UiField>
       <div class="grid content-start gap-3">
-        <div class="border-muted bg-muted/20 rounded-md border p-4">
-          <p class="text-muted text-xs">Findings</p>
-          <p class="text-highlighted mt-1 text-3xl font-semibold tabular-nums">
+        <div class="border-outline bg-muted/20 rounded-md border p-4">
+          <p class="text-foreground-muted text-xs">Findings</p>
+          <p class="text-foreground-highlighted mt-1 text-3xl font-semibold tabular-nums">
             {{ findings.length }}
           </p>
         </div>
@@ -61,16 +64,17 @@ const findings = computed<Finding[]>(() => {
           <li
             v-for="finding in findings"
             :key="`${finding.line}-${finding.kind}`"
-            class="border-muted rounded-md border p-3"
+            class="border-outline rounded-md border p-3"
           >
             <p class="font-medium">{{ finding.kind }}</p>
-            <p class="text-muted mt-1 text-xs">Line {{ finding.line }} · {{ finding.preview }}</p>
+            <p class="text-foreground-muted mt-1 text-xs">
+              Line {{ finding.line }} · {{ finding.preview }}
+            </p>
           </li>
         </ul>
-        <UAlert
+        <UiNotice
           v-else
-          color="success"
-          variant="subtle"
+          tone="success"
           title="No common patterns found"
           description="This scanner is heuristic. Review code manually before sharing it."
         />

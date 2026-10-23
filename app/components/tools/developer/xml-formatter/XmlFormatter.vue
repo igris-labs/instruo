@@ -33,26 +33,34 @@ function formatXml(value: string) {
     description="Add readable indentation to XML without sending the document anywhere."
   >
     <div class="grid gap-6 lg:grid-cols-2">
-      <UFormField label="XML input">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="XML input"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="14"
           class="w-full font-mono"
           placeholder="<root><item /></root>"
-        /> </UFormField
-      ><UFormField label="Formatted XML">
-        <UTextarea
+        /> </UiField
+      ><UiField
+        v-slot="{ controlProps }"
+        label="Formatted XML"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="output"
           readonly
           :rows="14"
           class="w-full font-mono"
           placeholder="Formatted XML appears here."
         />
-      </UFormField>
+      </UiField>
     </div>
     <div class="mt-5 flex justify-end">
-      <UButton
+      <UiButton
         color="neutral"
         variant="soft"
         label="Copy XML"

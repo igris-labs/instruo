@@ -20,21 +20,20 @@ const output = computed(() =>
 <template>
   <ToolWorkbench description="Generate short placeholder copy locally for drafts and prototypes.">
     <div class="mx-auto grid max-w-xl gap-6">
-      <UFormField label="Sentence count">
-        <UInput
-          v-model.number="count"
-          type="number"
-          min="1"
-          max="12"
-          size="xl"
+      <UiField label="Sentence count">
+        <UiNumberField
+          v-model="count"
+          :step-snapping="false"
+          :min="1"
+          :max="12"
           class="w-full"
         />
-      </UFormField>
-      <p class="border-default/70 text-muted rounded-lg border p-5 text-base leading-8">
+      </UiField>
+      <p class="border-outline/70 text-foreground-muted rounded-lg border p-5 text-base leading-8">
         {{ output }}
       </p>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy text"

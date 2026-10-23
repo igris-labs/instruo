@@ -14,26 +14,34 @@ const output = computed(() =>
 <template>
   <ToolWorkbench description="Remove comments and unnecessary whitespace from CSS locally.">
     <div class="grid gap-6 lg:grid-cols-2">
-      <UFormField label="CSS input">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="CSS input"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="14"
           class="w-full font-mono"
           placeholder=".card { color: black; }"
-        /> </UFormField
-      ><UFormField label="Minified CSS">
-        <UTextarea
+        /> </UiField
+      ><UiField
+        v-slot="{ controlProps }"
+        label="Minified CSS"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="output"
           readonly
           :rows="14"
           class="w-full font-mono"
           placeholder="Minified CSS appears here."
         />
-      </UFormField>
+      </UiField>
     </div>
     <div class="mt-5 flex justify-end">
-      <UButton
+      <UiButton
         color="neutral"
         variant="soft"
         label="Copy CSS"

@@ -47,7 +47,7 @@ onBeforeUnmount(() => timer && clearInterval(timer));
     <div class="mx-auto grid max-w-2xl gap-6">
       <div class="flex items-center justify-between gap-4">
         <p
-          class="text-toned text-sm"
+          class="text-foreground-muted text-sm"
           role="status"
           aria-live="polite"
         >
@@ -55,10 +55,10 @@ onBeforeUnmount(() => timer && clearInterval(timer));
         </p>
         <span class="text-primary font-mono text-xl">{{ seconds }}s</span>
       </div>
-      <div class="typing-copy border-default/70 bg-muted/20 border p-5 text-lg leading-8">
-        <span class="text-highlighted">{{ prompt }}</span>
+      <div class="typing-copy border-outline/70 bg-muted/20 border p-5 text-lg leading-8">
+        <span class="text-foreground-highlighted">{{ prompt }}</span>
       </div>
-      <UTextarea
+      <UiTextarea
         v-model="input"
         :rows="5"
         autoresize
@@ -68,14 +68,14 @@ onBeforeUnmount(() => timer && clearInterval(timer));
         @focus="start"
         @input="start"
       />
-      <UProgress
+      <UiProgress
         :model-value="progress"
         :max="100"
         aria-label="Typing progress"
       />
       <div class="flex justify-between">
-        <span class="text-muted font-mono text-sm">{{ words }} words</span
-        ><UButton
+        <span class="text-foreground-muted font-mono text-sm">{{ words }} words</span
+        ><UiButton
           label="Reset"
           color="neutral"
           variant="outline"

@@ -11,24 +11,24 @@ const { copyText } = useCopyToClipboard();
   <ToolWorkbench description="Build a copy-ready linear-gradient declaration with a live preview.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="Start"><UInput v-model="start" /></UFormField
-        ><UFormField label="End"><UInput v-model="end" /></UFormField
-        ><UFormField label="Angle">
-          <UInput
-            v-model.number="angle"
-            type="number"
+        <UiField label="Start"><UiInput v-model="start" /></UiField
+        ><UiField label="End"><UiInput v-model="end" /></UiField
+        ><UiField label="Angle">
+          <UiNumberField
+            v-model="angle"
+            :step-snapping="false"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div
-        class="border-default min-h-40 rounded-lg border"
+        class="border-outline min-h-40 rounded-lg border"
         :style="{ background: `linear-gradient(${angle}deg, ${start}, ${end})` }"
       />
-      <UInput
+      <UiInput
         :model-value="output"
         readonly
         class="font-mono"
-      /><UButton
+      /><UiButton
         color="neutral"
         variant="soft"
         label="Copy CSS"

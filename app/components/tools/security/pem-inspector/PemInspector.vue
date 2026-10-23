@@ -27,17 +27,17 @@ async function inspect() {
     description="Read a PEM envelope and calculate a local SHA-256 fingerprint. This tool does not parse certificate fields."
   >
     <div class="grid gap-5">
-      <UTextarea
+      <UiTextarea
         v-model="input"
         :rows="14"
         class="font-mono text-xs"
         placeholder="-----BEGIN CERTIFICATE-----"
-      /><UButton
+      /><UiButton
         label="Inspect PEM"
         icon="i-tabler-search"
         class="w-fit"
         @click="inspect"
-      /><UTextarea
+      /><UiTextarea
         v-model="output"
         :rows="6"
         readonly

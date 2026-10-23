@@ -190,21 +190,21 @@ const filtered = computed(() => {
     description="Search common HTTP response codes, then open one for practical API guidance."
   >
     <div class="grid gap-5">
-      <UFormField
+      <UiField
         label="Find a status code"
         description="Search by number, name, meaning, or a use case."
       >
-        <UInput
+        <UiInput
           v-model="query"
           icon="i-tabler-search"
           aria-label="Search HTTP status codes"
           placeholder="Try 404, forbidden, cache, or timeout…"
           class="w-full"
         />
-      </UFormField>
+      </UiField>
 
       <div
-        class="text-muted flex items-center justify-between gap-3 text-sm"
+        class="text-foreground-muted flex items-center justify-between gap-3 text-sm"
         role="status"
         aria-live="polite"
       >
@@ -212,67 +212,65 @@ const filtered = computed(() => {
           {{ filtered.length }} {{ filtered.length === 1 ? "status" : "statuses" }}
           <span v-if="query"> matching “{{ query }}”</span>
         </p>
-        <UButton
+        <UiButton
           v-if="query"
           color="neutral"
           variant="ghost"
-          size="sm"
           label="Clear search"
           @click="query = ''"
         />
       </div>
 
-      <UAccordion
+      <UiAccordion
         v-if="filtered.length"
         :items="filtered"
         type="multiple"
-        :ui="{
-          root: 'border-default/70 overflow-hidden rounded-lg border',
-          item: 'border-default/70 last:border-b-0',
-          trigger: 'bg-elevated hover:bg-muted/35 px-4 py-4 sm:px-5',
-          content: 'bg-muted/15',
-          body: 'px-4 pb-5 pt-1 sm:px-5',
-        }"
+        value-key="code"
       >
-        <template #default="{ item }">
+        <template #trigger="{ item }">
           <span class="flex min-w-0 items-center gap-3 text-left">
             <span
-              class="bg-muted text-highlighted inline-flex min-w-12 shrink-0 items-center justify-center rounded-md px-2 py-1 font-mono text-sm font-semibold tabular-nums"
+              class="bg-muted text-foreground-highlighted inline-flex min-w-12 shrink-0 items-center justify-center rounded-md px-2 py-1 font-mono text-sm font-semibold tabular-nums"
             >
               {{ item.code }}
             </span>
             <span class="min-w-0">
-              <span class="text-highlighted block truncate font-medium">{{ item.label }}</span>
-              <span class="text-muted mt-0.5 block text-xs">{{ item.group }}</span>
+              <span class="text-foreground-highlighted block truncate font-medium">{{
+                item.label
+              }}</span>
+              <span class="text-foreground-muted mt-0.5 block text-xs">{{ item.group }}</span>
             </span>
           </span>
         </template>
 
-        <template #body="{ item }">
+        <template #content="{ item }">
           <div class="grid gap-4 text-sm sm:grid-cols-3">
             <div>
-              <p class="text-muted mb-1 text-xs font-medium tracking-wide uppercase">
+              <p class="text-foreground-muted mb-1 text-xs font-medium tracking-wide uppercase">
                 What it means
               </p>
-              <p class="text-default leading-6">{{ item.meaning }}</p>
+              <p class="text-foreground leading-6">{{ item.meaning }}</p>
             </div>
             <div>
-              <p class="text-muted mb-1 text-xs font-medium tracking-wide uppercase">Use it when</p>
-              <p class="text-default leading-6">{{ item.useWhen }}</p>
+              <p class="text-foreground-muted mb-1 text-xs font-medium tracking-wide uppercase">
+                Use it when
+              </p>
+              <p class="text-foreground leading-6">{{ item.useWhen }}</p>
             </div>
             <div>
-              <p class="text-muted mb-1 text-xs font-medium tracking-wide uppercase">Example</p>
-              <p class="text-default leading-6">{{ item.example }}</p>
+              <p class="text-foreground-muted mb-1 text-xs font-medium tracking-wide uppercase">
+                Example
+              </p>
+              <p class="text-foreground leading-6">{{ item.example }}</p>
             </div>
           </div>
         </template>
-      </UAccordion>
+      </UiAccordion>
 
-      <UAlert
+      <UiNotice
         v-else
         icon="i-tabler-search-off"
-        color="neutral"
-        variant="subtle"
+        tone="neutral"
         title="No matching status codes"
         description="Try a code such as 404, or search for a concept like rate limit or redirect."
       />

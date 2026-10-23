@@ -148,89 +148,77 @@ onUnmounted(() => {
     description="Resize and compress JPEG, PNG, or WebP images without uploading them."
   >
     <div class="grid gap-6">
-      <UFormField
+      <UiField
+        v-slot="{ controlProps }"
         label="Source image"
         description="Choose a JPEG, PNG, or WebP file from this device."
         :error="errorMessage || undefined"
-        :ui="{ container: 'mt-2' }"
       >
-        <UFileUpload
+        <UiFileInput
+          v-bind="controlProps"
           :model-value="sourceFile"
           accept="image/jpeg,image/png,image/webp"
-          size="lg"
           label="Choose an image"
           description="Drop a JPEG, PNG, or WebP here, or browse this device."
           @update:model-value="selectImage"
         />
-      </UFormField>
+      </UiField>
 
       <div
         v-if="sourceFile"
         class="grid gap-6 lg:grid-cols-[minmax(0,18rem)_1fr] lg:items-start"
       >
         <div class="grid gap-5">
-          <UFormField
+          <UiField
             label="Width"
             :description="`Height stays proportional: ${outputHeight || 0}px.`"
-            :ui="{ container: 'mt-2' }"
           >
-            <UInputNumber
+            <UiNumberField
               :model-value="targetWidth"
               :min="1"
               :max="8192"
-              size="lg"
               class="w-full"
               @update:model-value="setWidth"
             />
-          </UFormField>
+          </UiField>
 
-          <UFormField
-            label="Output format"
-            :ui="{ container: 'mt-2' }"
-          >
-            <USelect
+          <UiField label="Output format">
+            <UiSelect
               :model-value="format"
               :items="formatItems"
-              value-key="value"
-              label-key="label"
-              size="lg"
               class="w-full"
-              :ui="{ base: 'rounded-md', content: 'rounded-md', item: 'before:rounded-md' }"
               @update:model-value="setFormat"
             />
-          </UFormField>
+          </UiField>
 
-          <UFormField
+          <UiField
             label="Quality"
             :description="
               format === 'image/png'
                 ? 'PNG is lossless, so quality is ignored.'
                 : 'Lower values create smaller files with less detail.'
             "
-            :ui="{ container: 'mt-2' }"
           >
-            <UInputNumber
+            <UiNumberField
               :model-value="quality"
               :min="10"
               :max="100"
               :disabled="format === 'image/png'"
-              size="lg"
               class="w-full"
               @update:model-value="setQuality"
             />
-          </UFormField>
+          </UiField>
 
-          <UButton
+          <UiButton
             label="Create resized image"
             icon="i-tabler-photo-down"
-            size="lg"
             :loading="processing"
             @click="createImage"
           />
         </div>
 
         <div
-          class="border-default/70 bg-muted/20 flex min-h-80 items-center justify-center rounded-lg border p-4"
+          class="border-outline/70 bg-muted/20 flex min-h-80 items-center justify-center rounded-lg border p-4"
         >
           <!-- eslint-disable vue/html-self-closing -->
           <img
@@ -242,9 +230,9 @@ onUnmounted(() => {
           <!-- eslint-enable vue/html-self-closing -->
           <div
             v-else
-            class="text-muted grid justify-items-center gap-3 text-center text-sm"
+            class="text-foreground-muted grid justify-items-center gap-3 text-center text-sm"
           >
-            <UIcon
+            <UiIcon
               name="i-tabler-photo"
               class="size-8"
             />
@@ -255,15 +243,15 @@ onUnmounted(() => {
 
       <div
         v-if="sourceFile"
-        class="border-default/70 grid gap-4 border-t pt-5 sm:grid-cols-[1fr_auto] sm:items-center"
+        class="border-outline/70 grid gap-4 border-t pt-5 sm:grid-cols-[1fr_auto] sm:items-center"
       >
-        <p class="text-muted text-sm leading-6">
+        <p class="text-foreground-muted text-sm leading-6">
           Source: {{ sourceWidth }} × {{ sourceHeight }}, {{ formatBytes(sourceFile.size) }}
           <template v-if="outputBlob">
             / Output: {{ targetWidth }} × {{ outputHeight }}, {{ formatBytes(outputBlob.size) }}
           </template>
         </p>
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Download image"

@@ -118,9 +118,8 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Inspect JWT claims or create an unsigned token-shaped value locally.">
     <div class="grid gap-7">
-      <UAlert
-        color="warning"
-        variant="subtle"
+      <UiNotice
+        tone="warning"
         icon="i-tabler-alert-triangle"
         title="Unsigned output only"
         description="Generated values have an empty signature. Use them for local demos and decoding only — never for access control or production credentials."
@@ -128,28 +127,29 @@ const { copyText } = useCopyToClipboard();
 
       <section class="grid gap-5">
         <div>
-          <h2 class="text-highlighted text-base font-semibold">Inspect a token</h2>
-          <p class="text-muted mt-1 text-sm">
+          <h2 class="text-foreground-highlighted text-base font-semibold">Inspect a token</h2>
+          <p class="text-foreground-muted mt-1 text-sm">
             Decode header and payload locally. Signature presence is shown, but never verified.
           </p>
         </div>
 
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="JWT to inspect"
           description="Paste a three-part token. Nothing leaves your browser."
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             v-model="token"
             :rows="5"
             class="w-full font-mono"
             placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"
           />
-        </UFormField>
+        </UiField>
 
-        <UAlert
+        <UiNotice
           v-if="inspection.state === 'invalid'"
-          color="error"
-          variant="subtle"
+          tone="error"
           icon="i-tabler-alert-circle"
           title="Could not decode token"
           :description="inspection.error"
@@ -163,110 +163,123 @@ const { copyText } = useCopyToClipboard();
             v-if="inspection.state === 'valid'"
             class="flex flex-wrap items-center gap-2"
           >
-            <UBadge
-              :color="inspection.hasSignature ? 'success' : 'warning'"
+            <UiBadge
+              :tone="inspection.hasSignature ? 'success' : 'warning'"
               variant="subtle"
             >
               {{ inspection.hasSignature ? "Signature present · not verified" : "Unsigned token" }}
-            </UBadge>
-            <span class="text-muted text-sm">Decoded locally from the pasted value.</span>
+            </UiBadge>
+            <span class="text-foreground-muted text-sm"
+              >Decoded locally from the pasted value.</span
+            >
           </div>
 
           <div class="grid gap-5 lg:grid-cols-2">
-            <UFormField
+            <UiField
+              v-slot="{ controlProps }"
               label="Header JSON"
               description="Algorithm and token metadata."
             >
-              <UTextarea
+              <UiTextarea
+                v-bind="controlProps"
                 :model-value="inspection.header"
                 :rows="7"
                 readonly
                 class="w-full font-mono"
                 placeholder="Decoded header appears here."
               />
-            </UFormField>
-            <UFormField
+            </UiField>
+            <UiField
+              v-slot="{ controlProps }"
               label="Payload JSON"
               description="Claims carried by the token."
             >
-              <UTextarea
+              <UiTextarea
+                v-bind="controlProps"
                 :model-value="inspection.payload"
                 :rows="7"
                 readonly
                 class="w-full font-mono"
                 placeholder="Decoded payload appears here."
               />
-            </UFormField>
+            </UiField>
           </div>
         </div>
       </section>
 
-      <div class="border-muted border-t" />
+      <div class="border-outline border-t" />
 
       <section class="grid gap-5">
         <div>
-          <h2 class="text-highlighted text-base font-semibold">Create an unsigned token</h2>
-          <p class="text-muted mt-1 text-sm">
+          <h2 class="text-foreground-highlighted text-base font-semibold">
+            Create an unsigned token
+          </h2>
+          <p class="text-foreground-muted mt-1 text-sm">
             Shape JSON for a demo token. The final signature segment stays empty by design.
           </p>
         </div>
 
         <div class="grid gap-5 lg:grid-cols-2">
-          <UFormField
+          <UiField
+            v-slot="{ controlProps }"
             label="Header JSON"
             :description="headerDescription"
           >
-            <UTextarea
+            <UiTextarea
+              v-bind="controlProps"
               v-model="header"
               :rows="7"
               class="w-full font-mono"
               spellcheck="false"
             />
-          </UFormField>
-          <UFormField
+          </UiField>
+          <UiField
+            v-slot="{ controlProps }"
             label="Payload JSON"
             :description="payloadDescription"
           >
-            <UTextarea
+            <UiTextarea
+              v-bind="controlProps"
               v-model="payload"
               :rows="7"
               class="w-full font-mono"
               spellcheck="false"
             />
-          </UFormField>
+          </UiField>
         </div>
 
-        <UAlert
+        <UiNotice
           v-if="generated.error"
-          color="error"
-          variant="subtle"
+          tone="error"
           icon="i-tabler-braces"
           title="Invalid JSON"
           :description="generated.error"
         />
 
-        <UFormField
+        <UiField
+          v-slot="{ controlProps }"
           label="Token-shaped output"
           description="Unsigned output ends with a trailing dot because no signature is created."
         >
-          <UTextarea
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="generated.token"
             :rows="4"
             readonly
             class="w-full font-mono"
             placeholder="Encoded value appears here."
           />
-        </UFormField>
+        </UiField>
 
         <div class="flex flex-wrap justify-end gap-3">
-          <UButton
+          <UiButton
             color="neutral"
             variant="ghost"
             label="Reset example"
             icon="i-tabler-refresh"
             @click="resetExample"
           />
-          <UButton
+          <UiButton
             color="neutral"
             variant="soft"
             label="Copy token-shaped value"

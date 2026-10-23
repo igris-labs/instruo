@@ -132,16 +132,15 @@ onBeforeUnmount(() => {
         class="number-guess-state"
       >
         <div class="number-guess-state-card">
-          <UIcon
+          <UiIcon
             name="i-tabler-target-arrow"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="number-guess-eyebrow">Signal room</p>
           <h2>Finding a fair number</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -153,20 +152,19 @@ onBeforeUnmount(() => {
         class="number-guess-state number-guess-state--ready"
       >
         <div class="number-guess-ready-copy">
-          <UBadge
+          <UiBadge
             label="Range 01–100"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
           <p class="number-guess-eyebrow">Seven attempts · one target</p>
           <h2>Read the signal.<br />Find the number.</h2>
           <p>Every guess tightens the range. Use the clues and make each attempt count.</p>
-          <UButton
+          <UiButton
             label="Start game"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="startGame"
           />
         </div>
@@ -206,9 +204,9 @@ onBeforeUnmount(() => {
                   {{ statusText }}
                 </p>
               </div>
-              <UBadge
+              <UiBadge
                 :label="`${guessesLeft}/${maxAttempts}`"
-                color="neutral"
+                tone="neutral"
                 variant="subtle"
                 class="number-guess-count"
                 :aria-label="`${guessesLeft} guesses left`"
@@ -242,39 +240,35 @@ onBeforeUnmount(() => {
               class="number-guess-form"
               @submit.prevent="submit"
             >
-              <UFormField
+              <UiField
                 label="Your guess"
                 :description="`Whole number from ${minNumber} to ${maxNumber}`"
                 class="number-guess-field"
               >
-                <UInput
-                  v-model.number="guess"
-                  type="number"
+                <UiNumberField
+                  v-model="guess"
+                  :step-snapping="false"
                   :min="minNumber"
                   :max="maxNumber"
                   :disabled="finished"
-                  size="xl"
                   class="number-guess-input"
-                  inputmode="numeric"
                   placeholder="42"
                 />
-              </UFormField>
+              </UiField>
               <div class="number-guess-actions">
-                <UButton
+                <UiButton
                   type="submit"
                   label="Check guess"
                   icon="i-tabler-arrow-right"
-                  color="primary"
-                  size="lg"
+                  color="neutral"
                   :disabled="finished || guess === undefined || guess === null"
                 />
-                <UButton
+                <UiButton
                   type="button"
                   label="New number"
                   icon="i-tabler-refresh"
                   color="neutral"
                   variant="outline"
-                  size="lg"
                   @click="startGame"
                 />
               </div>
@@ -289,7 +283,7 @@ onBeforeUnmount(() => {
               <span>Last guess</span>
               <strong>{{ lastGuess.value }}</strong>
               <span class="number-guess-last-result">
-                <UIcon
+                <UiIcon
                   :name="
                     lastGuess.direction === 'correct'
                       ? 'i-tabler-check'
@@ -320,7 +314,7 @@ onBeforeUnmount(() => {
                 >
                   <span class="number-guess-history-number">{{ item.value }}</span>
                   <span>{{ item.direction === "correct" ? "Correct" : item.direction }}</span>
-                  <UIcon
+                  <UiIcon
                     :name="
                       item.direction === 'correct'
                         ? 'i-tabler-check'
@@ -341,7 +335,7 @@ onBeforeUnmount(() => {
             v-if="finished"
             class="number-guess-result"
           >
-            <UIcon
+            <UiIcon
               :name="won ? 'i-tabler-trophy' : 'i-tabler-flag-3'"
               class="text-primary size-9"
               aria-hidden="true"
@@ -352,10 +346,10 @@ onBeforeUnmount(() => {
               The number was <strong>{{ target }}</strong
               >.
             </p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="startGame"
             />
           </div>

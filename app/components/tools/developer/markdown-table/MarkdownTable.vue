@@ -19,17 +19,17 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Turn tab-separated rows into a clean Markdown table.">
     <div class="grid gap-5 lg:grid-cols-2">
-      <UTextarea
+      <UiTextarea
         v-model="input"
         :rows="12"
         placeholder="Name\tRole\nAda\tEngineer"
-      /><UTextarea
+      /><UiTextarea
         :model-value="output"
         :rows="12"
         readonly
       />
       <div class="flex justify-end lg:col-span-2">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy table"

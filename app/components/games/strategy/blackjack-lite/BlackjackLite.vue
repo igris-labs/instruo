@@ -26,7 +26,7 @@ const playerScoreLabel = computed(() =>
 const outcomeTone = computed(() =>
   state.value.result === "You win." || state.value.result === "Blackjack!"
     ? "text-success"
-    : "text-highlighted",
+    : "text-foreground-highlighted",
 );
 
 function updateState(next: Record<string, unknown>) {
@@ -57,19 +57,19 @@ function updateState(next: Record<string, unknown>) {
     description="Reach 21 without going over. Dealer stands on 17. Local table, no betting, no account."
   >
     <div class="mx-auto grid max-w-2xl gap-5">
-      <header class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <header class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <div>
-          <p class="text-highlighted text-sm font-semibold">Blackjack</p>
-          <p class="text-muted mt-1 font-mono text-xs">Felt Table · local dealer</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Blackjack</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Felt Table · local dealer</p>
         </div>
-        <div class="text-muted flex gap-3 font-mono text-xs">
-          <span class="text-highlighted">Dealer {{ dealerScoreLabel }}</span>
-          <span class="text-highlighted">You {{ playerScoreLabel }}</span>
+        <div class="text-foreground-muted flex gap-3 font-mono text-xs">
+          <span class="text-foreground-highlighted">Dealer {{ dealerScoreLabel }}</span>
+          <span class="text-foreground-highlighted">You {{ playerScoreLabel }}</span>
         </div>
       </header>
 
       <div
-        class="border-default relative overflow-hidden rounded-lg border"
+        class="border-outline relative overflow-hidden rounded-lg border"
         data-phaser-game-shell
         style="--phaser-game-loading-bg: #0a2d29"
         :class="{ 'is-over': loaded && state.status === 'over' }"
@@ -97,21 +97,21 @@ function updateState(next: Record<string, unknown>) {
           class="bg-default/70 absolute inset-0 z-10 grid place-items-center p-5"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="bg-primary text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="bg-primary text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               aria-hidden="true"
             >
               <Icon name="i-tabler-cards" />
             </div>
-            <h2 class="text-highlighted text-xl font-semibold">Take a seat</h2>
-            <p class="text-muted text-sm leading-6">
+            <h2 class="text-foreground-highlighted text-xl font-semibold">Take a seat</h2>
+            <p class="text-foreground-muted text-sm leading-6">
               Build a hand closer to 21 than the dealer. Aces count as 1 or 11; dealer stands on 17.
             </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.start()"
             >
               <NuxtImg
@@ -130,7 +130,7 @@ function updateState(next: Record<string, unknown>) {
                 Deal hand
               </span>
             </button>
-            <p class="text-muted font-mono text-xs">H / Space hit · S / Enter stand</p>
+            <p class="text-foreground-muted font-mono text-xs">H / Space hit · S / Enter stand</p>
           </div>
         </div>
 
@@ -142,10 +142,10 @@ function updateState(next: Record<string, unknown>) {
           aria-labelledby="blackjack-over-title"
         >
           <div
-            class="border-default bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
+            class="border-outline bg-elevated grid w-full max-w-sm gap-4 rounded-lg border p-6 text-center shadow-xl"
           >
             <div
-              class="text-inverted mx-auto grid size-14 place-items-center text-2xl"
+              class="text-foreground-inverted mx-auto grid size-14 place-items-center text-2xl"
               :class="
                 state.result === 'You win.' || state.result === 'Blackjack!'
                   ? 'bg-success'
@@ -163,7 +163,7 @@ function updateState(next: Record<string, unknown>) {
             </div>
             <h2
               id="blackjack-over-title"
-              class="text-highlighted text-xl font-semibold"
+              class="text-foreground-highlighted text-xl font-semibold"
             >
               {{ state.result }}
             </h2>
@@ -171,13 +171,15 @@ function updateState(next: Record<string, unknown>) {
               class="font-mono text-4xl font-bold tabular-nums"
               :class="outcomeTone"
             >
-              {{ state.playerScore }} <span class="text-muted text-xl">·</span>
+              {{ state.playerScore }} <span class="text-foreground-muted text-xl">·</span>
               {{ state.dealerScore }}
             </p>
-            <p class="text-muted font-mono text-xs tracking-[0.18em] uppercase">You · Dealer</p>
+            <p class="text-foreground-muted font-mono text-xs tracking-[0.18em] uppercase">
+              You · Dealer
+            </p>
             <button
               type="button"
-              class="text-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
+              class="text-foreground-inverted focus-visible:ring-primary relative mx-auto grid h-16 w-56 place-items-center text-sm font-semibold transition-transform focus-visible:ring-2 focus-visible:outline-none active:translate-y-px"
               @click.stop="gameHost?.restart()"
             >
               <NuxtImg
@@ -204,9 +206,8 @@ function updateState(next: Record<string, unknown>) {
           class="bg-default absolute inset-0 z-20 grid place-items-center p-5"
           role="alert"
         >
-          <UAlert
-            color="error"
-            variant="subtle"
+          <UiNotice
+            tone="error"
             title="Game unavailable"
             description="Reload the page and try once more."
             icon="i-tabler-alert-circle"
@@ -215,23 +216,21 @@ function updateState(next: Record<string, unknown>) {
       </div>
 
       <div class="flex flex-wrap justify-center gap-2">
-        <UButton
+        <UiButton
           label="Hit"
           icon="i-tabler-plus"
-          size="lg"
           :disabled="!canAct"
           @click="gameHost?.start('hit')"
         />
-        <UButton
+        <UiButton
           label="Stand"
           icon="i-tabler-hand-stop"
           color="neutral"
           variant="outline"
-          size="lg"
           :disabled="!canAct"
           @click="gameHost?.start('stand')"
         />
-        <UButton
+        <UiButton
           label="New hand"
           icon="i-tabler-refresh"
           color="neutral"
@@ -240,7 +239,7 @@ function updateState(next: Record<string, unknown>) {
           @click="gameHost?.restart()"
         />
       </div>
-      <p class="text-muted text-center font-mono text-xs">
+      <p class="text-foreground-muted text-center font-mono text-xs">
         {{ state.playerCards }} player cards · {{ state.dealerCards }} dealer cards · no account
         needed
       </p>

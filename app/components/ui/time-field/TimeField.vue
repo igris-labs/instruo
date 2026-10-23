@@ -1,0 +1,47 @@
+<script setup lang="ts">
+import type { TimeFieldProps } from "akaza-ui";
+import type { PrimitiveSize, PrimitiveVariant } from "../ui.types";
+import { TimeField as AkazaTimeField } from "akaza-ui";
+import { computed } from "vue";
+import { timeFieldUi } from "./index";
+
+defineOptions({ inheritAttrs: false });
+
+const {
+  size,
+  variant,
+  class: customClass,
+  ui: customUi,
+  selectOnFocus = true,
+  autoAdvance = true,
+  ...forwardedProps
+} = defineProps<
+  TimeFieldProps & {
+    size?: PrimitiveSize;
+    variant?: PrimitiveVariant;
+    class?: string;
+    ui?: Record<string, string>;
+  }
+>();
+
+const akazaProps = computed(() => ({ ...forwardedProps, selectOnFocus, autoAdvance }));
+
+const ui = computed(() => timeFieldUi(size, variant, customClass, customUi));
+</script>
+
+<template>
+  <AkazaTimeField
+    v-bind="{ ...akazaProps, ...$attrs }"
+    :ui="ui"
+  >
+    <template
+      v-for="(_, slotName) in $slots"
+      #[slotName]="slotProps"
+    >
+      <slot
+        :name="slotName"
+        v-bind="slotProps || {}"
+      />
+    </template>
+  </AkazaTimeField>
+</template>

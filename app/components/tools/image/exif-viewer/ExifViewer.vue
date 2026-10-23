@@ -118,17 +118,16 @@ onBeforeUnmount(() => {
     description="Inspect common JPEG EXIF fields locally. Images stay in your browser."
   >
     <div class="grid gap-5">
-      <UFileUpload
+      <UiFileInput
         :model-value="file"
         accept="image/*"
         label="Choose a photo"
         description="Drop a JPEG here or browse this device. Metadata is inspected locally."
         @update:model-value="select"
       />
-      <UAlert
+      <UiNotice
         v-if="error"
-        color="warning"
-        variant="subtle"
+        tone="warning"
         icon="i-tabler-alert-triangle"
         title="Limited metadata"
         :description="error"
@@ -140,20 +139,20 @@ onBeforeUnmount(() => {
         <img
           :src="previewUrl"
           :alt="file.name"
-          class="border-default max-h-80 w-full rounded-md border object-contain"
+          class="border-outline max-h-80 w-full rounded-md border object-contain"
         />
-        <dl class="divide-default border-default divide-y overflow-hidden rounded-lg border-y">
+        <dl class="divide-outline border-outline divide-y overflow-hidden rounded-lg border-y">
           <div
             v-for="(value, key) in metadata"
             :key="key"
             class="flex justify-between gap-4 py-2 text-sm"
           >
-            <dt class="text-muted">{{ key }}</dt>
-            <dd class="text-highlighted text-right">{{ value }}</dd>
+            <dt class="text-foreground-muted">{{ key }}</dt>
+            <dd class="text-foreground-highlighted text-right">{{ value }}</dd>
           </div>
         </dl>
       </div>
-      <UButton
+      <UiButton
         color="neutral"
         variant="soft"
         label="Download without metadata"

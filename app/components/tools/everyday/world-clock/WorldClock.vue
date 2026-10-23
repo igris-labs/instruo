@@ -38,7 +38,7 @@ const timeFormat = useLocalStorage<"12" | "24">("instruo-world-clock-format", "1
   initOnMounted: true,
 });
 const mounted = useMounted();
-const now = useNow({ interval: 1000 });
+const now = useNow({ scheduler: (update) => useIntervalFn(update, 1000) });
 const { copyText } = useCopyToClipboard();
 
 function zoneLabel(zone: string) {
@@ -117,10 +117,12 @@ function copyClock(clock: (typeof clocks.value)[number]) {
     description="Compare important time zones at a glance. Your selections stay on this device."
   >
     <div class="grid gap-5">
-      <div class="border-muted flex flex-wrap items-center justify-between gap-4 border-b pb-5">
+      <div class="border-outline flex flex-wrap items-center justify-between gap-4 border-b pb-5">
         <div>
-          <h2 class="text-highlighted text-base font-semibold">Your clocks</h2>
-          <p class="text-muted mt-1 text-sm">Add up to 6 zones. Changes save automatically.</p>
+          <h2 class="text-foreground-highlighted text-base font-semibold">Your clocks</h2>
+          <p class="text-foreground-muted mt-1 text-sm">
+            Add up to 6 zones. Changes save automatically.
+          </p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -128,24 +130,22 @@ function copyClock(clock: (typeof clocks.value)[number]) {
             class="bg-muted flex rounded-md p-1"
             aria-label="Time format"
           >
-            <UButton
+            <UiButton
               label="12 hour"
               color="neutral"
               :variant="timeFormat === '12' ? 'soft' : 'ghost'"
-              size="sm"
               :aria-pressed="timeFormat === '12'"
               @click="timeFormat = '12'"
             />
-            <UButton
+            <UiButton
               label="24 hour"
               color="neutral"
               :variant="timeFormat === '24' ? 'soft' : 'ghost'"
-              size="sm"
               :aria-pressed="timeFormat === '24'"
               @click="timeFormat = '24'"
             />
           </div>
-          <UButton
+          <UiButton
             label="Add clock"
             icon="i-tabler-plus"
             color="neutral"
@@ -160,26 +160,23 @@ function copyClock(clock: (typeof clocks.value)[number]) {
         <section
           v-for="(clock, index) in clocks"
           :key="clock.id"
-          class="border-muted bg-muted/30 overflow-hidden rounded-lg border"
+          class="border-outline bg-muted/30 overflow-hidden rounded-lg border"
         >
-          <header class="border-muted bg-elevated border-b p-4 sm:p-5">
+          <header class="border-outline bg-elevated border-b p-4 sm:p-5">
             <div class="flex items-end gap-3">
-              <UFormField
+              <UiField
                 :label="`Clock ${index + 1}`"
                 class="min-w-0 flex-1"
               >
-                <USelectMenu
+                <UiSelect
                   :model-value="clock.zone"
                   :items="zoneOptions"
-                  value-key="value"
-                  label-key="label"
-                  size="lg"
-                  :search-input="{ placeholder: 'Search time zones...' }"
                   class="w-full"
+                  searchable
                   @update:model-value="updateZone(index, $event)"
                 />
-              </UFormField>
-              <UButton
+              </UiField>
+              <UiButton
                 icon="i-tabler-trash"
                 aria-label="Remove clock"
                 color="neutral"
@@ -194,27 +191,26 @@ function copyClock(clock: (typeof clocks.value)[number]) {
           <div class="p-5 sm:p-6">
             <div class="flex items-start justify-between gap-4">
               <div>
-                <p class="text-toned text-sm font-medium">{{ clock.label }}</p>
+                <p class="text-foreground-muted text-sm font-medium">{{ clock.label }}</p>
                 <p
-                  class="text-highlighted mt-3 font-mono text-3xl font-semibold tracking-tight tabular-nums sm:text-4xl"
+                  class="text-foreground-highlighted mt-3 font-mono text-3xl font-semibold tracking-tight tabular-nums sm:text-4xl"
                 >
                   {{ clock.time || "--:--:--" }}
                 </p>
               </div>
-              <UButton
+              <UiButton
                 color="neutral"
                 variant="soft"
                 icon="i-tabler-copy"
                 aria-label="Copy clock time"
-                size="sm"
                 @click="copyClock(clock)"
               />
             </div>
             <div
-              class="border-muted mt-5 flex flex-wrap items-center justify-between gap-2 border-t pt-4"
+              class="border-outline mt-5 flex flex-wrap items-center justify-between gap-2 border-t pt-4"
             >
-              <p class="text-muted text-sm">{{ clock.date || "Loading local clock" }}</p>
-              <p class="text-dimmed font-mono text-xs">{{ clock.offset }}</p>
+              <p class="text-foreground-muted text-sm">{{ clock.date || "Loading local clock" }}</p>
+              <p class="text-foreground-dimmed font-mono text-xs">{{ clock.offset }}</p>
             </div>
           </div>
         </section>

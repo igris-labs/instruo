@@ -62,28 +62,27 @@ onMounted(() => {
   >
     <div class="grid max-w-2xl gap-5">
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="Date and time">
-          <UInput
+        <UiField label="Date and time">
+          <UiInput
             v-model="dateTime"
             type="datetime-local"
           />
-        </UFormField>
-        <UFormField label="Input time zone">
-          <USelect
+        </UiField>
+        <UiField label="Input time zone">
+          <UiSelect
             v-model="sourceTimezone"
             :items="timezones"
           />
-        </UFormField>
-        <UFormField label="Convert to">
-          <USelect
+        </UiField>
+        <UiField label="Convert to">
+          <UiSelect
             v-model="targetTimezone"
             :items="timezones"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <UAlert
-        color="neutral"
-        variant="subtle"
+      <UiNotice
+        tone="neutral"
         title="Converted time"
         :description="output"
         icon="i-tabler-clock"

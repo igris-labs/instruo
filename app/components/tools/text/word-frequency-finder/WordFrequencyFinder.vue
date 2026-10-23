@@ -28,47 +28,49 @@ const frequencies = computed(() => {
 <template>
   <ToolWorkbench description="Word counts update as text or search terms change.">
     <div class="grid gap-6">
-      <UFormField label="Text to analyze">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Text to analyze"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           placeholder="Type or paste text…"
           autoresize
           :rows="12"
           :maxrows="20"
           class="w-full"
-          :ui="{ base: 'text-base leading-7' }"
         />
-      </UFormField>
+      </UiField>
 
-      <UFormField
+      <UiField
         label="Words to find"
         description="Separate words with commas. Matching ignores case."
       >
-        <UInput
+        <UiInput
           v-model="wordsToFind"
           placeholder="tool, browser, text"
-          size="xl"
           class="w-full"
         />
-      </UFormField>
+      </UiField>
 
       <div
         v-if="frequencies.length"
-        class="border-default/70 overflow-hidden rounded-lg border-t"
+        class="border-outline/70 overflow-hidden rounded-lg border-t"
       >
         <div
           v-for="item in frequencies"
           :key="item.word"
-          class="border-default/70 grid grid-cols-[1fr_auto] items-center gap-6 border-b py-4"
+          class="border-outline/70 grid grid-cols-[1fr_auto] items-center gap-6 border-b py-4"
         >
-          <span class="text-highlighted font-medium">{{ item.word }}</span>
+          <span class="text-foreground-highlighted font-medium">{{ item.word }}</span>
           <span class="font-mono text-lg tabular-nums">{{ item.count }}</span>
         </div>
       </div>
 
       <p
         v-else
-        class="text-muted border-default/70 rounded-lg border p-5 text-sm"
+        class="text-foreground-muted border-outline/70 rounded-lg border p-5 text-sm"
       >
         Add one or more comma-separated words to see their frequency.
       </p>

@@ -17,30 +17,38 @@ const rows = computed(() => {
   <ToolWorkbench description="Compare two short text blocks line by line in your browser.">
     <div class="grid gap-6">
       <div class="grid gap-4 lg:grid-cols-2">
-        <UFormField label="Original">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Original"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="left"
             autoresize
             :rows="10"
             class="w-full font-mono"
-          /> </UFormField
-        ><UFormField label="Updated">
-          <UTextarea
+          /> </UiField
+        ><UiField
+          v-slot="{ controlProps }"
+          label="Updated"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="right"
             autoresize
             :rows="10"
             class="w-full font-mono"
           />
-        </UFormField>
+        </UiField>
       </div>
-      <ol class="border-default/70 border-t font-mono text-sm">
+      <ol class="border-outline/70 border-t font-mono text-sm">
         <li
           v-for="(row, index) in rows"
           :key="index"
-          class="border-default/70 grid gap-2 border-b px-3 py-2 sm:grid-cols-2"
+          class="border-outline/70 grid gap-2 border-b px-3 py-2 sm:grid-cols-2"
           :class="
             row.type === 'same'
-              ? 'text-muted'
+              ? 'text-foreground-muted'
               : row.type === 'added'
                 ? 'text-success bg-success/5'
                 : row.type === 'removed'

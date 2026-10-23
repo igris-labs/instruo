@@ -29,19 +29,21 @@ onBeforeUnmount(() => timer && clearTimeout(timer));
 <template>
   <ToolWorkbench description="Flip a fair virtual coin. The result is generated in your browser.">
     <div class="mx-auto grid max-w-xl gap-6">
-      <div class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <div class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <p
-          class="text-toned text-sm"
+          class="text-foreground-muted text-sm"
           role="status"
           aria-live="polite"
         >
           {{ statusText }}
         </p>
-        <span class="text-muted shrink-0 font-mono text-xs uppercase">{{ flips }} tosses</span>
+        <span class="text-foreground-muted shrink-0 font-mono text-xs uppercase"
+          >{{ flips }} tosses</span
+        >
       </div>
 
       <div
-        class="coin-console border-default/70 bg-muted/20 grid justify-items-center gap-7 border p-6 text-center sm:p-8"
+        class="coin-console border-outline/70 bg-muted/20 grid justify-items-center gap-7 border p-6 text-center sm:p-8"
       >
         <div class="coin-disc-wrap">
           <button
@@ -52,7 +54,7 @@ onBeforeUnmount(() => timer && clearTimeout(timer));
             :disabled="flipping"
             @click="flip"
           >
-            <UIcon
+            <UiIcon
               name="i-tabler-coin"
               class="coin-disc__icon"
               aria-hidden="true"
@@ -72,21 +74,20 @@ onBeforeUnmount(() => timer && clearTimeout(timer));
         </div>
 
         <div class="grid gap-1">
-          <span class="text-muted font-mono text-[0.7rem] tracking-[0.16em] uppercase"
+          <span class="text-foreground-muted font-mono text-[0.7rem] tracking-[0.16em] uppercase"
             >Last toss</span
           >
-          <strong class="text-highlighted text-2xl font-semibold">{{
+          <strong class="text-foreground-highlighted text-2xl font-semibold">{{
             result || "Not started"
           }}</strong>
-          <span class="text-muted text-sm">Heads or tails. One clean result.</span>
+          <span class="text-foreground-muted text-sm">Heads or tails. One clean result.</span>
         </div>
       </div>
 
       <div class="flex justify-center">
-        <UButton
+        <UiButton
           label="Flip coin"
           icon="i-tabler-arrows-shuffle"
-          size="lg"
           class="min-w-40 justify-center"
           :loading="flipping"
           @click="flip"
@@ -107,9 +108,9 @@ onBeforeUnmount(() => timer && clearTimeout(timer));
   border: 0.65rem solid color-mix(in srgb, var(--ui-color-primary-500) 72%, var(--ui-bg));
   border-radius: 50%;
   background: var(--ui-color-primary-500);
-  color: var(--ui-text-inverted);
+  color: var(--ui-text-foreground-inverted);
   box-shadow:
-    inset 0 0 0 0.2rem color-mix(in srgb, var(--ui-text-inverted) 22%, transparent),
+    inset 0 0 0 0.2rem color-mix(in srgb, var(--ui-text-foreground-inverted) 22%, transparent),
     0 1rem 2rem color-mix(in srgb, var(--ui-color-primary-500) 22%, transparent);
   transform-style: preserve-3d;
 }

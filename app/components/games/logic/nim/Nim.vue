@@ -148,16 +148,15 @@ onBeforeUnmount(() => {
         class="nim-state"
       >
         <div class="nim-state-copy">
-          <UIcon
+          <UiIcon
             name="i-tabler-stack-2"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="nim-eyebrow">Stone table</p>
           <h2>Setting the piles</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -169,33 +168,29 @@ onBeforeUnmount(() => {
         class="nim-state nim-state--ready"
       >
         <div class="nim-ready-copy">
-          <UBadge
+          <UiBadge
             label="Classic 3–4–5 table"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
           <p class="nim-eyebrow">Count · plan · take</p>
           <h2>Take the last stone.<br />Take the win.</h2>
           <p>Take any number from one pile. A good move leaves your opponent the wrong choices.</p>
-          <UFormField
+          <UiField
             label="Play mode"
             class="nim-ready-field"
           >
-            <USelect
+            <UiSelect
               v-model="mode"
               :items="modeOptions"
-              value-key="value"
-              label-key="label"
-              size="lg"
               class="w-full sm:w-72"
             />
-          </UFormField>
-          <UButton
+          </UiField>
+          <UiButton
             label="Start match"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="begin"
           />
         </div>
@@ -270,11 +265,10 @@ onBeforeUnmount(() => {
                   >
                 </div>
                 <div class="nim-pile-actions">
-                  <UButton
+                  <UiButton
                     v-for="amount in pile"
                     :key="amount"
                     :label="`Take ${amount}`"
-                    size="xs"
                     color="neutral"
                     variant="outline"
                     :disabled="!isHumanTurn || computerThinking || isComplete"
@@ -291,7 +285,7 @@ onBeforeUnmount(() => {
               aria-live="polite"
             >
               <template v-if="lastMove">
-                <UIcon
+                <UiIcon
                   name="i-tabler-arrow-down-right"
                   aria-hidden="true"
                 />
@@ -308,12 +302,11 @@ onBeforeUnmount(() => {
 
             <div class="nim-footer">
               <p>Take any number from one pile. Last stone wins.</p>
-              <UButton
+              <UiButton
                 label="New match"
                 icon="i-tabler-refresh"
                 color="neutral"
                 variant="ghost"
-                size="sm"
                 @click="begin"
               />
             </div>
@@ -323,7 +316,7 @@ onBeforeUnmount(() => {
             v-if="isComplete"
             class="nim-result"
           >
-            <UIcon
+            <UiIcon
               :name="winner === 1 ? 'i-tabler-trophy' : 'i-tabler-flag-3'"
               :class="winner === 1 ? 'text-success' : 'text-primary'"
               class="size-9"
@@ -332,10 +325,10 @@ onBeforeUnmount(() => {
             <p class="nim-eyebrow">Match complete</p>
             <h2>{{ winnerLabel }}.</h2>
             <p>All stones are gone. The final move decided it.</p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="begin"
             />
           </div>

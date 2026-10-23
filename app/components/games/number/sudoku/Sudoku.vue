@@ -254,14 +254,16 @@ onMounted(() => loadPuzzle());
               v-for="(value, index) in cells"
               :key="index"
               type="button"
-              class="focus-visible:ring-primary border-default/70 relative flex items-center justify-center border-r border-b font-mono text-base font-medium tabular-nums focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none sm:text-xl"
+              class="focus-visible:ring-primary border-outline/70 relative flex items-center justify-center border-r border-b font-mono text-base font-medium tabular-nums focus-visible:z-10 focus-visible:ring-2 focus-visible:outline-none sm:text-xl"
               :class="[
                 index % 9 === 2 || index % 9 === 5 ? 'border-r-inverted border-r-2' : '',
                 Math.floor(index / 9) === 2 || Math.floor(index / 9) === 5
                   ? 'border-b-inverted border-b-2'
                   : '',
                 selectedCell === index ? 'bg-primary/15 text-primary' : 'hover:bg-elevated/50',
-                isGiven(index) ? 'bg-muted/40 text-highlighted font-semibold' : 'text-toned',
+                isGiven(index)
+                  ? 'bg-muted/40 text-foreground-highlighted font-semibold'
+                  : 'text-foreground-muted',
                 incorrectCells.has(index) ? 'bg-error/15 text-error' : '',
               ]"
               :aria-label="`Row ${Math.floor(index / 9) + 1}, column ${(index % 9) + 1}${value ? `, ${value}` : ', empty'}`"
@@ -273,23 +275,22 @@ onMounted(() => loadPuzzle());
         </div>
 
         <div class="grid gap-6">
-          <div class="border-default/70 grid grid-cols-2 border-b pb-5">
+          <div class="border-outline/70 grid grid-cols-2 border-b pb-5">
             <div>
               <p class="font-mono text-3xl tabular-nums">{{ formattedTime }}</p>
-              <p class="text-muted mt-1 text-sm">elapsed time</p>
+              <p class="text-foreground-muted mt-1 text-sm">elapsed time</p>
             </div>
-            <div class="border-default/70 border-l pl-5">
+            <div class="border-outline/70 border-l pl-5">
               <p class="font-mono text-3xl tabular-nums">{{ remaining }}</p>
-              <p class="text-muted mt-1 text-sm">empty squares</p>
+              <p class="text-foreground-muted mt-1 text-sm">empty squares</p>
             </div>
           </div>
 
-          <UAlert
+          <UiNotice
             v-if="completed"
             title="Puzzle complete"
             :description="`Solved in ${formattedTime}. Every row, column, and box is correct.`"
-            color="success"
-            variant="soft"
+            tone="success"
             icon="i-tabler-circle-check"
           />
 
@@ -298,14 +299,14 @@ onMounted(() => loadPuzzle());
               v-for="number in 9"
               :key="number"
               type="button"
-              class="focus-visible:ring-primary border-default/70 hover:bg-elevated/60 min-h-11 border font-mono font-semibold focus-visible:ring-2 focus-visible:outline-none"
+              class="focus-visible:ring-primary border-outline/70 hover:bg-elevated/60 min-h-11 border font-mono font-semibold focus-visible:ring-2 focus-visible:outline-none"
               @click="setNumber(number)"
             >
               {{ number }}
             </button>
             <button
               type="button"
-              class="focus-visible:ring-primary border-default/70 hover:bg-elevated/60 min-h-11 border font-mono text-xs focus-visible:ring-2 focus-visible:outline-none"
+              class="focus-visible:ring-primary border-outline/70 hover:bg-elevated/60 min-h-11 border font-mono text-xs focus-visible:ring-2 focus-visible:outline-none"
               @click="setNumber(0)"
             >
               CLEAR
@@ -315,33 +316,29 @@ onMounted(() => loadPuzzle());
       </div>
 
       <div
-        class="border-default/70 mx-auto grid w-full max-w-3xl gap-4 border-t pt-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end"
+        class="border-outline/70 mx-auto grid w-full max-w-3xl gap-4 border-t pt-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end"
       >
-        <UFormField
+        <UiField
           label="Difficulty"
           :description="`${selectedLevel.given}; ${selectedLevel.empty}.`"
-          :ui="{ container: 'mt-2' }"
         >
-          <USelect
+          <UiSelect
             :model-value="level"
             :items="levelItems"
-            value-key="value"
-            label-key="label"
-            size="lg"
             class="w-full sm:max-w-sm"
             @update:model-value="changeLevel"
           />
-        </UFormField>
+        </UiField>
 
         <div class="flex flex-wrap gap-2 sm:justify-end">
-          <UButton
+          <UiButton
             label="Reset"
             color="neutral"
             variant="ghost"
             icon="i-tabler-rotate"
             @click="reset"
           />
-          <UButton
+          <UiButton
             label="New puzzle"
             color="neutral"
             variant="outline"

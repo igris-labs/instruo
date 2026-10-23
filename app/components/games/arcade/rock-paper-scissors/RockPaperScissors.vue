@@ -126,16 +126,15 @@ onBeforeUnmount(() => {
         class="rps-state"
       >
         <div class="rps-state-copy">
-          <UIcon
+          <UiIcon
             name="i-tabler-hand-click"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="rps-eyebrow">Arena prep</p>
           <h2>Shuffling the hands</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -147,20 +146,19 @@ onBeforeUnmount(() => {
         class="rps-state rps-state--ready"
       >
         <div class="rps-ready-copy">
-          <UBadge
+          <UiBadge
             label="First to five"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
           <p class="rps-eyebrow">Rock · paper · scissors</p>
           <h2>Read the hand.<br />Take the match.</h2>
           <p>Rock beats scissors. Scissors beat paper. Paper beats rock.</p>
-          <UButton
+          <UiButton
             label="Start match"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="startGame"
           />
         </div>
@@ -213,7 +211,7 @@ onBeforeUnmount(() => {
                 :data-picked="Boolean(playerChoice)"
               >
                 <span class="rps-hand-label">You</span>
-                <UIcon
+                <UiIcon
                   :name="optionFor(playerChoice)?.icon ?? 'i-tabler-help'"
                   class="rps-hand-icon"
                   aria-hidden="true"
@@ -226,7 +224,7 @@ onBeforeUnmount(() => {
                 :data-picked="Boolean(computerChoice)"
               >
                 <span class="rps-hand-label">Computer</span>
-                <UIcon
+                <UiIcon
                   :name="optionFor(computerChoice)?.icon ?? 'i-tabler-help'"
                   class="rps-hand-icon"
                   aria-hidden="true"
@@ -246,7 +244,7 @@ onBeforeUnmount(() => {
                 :aria-label="`Choose ${choice.label}`"
                 @click="play(choice.value)"
               >
-                <UIcon
+                <UiIcon
                   :name="choice.icon"
                   class="size-7"
                   aria-hidden="true"
@@ -270,13 +268,13 @@ onBeforeUnmount(() => {
                   :key="`${round.player}-${round.computer}-${index}`"
                   :data-outcome="round.outcome"
                 >
-                  <UIcon
+                  <UiIcon
                     :name="optionFor(round.player)?.icon ?? 'i-tabler-help'"
                     aria-hidden="true"
                   />
                   <span>{{ optionFor(round.player)?.label }}</span>
                   <span class="rps-history-vs">vs</span>
-                  <UIcon
+                  <UiIcon
                     :name="optionFor(round.computer)?.icon ?? 'i-tabler-help'"
                     aria-hidden="true"
                   />
@@ -290,12 +288,11 @@ onBeforeUnmount(() => {
 
             <footer class="rps-footer">
               <p>Rock beats scissors · scissors beat paper · paper beats rock</p>
-              <UButton
+              <UiButton
                 label="New match"
                 color="neutral"
                 variant="ghost"
                 icon="i-tabler-refresh"
-                size="sm"
                 @click="startGame"
               />
             </footer>
@@ -305,7 +302,7 @@ onBeforeUnmount(() => {
             v-if="isComplete"
             class="rps-result"
           >
-            <UIcon
+            <UiIcon
               :name="matchWinner === 'player' ? 'i-tabler-trophy' : 'i-tabler-flag-3'"
               class="text-primary size-9"
               aria-hidden="true"
@@ -315,10 +312,10 @@ onBeforeUnmount(() => {
             <p>
               Final score <strong>{{ scoreLabel }}</strong>
             </p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="startGame"
             />
           </div>

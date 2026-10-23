@@ -40,24 +40,24 @@ onBeforeUnmount(() => {
   <ToolWorkbench description="A precise, private stopwatch for quick timing tasks.">
     <div class="grid max-w-xl justify-items-center gap-6">
       <output
-        class="text-highlighted font-mono text-6xl tracking-tight tabular-nums"
+        class="text-foreground-highlighted font-mono text-6xl tracking-tight tabular-nums"
         aria-live="polite"
         >{{ display }}</output
       >
       <div class="flex flex-wrap justify-center gap-2">
-        <UButton
+        <UiButton
           v-if="!running"
           label="Start"
           icon="i-tabler-player-play"
           @click="start"
         />
-        <UButton
+        <UiButton
           v-else
           label="Pause"
           icon="i-tabler-player-pause"
           @click="pause"
         />
-        <UButton
+        <UiButton
           color="neutral"
           variant="ghost"
           label="Reset"

@@ -380,7 +380,7 @@ onBeforeUnmount(() => {
           class="relative z-10 grid h-full place-items-center p-6 text-center text-white"
         >
           <div class="grid justify-items-center gap-4">
-            <UIcon
+            <UiIcon
               name="i-tabler-bulb"
               class="text-primary size-9 animate-pulse"
               aria-hidden="true"
@@ -393,9 +393,8 @@ onBeforeUnmount(() => {
                 Warming the lights
               </h2>
             </div>
-            <UProgress
+            <UiProgress
               :model-value="loadingProgress"
-              color="primary"
               class="w-44"
               aria-label="Loading game"
             />
@@ -408,9 +407,9 @@ onBeforeUnmount(() => {
         >
           <div class="grid w-full max-w-lg gap-4">
             <div class="flex flex-wrap items-center justify-between gap-3">
-              <UBadge
+              <UiBadge
                 :label="selectedModeLabel"
-                color="primary"
+                tone="primary"
                 variant="subtle"
               />
               <span
@@ -429,25 +428,22 @@ onBeforeUnmount(() => {
             </div>
             <p class="max-w-md text-sm leading-6 text-white/75 sm:text-base">{{ modeSummary }}</p>
             <div class="grid gap-2 sm:max-w-xs">
-              <UFormField
+              <UiField
                 label="Circuit mode"
                 class="text-white"
               >
-                <USelect
+                <UiSelect
                   v-model="selectedModeModel"
                   :items="modeOptions"
-                  value-key="value"
-                  label-key="label"
                   class="w-full"
                 />
-              </UFormField>
+              </UiField>
             </div>
             <div class="flex flex-wrap items-center gap-3">
-              <UButton
+              <UiButton
                 label="Start circuit"
                 icon="i-tabler-player-play"
-                color="primary"
-                size="lg"
+                color="neutral"
                 @click="startGame"
               />
               <span class="text-xs text-white/60">{{ bestLabel }} · runs locally</span>
@@ -478,19 +474,18 @@ onBeforeUnmount(() => {
                   </p>
                 </div>
                 <div class="flex shrink-0 items-center gap-1">
-                  <UButton
+                  <UiButton
                     :icon="soundEnabled ? 'i-tabler-volume' : 'i-tabler-volume-off'"
                     color="neutral"
                     variant="ghost"
-                    size="xs"
                     :aria-label="soundEnabled ? 'Mute game sounds' : 'Unmute game sounds'"
                     :aria-pressed="soundEnabled"
                     class="text-white/75 hover:text-white"
                     @click="toggleSound"
                   />
-                  <UBadge
+                  <UiBadge
                     :label="moveLabel"
-                    color="neutral"
+                    tone="neutral"
                     variant="subtle"
                     class="bg-white/10 text-white"
                   />
@@ -528,7 +523,7 @@ onBeforeUnmount(() => {
                   :disabled="isWon"
                   @click="toggle(index)"
                 >
-                  <UIcon
+                  <UiIcon
                     :name="isOn ? 'i-tabler-bulb' : 'i-tabler-bulb-off'"
                     class="relative z-10"
                     :class="boardSize === 7 ? 'size-4 sm:size-5' : 'size-5 sm:size-6'"
@@ -547,21 +542,19 @@ onBeforeUnmount(() => {
                   Try the highlighted switch. Hint adds {{ hintPenalty }} scored moves.
                 </p>
                 <div class="flex flex-wrap items-center justify-between gap-2">
-                  <UButton
+                  <UiButton
                     label="Hint"
                     icon="i-tabler-bulb"
                     color="neutral"
                     variant="outline"
-                    size="sm"
                     :disabled="hintIndex === null || isWon"
                     @click="useHint"
                   />
-                  <UButton
+                  <UiButton
                     label="Reset circuit"
                     icon="i-tabler-refresh"
                     color="neutral"
                     variant="ghost"
-                    size="sm"
                     @click="reset"
                   />
                 </div>
@@ -573,7 +566,7 @@ onBeforeUnmount(() => {
               class="absolute inset-0 z-20 grid place-items-center bg-black/65 p-5 text-center backdrop-blur-sm"
             >
               <div class="grid justify-items-center gap-3">
-                <UIcon
+                <UiIcon
                   name="i-tabler-bulb-off"
                   class="text-primary size-8"
                   aria-hidden="true"
@@ -596,10 +589,10 @@ onBeforeUnmount(() => {
                 >
                   {{ dailyStreak }} day daily streak
                 </p>
-                <UButton
+                <UiButton
                   label="Play again"
                   icon="i-tabler-player-play"
-                  color="primary"
+                  color="neutral"
                   @click="startGame"
                 />
               </div>
@@ -609,12 +602,12 @@ onBeforeUnmount(() => {
       </section>
 
       <div class="flex flex-wrap items-center justify-between gap-3">
-        <p class="text-muted min-w-0 text-sm leading-6">
+        <p class="text-foreground-muted min-w-0 text-sm leading-6">
           Every board is generated from legal moves, so every circuit is solvable.
         </p>
         <span
           v-if="selectedMode === 'daily' && dailyStreak > 0"
-          class="text-toned shrink-0 font-mono text-xs tabular-nums"
+          class="text-foreground-muted shrink-0 font-mono text-xs tabular-nums"
           >{{ dailyStreak }} day streak</span
         >
       </div>

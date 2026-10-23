@@ -68,20 +68,20 @@ function reset() {
       class="mx-auto grid max-w-xl gap-6"
       @submit.prevent="submit"
     >
-      <div class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <div class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <p
-          class="text-toned flex items-center gap-2 text-sm leading-6"
+          class="text-foreground-muted flex items-center gap-2 text-sm leading-6"
           :class="isLost ? 'text-error' : isSolved ? 'text-success' : ''"
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             v-if="isLost"
             name="i-tabler-circle-x"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="isSolved"
             name="i-tabler-circle-check"
             class="size-4 shrink-0"
@@ -89,43 +89,43 @@ function reset() {
           />
           {{ statusText }}
         </p>
-        <span class="text-toned shrink-0 font-mono text-sm tabular-nums">
+        <span class="text-foreground-muted shrink-0 font-mono text-sm tabular-nums">
           {{ attempts }}/{{ maxAttempts }}
         </span>
       </div>
 
       <div
-        class="border-default/70 bg-muted/20 grid min-h-44 place-items-center gap-3 border p-6 text-center sm:min-h-52 sm:p-8"
+        class="border-outline/70 bg-muted/20 grid min-h-44 place-items-center gap-3 border p-6 text-center sm:min-h-52 sm:p-8"
       >
-        <span class="text-muted text-xs font-semibold tracking-[0.14em] uppercase">
+        <span class="text-foreground-muted text-xs font-semibold tracking-[0.14em] uppercase">
           Scrambled word
         </span>
-        <strong class="text-highlighted font-mono text-[clamp(2rem,8vw,3.5rem)] tracking-[0.18em]">
+        <strong
+          class="text-foreground-highlighted font-mono text-[clamp(2rem,8vw,3.5rem)] tracking-[0.18em]"
+        >
           {{ scrambled }}
         </strong>
       </div>
 
-      <UFormField
+      <UiField
         label="Your answer"
         description="Use letters only. Guessing ignores letter case."
       >
         <div class="flex flex-col gap-3 sm:flex-row">
-          <UInput
+          <UiInput
             v-model="guess"
             class="w-full"
-            size="xl"
             placeholder="Type the word"
             autocomplete="off"
             :disabled="gameOver"
           />
-          <UButton
+          <UiButton
             type="submit"
             label="Check answer"
-            size="xl"
             :disabled="gameOver || !guess.trim()"
           />
         </div>
-      </UFormField>
+      </UiField>
 
       <Transition
         name="scramble-feedback"
@@ -161,12 +161,12 @@ function reset() {
       </Transition>
 
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
       >
-        <p class="text-muted text-sm leading-6">
+        <p class="text-foreground-muted text-sm leading-6">
           Every round is generated locally from a short word list.
         </p>
-        <UButton
+        <UiButton
           label="New word"
           color="neutral"
           variant="outline"

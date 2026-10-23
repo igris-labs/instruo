@@ -139,16 +139,15 @@ onBeforeUnmount(() => {
         class="higher-lower-state"
       >
         <div class="higher-lower-state-copy">
-          <UIcon
+          <UiIcon
             name="i-tabler-arrows-up-down"
             class="text-primary size-9"
             aria-hidden="true"
           />
           <p class="higher-lower-eyebrow">The number stage</p>
           <h2>Setting the next reveal</h2>
-          <UProgress
+          <UiProgress
             :model-value="loadingProgress"
-            color="primary"
             class="w-48"
             aria-label="Loading game"
           />
@@ -160,9 +159,9 @@ onBeforeUnmount(() => {
         class="higher-lower-state higher-lower-state--ready"
       >
         <div class="higher-lower-ready-copy">
-          <UBadge
+          <UiBadge
             label="1–100 · endless calls"
-            color="primary"
+            tone="primary"
             variant="subtle"
             class="w-fit"
           />
@@ -171,11 +170,10 @@ onBeforeUnmount(() => {
           <p>
             Choose higher or lower, then watch the next card turn. One wrong call ends the round.
           </p>
-          <UButton
+          <UiButton
             label="Start game"
             icon="i-tabler-player-play"
-            color="primary"
-            size="lg"
+            color="neutral"
             @click="startGame"
           />
         </div>
@@ -240,19 +238,17 @@ onBeforeUnmount(() => {
             </div>
 
             <div class="higher-lower-actions">
-              <UButton
+              <UiButton
                 label="Higher"
                 icon="i-tabler-arrow-up"
                 color="success"
-                size="xl"
                 :disabled="isComplete"
                 @click="choose('higher')"
               />
-              <UButton
+              <UiButton
                 label="Lower"
                 icon="i-tabler-arrow-down"
-                color="primary"
-                size="xl"
+                color="neutral"
                 :disabled="isComplete"
                 @click="choose('lower')"
               />
@@ -276,7 +272,7 @@ onBeforeUnmount(() => {
                     >{{ round.from }} → {{ round.to }}</span
                   >
                   <span>{{ round.prediction }}</span>
-                  <UIcon
+                  <UiIcon
                     :name="round.correct ? 'i-tabler-check' : 'i-tabler-x'"
                     aria-hidden="true"
                   />
@@ -292,12 +288,11 @@ onBeforeUnmount(() => {
 
             <div class="higher-lower-footer">
               <p>Equal numbers end the round.</p>
-              <UButton
+              <UiButton
                 label="New round"
                 icon="i-tabler-refresh"
                 color="neutral"
                 variant="ghost"
-                size="sm"
                 @click="startGame"
               />
             </div>
@@ -307,7 +302,7 @@ onBeforeUnmount(() => {
             v-if="isComplete"
             class="higher-lower-result"
           >
-            <UIcon
+            <UiIcon
               :name="resultIcon"
               class="text-error size-9"
               aria-hidden="true"
@@ -319,10 +314,10 @@ onBeforeUnmount(() => {
               >. You scored <strong>{{ score }}</strong
               >.
             </p>
-            <UButton
+            <UiButton
               label="Play again"
               icon="i-tabler-player-play"
-              color="primary"
+              color="neutral"
               @click="startGame"
             />
           </div>

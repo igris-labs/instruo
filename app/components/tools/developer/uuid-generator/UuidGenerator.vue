@@ -70,74 +70,76 @@ onMounted(generate);
   <ToolWorkbench :description="description">
     <div class="grid gap-6">
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-[12rem_1fr_auto] lg:items-end">
-        <UFormField
+        <UiField
           label="UUID version"
           description="Choose the format you need."
         >
-          <USelect
+          <UiSelect
             :model-value="version"
             :items="versionItems"
             class="w-full"
             @update:model-value="selectVersion"
           />
-        </UFormField>
+        </UiField>
 
         <template v-if="isNameBased">
-          <UFormField
+          <UiField
             label="Name"
             description="The same name and namespace always return the same UUID."
           >
-            <UInput
+            <UiInput
               v-model="name"
               class="w-full"
               placeholder="https://example.com"
             />
-          </UFormField>
-          <UFormField
+          </UiField>
+          <UiField
             label="Namespace"
             description="Use URL or DNS semantics."
           >
-            <USelect
+            <UiSelect
               v-model="namespacePreset"
               :items="namespaceItems"
               class="w-48"
             />
-          </UFormField>
+          </UiField>
         </template>
 
-        <UFormField
+        <UiField
           v-else
           label="Number of UUIDs"
           description="Generate up to 50 at once."
         >
-          <UInputNumber
+          <UiNumberField
             v-model="count"
             :min="1"
             :max="50"
             class="w-40"
           />
-        </UFormField>
+        </UiField>
 
-        <UButton
+        <UiButton
           label="Generate"
           icon="i-tabler-refresh"
-          size="lg"
           @click="generate"
         />
       </div>
 
-      <UFormField :label="`UUID ${version} output`">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        :label="`UUID ${version} output`"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           :model-value="output"
           readonly
           :rows="Math.min(Math.max(isNameBased ? 1 : count, 5), 15)"
           class="w-full"
-          :ui="{ base: 'font-mono text-sm leading-7' }"
         />
-      </UFormField>
+      </UiField>
 
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy output"

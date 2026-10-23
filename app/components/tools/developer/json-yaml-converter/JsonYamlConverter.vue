@@ -18,24 +18,22 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Convert JSON and simple YAML locally, with no upload.">
     <div class="grid gap-5">
-      <USelect
+      <UiSelect
         v-model="direction"
         :items="[
           { label: 'JSON → YAML', value: 'json-yaml' },
           { label: 'YAML → JSON', value: 'yaml-json' },
         ]"
-        value-key="value"
-        label-key="label"
         class="w-full sm:max-w-xs"
       />
       <div class="grid gap-5 lg:grid-cols-2">
-        <UTextarea
+        <UiTextarea
           v-model="input"
           :rows="14"
           class="w-full"
           placeholder="Paste JSON or YAML…"
         />
-        <UTextarea
+        <UiTextarea
           :model-value="output"
           :rows="14"
           class="w-full"
@@ -44,7 +42,7 @@ const { copyText } = useCopyToClipboard();
         />
       </div>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy output"

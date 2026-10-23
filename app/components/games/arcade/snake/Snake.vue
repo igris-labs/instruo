@@ -80,8 +80,8 @@ function updateState(nextState: Record<string, unknown>) {
     <div class="snake-game">
       <header class="snake-game__header">
         <div>
-          <p class="text-highlighted text-sm font-semibold">Snake</p>
-          <p class="text-muted mt-1 font-mono text-xs">Serpent Run · three routes</p>
+          <p class="text-foreground-highlighted text-sm font-semibold">Snake</p>
+          <p class="text-foreground-muted mt-1 font-mono text-xs">Serpent Run · three routes</p>
         </div>
         <div class="snake-game__stats">
           <button
@@ -571,7 +571,7 @@ function updateState(nextState: Record<string, unknown>) {
   gap: 0.45rem;
   min-height: 1.5rem;
   margin: 0;
-  color: var(--ui-text-muted);
+  color: var(--ui-text-foreground-muted);
   font-size: 0.76rem;
   text-align: center;
 }

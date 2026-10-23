@@ -8,33 +8,31 @@ async function process() {
 <template>
   <ToolWorkbench description="Convert images between PNG, JPEG, and WebP without uploading them.">
     <div class="grid gap-5">
-      <UFileUpload
+      <UiFileInput
         :model-value="file"
         accept="image/*"
         label="Choose an image"
         description="Drop an image here or browse this device. Conversion stays in this browser."
         @update:model-value="select"
       />
-      <UFormField label="Output format">
-        <USelect
+      <UiField label="Output format">
+        <UiSelect
           v-model="format"
           :items="[
             { label: 'WebP', value: 'image/webp' },
             { label: 'JPEG', value: 'image/jpeg' },
             { label: 'PNG', value: 'image/png' },
           ]"
-          value-key="value"
-          label-key="label"
           class="w-full sm:max-w-xs"
         />
-      </UFormField>
+      </UiField>
       <div class="flex gap-2">
-        <UButton
+        <UiButton
           label="Convert"
           icon="i-tabler-refresh"
           :disabled="!file"
           @click="process"
-        /><UButton
+        /><UiButton
           color="neutral"
           variant="soft"
           label="Download"
@@ -46,7 +44,7 @@ async function process() {
         v-if="outputUrl"
         :src="outputUrl"
         alt="Converted image"
-        class="border-default max-h-72 w-fit rounded-md border object-contain"
+        class="border-outline max-h-72 w-fit rounded-md border object-contain"
       />
     </div>
   </ToolWorkbench>

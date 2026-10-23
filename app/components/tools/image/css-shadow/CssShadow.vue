@@ -13,39 +13,39 @@ const { copyText } = useCopyToClipboard();
   <ToolWorkbench description="Build a copy-ready box-shadow declaration with a live preview.">
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="X">
-          <UInput
-            v-model.number="x"
-            type="number"
-          /> </UFormField
-        ><UFormField label="Y">
-          <UInput
-            v-model.number="y"
-            type="number"
-          /> </UFormField
-        ><UFormField label="Blur">
-          <UInput
-            v-model.number="blur"
-            type="number"
-          /> </UFormField
-        ><UFormField label="Spread">
-          <UInput
-            v-model.number="spread"
-            type="number"
-          /> </UFormField
-        ><UFormField label="Color"><UInput v-model="color" /></UFormField>
+        <UiField label="X">
+          <UiNumberField
+            v-model="x"
+            :step-snapping="false"
+          /> </UiField
+        ><UiField label="Y">
+          <UiNumberField
+            v-model="y"
+            :step-snapping="false"
+          /> </UiField
+        ><UiField label="Blur">
+          <UiNumberField
+            v-model="blur"
+            :step-snapping="false"
+          /> </UiField
+        ><UiField label="Spread">
+          <UiNumberField
+            v-model="spread"
+            :step-snapping="false"
+          /> </UiField
+        ><UiField label="Color"><UiInput v-model="color" /></UiField>
       </div>
-      <div class="border-default bg-elevated grid min-h-32 place-items-center rounded-lg border">
+      <div class="border-outline bg-elevated grid min-h-32 place-items-center rounded-lg border">
         <div
           class="bg-default size-24"
           :style="{ boxShadow: `${x}px ${y}px ${blur}px ${spread}px ${color}` }"
         />
       </div>
-      <UInput
+      <UiInput
         :model-value="output"
         readonly
         class="font-mono"
-      /><UButton
+      /><UiButton
         color="neutral"
         variant="soft"
         label="Copy CSS"

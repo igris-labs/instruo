@@ -86,9 +86,9 @@ onBeforeUnmount(clearTimer);
     description="Wait for the signal, then click or press Space as quickly as you can."
   >
     <div class="mx-auto grid max-w-xl gap-6">
-      <div class="border-default/70 flex items-center justify-between gap-4 border-b pb-4">
+      <div class="border-outline/70 flex items-center justify-between gap-4 border-b pb-4">
         <p
-          class="text-toned flex items-center gap-2 text-sm leading-6"
+          class="text-foreground-muted flex items-center gap-2 text-sm leading-6"
           :class="
             gameState === 'false-start'
               ? 'text-error'
@@ -99,13 +99,13 @@ onBeforeUnmount(clearTimer);
           role="status"
           aria-live="polite"
         >
-          <UIcon
+          <UiIcon
             v-if="gameState === 'false-start'"
             name="i-tabler-circle-x"
             class="size-4 shrink-0"
             aria-hidden="true"
           />
-          <UIcon
+          <UiIcon
             v-else-if="gameState === 'result'"
             name="i-tabler-circle-check"
             class="size-4 shrink-0"
@@ -113,7 +113,7 @@ onBeforeUnmount(clearTimer);
           />
           {{ statusText }}
         </p>
-        <span class="text-toned shrink-0 font-mono text-sm tabular-nums">
+        <span class="text-foreground-muted shrink-0 font-mono text-sm tabular-nums">
           Best {{ bestMs === null ? "--" : `${bestMs} ms` }}
         </span>
       </div>
@@ -122,10 +122,10 @@ onBeforeUnmount(clearTimer);
         type="button"
         class="reaction-stage focus-visible:ring-primary grid min-h-72 place-items-center border-2 p-8 text-center transition-transform duration-300 focus-visible:ring-2 focus-visible:outline-none active:scale-[0.99]"
         :class="{
-          'border-inverted bg-muted/20 text-highlighted':
+          'border-inverted bg-muted/20 text-foreground-highlighted':
             gameState === 'idle' || gameState === 'result',
           'border-warning bg-warning/10 text-warning': gameState === 'waiting',
-          'border-success bg-success text-inverted': gameState === 'ready',
+          'border-success bg-success text-foreground-inverted': gameState === 'ready',
           'border-error bg-error/10 text-error': gameState === 'false-start',
         }"
         :data-state="gameState"
@@ -141,12 +141,12 @@ onBeforeUnmount(clearTimer);
       </button>
 
       <div
-        class="border-default/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
+        class="border-outline/70 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
       >
-        <p class="text-muted text-sm leading-6">
+        <p class="text-foreground-muted text-sm leading-6">
           Average human reaction time is roughly 200 to 250 ms.
         </p>
-        <UButton
+        <UiButton
           label="New round"
           color="neutral"
           variant="outline"

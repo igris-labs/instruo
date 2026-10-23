@@ -36,23 +36,31 @@ const formatted = computed(() => {
     description="Make Nginx configuration easier to review, diff, and paste into a server block."
   >
     <div class="grid gap-5 lg:grid-cols-2">
-      <UFormField label="Nginx configuration">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Nginx configuration"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           :rows="18"
           class="w-full font-mono"
         />
-      </UFormField>
+      </UiField>
       <div class="grid content-start gap-3">
-        <UFormField label="Formatted configuration">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Formatted configuration"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="formatted"
             :rows="18"
             readonly
             class="w-full font-mono"
           />
-        </UFormField>
-        <UButton
+        </UiField>
+        <UiButton
           label="Copy configuration"
           icon="i-tabler-copy"
           color="neutral"

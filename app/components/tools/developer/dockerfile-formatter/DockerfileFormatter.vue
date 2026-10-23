@@ -17,17 +17,17 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Normalize common Dockerfile instruction casing and whitespace.">
     <div class="grid gap-5 lg:grid-cols-2">
-      <UTextarea
+      <UiTextarea
         v-model="input"
         :rows="16"
         placeholder="FROM node:22\nWORKDIR /app"
-      /><UTextarea
+      /><UiTextarea
         :model-value="output"
         :rows="16"
         readonly
       />
       <div class="flex justify-end lg:col-span-2">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy Dockerfile"

@@ -57,40 +57,47 @@ const output = computed(() => {
   >
     <div class="grid gap-5">
       <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_12rem]">
-        <UFormField label="Root name">
-          <UInput
+        <UiField label="Root name">
+          <UiInput
             v-model="name"
             class="w-full"
           />
-        </UFormField>
-        <UFormField label="Target">
-          <USelect
+        </UiField>
+        <UiField label="Target">
+          <UiSelect
             v-model="target"
             :items="targets"
-            value-key="value"
             class="w-full"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="grid gap-5 lg:grid-cols-2">
-        <UFormField label="Sample JSON">
-          <UTextarea
+        <UiField
+          v-slot="{ controlProps }"
+          label="Sample JSON"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             v-model="source"
             :rows="12"
             class="w-full font-mono"
           />
-        </UFormField>
-        <UFormField label="Generated code">
-          <UTextarea
+        </UiField>
+        <UiField
+          v-slot="{ controlProps }"
+          label="Generated code"
+        >
+          <UiTextarea
+            v-bind="controlProps"
             :model-value="output"
             :rows="12"
             readonly
             class="w-full font-mono"
           />
-        </UFormField>
+        </UiField>
       </div>
       <div class="flex justify-end">
-        <UButton
+        <UiButton
           label="Copy code"
           icon="i-tabler-copy"
           color="neutral"

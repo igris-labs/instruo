@@ -31,17 +31,21 @@ function escapeHtml(value: string) {
 <template>
   <ToolWorkbench description="Preview a useful subset of Markdown locally as you type.">
     <div class="grid gap-6 lg:grid-cols-2">
-      <UFormField label="Markdown">
-        <UTextarea
+      <UiField
+        v-slot="{ controlProps }"
+        label="Markdown"
+      >
+        <UiTextarea
+          v-bind="controlProps"
           v-model="input"
           autoresize
           :rows="14"
           class="w-full font-mono"
           placeholder="# Heading"
         />
-      </UFormField>
+      </UiField>
       <section
-        class="border-default/70 min-h-72 rounded-lg border p-5"
+        class="border-outline/70 min-h-72 rounded-lg border p-5"
         aria-label="Markdown preview"
       >
         <div
@@ -67,7 +71,7 @@ function escapeHtml(value: string) {
   font-weight: 650;
 }
 .markdown-preview :deep(p) {
-  color: var(--ui-text-muted);
+  color: var(--ui-text-foreground-muted);
   line-height: 1.7;
 }
 .markdown-preview :deep(li) {

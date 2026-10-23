@@ -21,19 +21,19 @@ const { copyText } = useCopyToClipboard();
 <template>
   <ToolWorkbench description="Turn a list of titles into clean URL slugs in one pass.">
     <div class="grid gap-5 lg:grid-cols-2">
-      <UTextarea
+      <UiTextarea
         v-model="input"
         :rows="12"
         placeholder="One title per line…"
       />
-      <UTextarea
+      <UiTextarea
         :model-value="output"
         :rows="12"
         readonly
         placeholder="slug-output"
       />
       <div class="flex justify-end lg:col-span-2">
-        <UButton
+        <UiButton
           color="neutral"
           variant="soft"
           label="Copy slugs"
