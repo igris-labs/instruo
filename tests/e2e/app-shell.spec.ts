@@ -30,9 +30,7 @@ test("resource shell fits mobile, tablet, and desktop containers", async ({ page
       if (width < 1024) await expect(browse).toBeVisible();
       else {
         await expect(browse).not.toBeVisible();
-        await expect(
-          page.getByRole("textbox", { name: /Filter (tool|game) navigation/ }),
-        ).toBeVisible();
+        await expect(page.getByRole("navigation", { name: /^(tool|game) list$/ })).toBeVisible();
       }
     }
   }
@@ -43,7 +41,8 @@ test("resource navigation opens on demand and closes after selection", async ({ 
   await page.goto("/tools/developer/json-formatter");
   await page.getByRole("button", { name: "Browse tools", exact: true }).click();
   const sidebar = page.getByRole("dialog");
-  await sidebar.getByRole("textbox", { name: "Filter tool navigation" }).fill("Unit Converter");
+  await expect(sidebar.getByRole("textbox")).toHaveCount(0);
+  await sidebar.getByRole("button", { name: "Everyday", exact: true }).click();
   const target = sidebar.getByRole("link", { name: "Unit Converter", exact: true });
   await target.click();
   await expect(page).toHaveURL(/unit-converter/);
@@ -112,6 +111,48 @@ test("tool icons have consistent category colors in both themes", async ({ page 
   }
 });
 
+test("logo accent marks focus while category selection and primary buttons stay neutral", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto("/tools");
+  await page.waitForLoadState("networkidle");
+  const selected = page
+    .getByRole("navigation", { name: "Tool categories" })
+    .getByRole("button", { pressed: true });
+  await expect(selected).toHaveCSS("color", "oklch(0.2435 0 0)");
+  const search = page.getByRole("textbox", { name: "Search tools", exact: true });
+  await search.focus();
+  await expect(search).toHaveCSS("border-color", "rgb(184, 65, 8)");
+  await page.getByRole("button", { name: "Switch to dark theme", exact: true }).click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await expect(selected).toHaveCSS(
+    "color",
+    await page.getByRole("main").evaluate((element) => getComputedStyle(element).color),
+  );
+  await page.getByRole("button", { name: "Switch to light theme", exact: true }).click();
+  await page.goto("/");
+  await expect(page.locator(".ipex-execution").first()).toHaveCSS("color", "oklch(1 0 0)");
+});
+
+test("search dialog stays open inside and dismisses on an outside click", async ({ page }) => {
+  await page.goto("/tools");
+  const trigger = page.getByRole("button", { name: "Search tools and games", exact: true });
+  await trigger.click();
+  const dialog = page.getByRole("dialog");
+  const input = dialog.getByPlaceholder("Search tools and games…");
+  await input.fill("JSON");
+  await input.click();
+  await expect(dialog).toBeVisible();
+  await page.mouse.click(8, 8);
+  await expect(dialog).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(dialog).not.toBeVisible();
+});
+
 test("landing stays usable with reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
@@ -140,6 +181,25 @@ test("desktop navigation preserves its scroll position between tools", async ({ 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("JSON Minifier");
   await expect.poll(() => sidebar.evaluate((element) => element.scrollTop)).toBeCloseTo(before, 0);
   await expect(target).toHaveAttribute("aria-current", "page");
+});
+
+test("collapsed sidebar groups have no leftover content padding", async ({ page }) => {
+  await page.goto("/tools/developer/json-formatter");
+  await page.waitForLoadState("networkidle");
+  const navigation = page.getByRole("navigation", { name: "tool list", exact: true });
+  const developer = navigation.getByRole("button", { name: "Developer", exact: true });
+  const next = navigation.getByRole("button", { name: "Encoder Decoder", exact: true });
+  await developer.click();
+  await expect(developer).toHaveAttribute("aria-expanded", "false");
+  await expect
+    .poll(async () => {
+      const first = (await developer.boundingBox())!;
+      const second = (await next.boundingBox())!;
+      return Math.round(second.y - first.y - first.height);
+    })
+    .toBe(2);
+  await developer.click();
+  await expect(navigation.getByRole("link", { name: "JSON Formatter", exact: true })).toBeVisible();
 });
 
 test("workspace sidebar and shared icons use the larger geometry", async ({ page }) => {

@@ -16,7 +16,7 @@ export const inputDefaults = {
 };
 
 export const inputVariants = cva(
-  "w-full rounded-lg border border-outline bg-default text-foreground shadow-none outline-none placeholder:text-foreground-muted focus-visible:border-inverted focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-inverted/35 focus-visible:shadow-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-55",
+  "w-full rounded-lg border border-outline bg-default text-foreground shadow-none outline-none placeholder:text-foreground-muted focus-visible:border-accent-foreground focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent-foreground/40 focus-visible:shadow-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-55",
   {
     variants: {
       size: {

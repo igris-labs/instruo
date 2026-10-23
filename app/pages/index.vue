@@ -88,7 +88,7 @@ useSeoMeta({
           />
           <NuxtLink
             to="/games"
-            class="text-foreground-muted hover:text-foreground focus-visible:outline-info inline-flex min-h-11 items-center gap-2 rounded-sm text-sm focus-visible:outline-2"
+            class="text-foreground-muted hover:text-foreground focus-visible:outline-accent-foreground inline-flex min-h-11 items-center gap-2 rounded-sm text-sm focus-visible:outline-2"
           >
             Play a game
             <UiIcon
@@ -112,7 +112,7 @@ useSeoMeta({
           </h2>
           <NuxtLink
             to="/tools/developer/json-formatter"
-            class="text-foreground-muted hover:text-foreground focus-visible:outline-info inline-flex min-h-7 items-center gap-2 rounded-sm text-xs focus-visible:outline-2"
+            class="text-foreground-muted hover:text-foreground focus-visible:outline-accent-foreground inline-flex min-h-7 items-center gap-2 rounded-sm text-xs focus-visible:outline-2"
           >
             Open JSON Formatter <UiIcon name="i-tabler-arrow-up-right" />
           </NuxtLink>
@@ -144,7 +144,7 @@ useSeoMeta({
         </p>
         <NuxtLink
           to="/tools"
-          class="hover:text-foreground-muted focus-visible:outline-info mt-6 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium focus-visible:outline-2"
+          class="hover:text-accent-foreground focus-visible:outline-accent-foreground mt-6 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium focus-visible:outline-2"
         >
           Explore all tools
           <UiIcon
@@ -159,7 +159,7 @@ useSeoMeta({
           :key="item.id"
           :to="item.path"
           data-reveal
-          class="group hover:bg-muted/60 focus-visible:outline-info flex min-h-20 items-center gap-4 rounded-md px-1 py-4 transition-colors duration-150 focus-visible:outline-2 motion-reduce:transition-none"
+          class="group hover:bg-muted/60 focus-visible:outline-accent-foreground flex min-h-20 items-center gap-4 rounded-md px-1 py-4 transition-colors duration-150 focus-visible:outline-2 motion-reduce:transition-none"
         >
           <UiIcon
             :name="item.icon || 'i-tabler-tool'"
@@ -201,7 +201,7 @@ useSeoMeta({
         </div>
         <NuxtLink
           to="/games"
-          class="hover:text-foreground-muted focus-visible:outline-info inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium focus-visible:outline-2"
+          class="hover:text-accent-foreground focus-visible:outline-accent-foreground inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium focus-visible:outline-2"
         >
           All games
           <UiIcon
@@ -217,7 +217,7 @@ useSeoMeta({
           :to="game.path"
           :aria-label="`Play ${game.title}`"
           data-reveal
-          class="group focus-visible:outline-info min-w-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4"
+          class="group focus-visible:outline-accent-foreground min-w-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4"
         >
           <GamePreview
             :path="game.path"

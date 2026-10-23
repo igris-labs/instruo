@@ -91,7 +91,7 @@ watch(open, () => {
             content:
               'max-h-[min(55dvh,26rem)] overflow-y-auto rounded-none border-0 bg-transparent p-2 shadow-none',
             groupLabel: 'px-2 pt-3 pb-2 text-xs text-foreground-dimmed',
-            option: 'min-h-12 gap-3 px-2 py-2 data-akaza-highlighted:bg-muted hover:bg-muted',
+            option: 'min-h-12 gap-3 px-2 py-2 data-akaza-highlighted:bg-accent-soft hover:bg-muted',
           }"
           @update:model-value="select"
         >

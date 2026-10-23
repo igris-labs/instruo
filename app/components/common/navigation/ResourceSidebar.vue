@@ -8,7 +8,6 @@ interface ResourceItem {
   icon?: string;
 }
 const props = defineProps<{ items: ResourceItem[]; currentPath: string; kind: "game" | "tool" }>();
-const search = ref("");
 const open = useState("resource-sidebar-open", () => false);
 const collapsed = ref(false);
 const expanded = ref<string[]>([]);
@@ -17,13 +16,6 @@ const scrollTop = useState(`sidebar-scroll-${props.kind}`, () => 0);
 const menuItems = computed<NavigationMenuItem[]>(() => {
   const groups = new Map<string, ResourceItem[]>();
   for (const item of props.items.toSorted((a, b) => a.title.localeCompare(b.title))) {
-    if (
-      ![item.title, item.category]
-        .join(" ")
-        .toLowerCase()
-        .includes(search.value.trim().toLowerCase())
-    )
-      continue;
     groups.set(item.category, [...(groups.get(item.category) ?? []), item]);
   }
   return [...groups.entries()]
@@ -44,11 +36,10 @@ const menuItems = computed<NavigationMenuItem[]>(() => {
     }));
 });
 watch(
-  [() => props.currentPath, () => props.items, search],
+  [() => props.currentPath, () => props.items],
   () => {
     const activeCategory = props.items.find((item) => item.path === props.currentPath)?.category;
-    if (search.value.trim()) expanded.value = menuItems.value.map((item) => String(item.value));
-    else if (activeCategory && !expanded.value.includes(activeCategory))
+    if (activeCategory && !expanded.value.includes(activeCategory))
       expanded.value = [...expanded.value, activeCategory];
   },
   { immediate: true },
@@ -95,7 +86,7 @@ watch(
     :ui="{
       panel: 'border-r border-outline/60 bg-default',
       body: 'overscroll-contain px-2 pb-3',
-      header: 'h-auto min-h-12 flex-wrap px-3 py-4',
+      header: 'h-12 px-3',
       mobileContent: 'bg-default',
     }"
   >
@@ -113,13 +104,6 @@ watch(
         aria-label="Close navigation"
         @click="open = false"
       />
-      <UiInput
-        v-model="search"
-        icon="i-tabler-search"
-        :placeholder="`Filter ${kind}s…`"
-        :aria-label="`Filter ${kind} navigation`"
-        class="w-full"
-      />
     </template>
     <div
       ref="navigation"
@@ -133,7 +117,7 @@ watch(
         :aria-label="`${kind} list`"
         :ui="{
           list: 'flex-col items-stretch gap-0.5',
-          link: 'min-h-8 gap-2 rounded-md px-2 text-sm text-foreground-muted hover:bg-muted data-akaza-active:bg-muted data-akaza-active:text-foreground-highlighted',
+          link: 'min-h-8 gap-2 rounded-md px-2 text-sm text-foreground-muted hover:bg-muted aria-[current=page]:bg-muted aria-[current=page]:text-foreground-highlighted',
           trigger:
             'min-h-9 w-full justify-between px-2 text-xs text-foreground-muted hover:bg-muted data-akaza-active:text-foreground',
           inlineTrigger:
@@ -141,8 +125,9 @@ watch(
           itemLabel: 'min-w-0 flex-1 truncate text-left leading-5',
           itemLeading: 'empty:hidden',
           inlineLink:
-            'h-8 min-w-0 gap-2 rounded-md px-2 text-xs text-foreground-muted hover:bg-muted data-akaza-active:bg-muted data-akaza-active:text-foreground-highlighted',
-          inlineContent: 'pl-0 pt-1 pb-3',
+            'h-8 min-w-0 gap-2 rounded-md px-2 text-xs text-foreground-muted hover:bg-muted aria-[current=page]:bg-muted aria-[current=page]:text-foreground-highlighted',
+          inlineContent: 'p-0',
+          inlineList: 'space-y-0.5 pt-1 pb-3',
           groupLabel: 'mt-5 px-2 pb-2 text-[11px] font-medium text-foreground-dimmed',
         }"
       >
@@ -170,12 +155,6 @@ watch(
           />
         </template>
       </UiNavigationMenu>
-      <p
-        v-if="!menuItems.length"
-        class="text-foreground-muted p-3 text-xs"
-      >
-        No matching {{ kind }}s.
-      </p>
     </div>
     <template #footer>
       <UiNavigationMenu

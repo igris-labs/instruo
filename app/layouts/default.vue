@@ -34,7 +34,7 @@ watch(
       main: 'min-w-0 outline-none',
       left: 'min-h-0',
       skipLink:
-        'bg-inverted text-foreground-inverted rounded-md px-3 py-2 focus-visible:outline-2 focus-visible:outline-info',
+        'bg-inverted text-foreground-inverted rounded-md px-3 py-2 focus-visible:outline-2 focus-visible:outline-accent-foreground',
     }"
   >
     <template #header><AppHeader :workspace="Boolean(resourceKind)" /></template>

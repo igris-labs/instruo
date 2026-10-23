@@ -48,7 +48,7 @@ const items = computed(() =>
           <NuxtLink
             to="/"
             aria-label="Instruo home"
-            class="focus-visible:outline-info inline-flex items-center gap-2 rounded-md text-sm font-semibold focus-visible:outline-2"
+            class="focus-visible:outline-accent-foreground inline-flex items-center gap-2 rounded-md text-sm font-semibold focus-visible:outline-2"
           >
             <img
               src="/logo.svg"
@@ -66,7 +66,7 @@ const items = computed(() =>
           :class="workspace ? 'ml-5' : ''"
           :ui="{
             list: 'gap-5',
-            link: 'text-sm text-foreground-muted data-akaza-active:text-foreground hover:text-foreground hover:bg-transparent px-0 min-h-8 rounded-sm',
+            link: 'text-sm text-foreground-muted data-akaza-active:text-accent-foreground aria-[current=page]:text-accent-foreground hover:text-accent-foreground hover:bg-transparent px-0 min-h-8 rounded-sm',
           }"
         />
       </div>
@@ -85,7 +85,7 @@ const items = computed(() =>
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instruo on GitHub"
-          class="text-foreground-muted hover:text-foreground focus-visible:outline-info relative inline-flex size-7 items-center justify-center rounded-md focus-visible:outline-2 pointer-coarse:before:absolute pointer-coarse:before:size-11"
+          class="text-foreground-muted hover:text-foreground focus-visible:outline-accent-foreground relative inline-flex size-7 items-center justify-center rounded-md focus-visible:outline-2 pointer-coarse:before:absolute pointer-coarse:before:size-11"
           ><UiIcon
             name="i-tabler-brand-github"
             class="size-5"
@@ -131,7 +131,7 @@ const items = computed(() =>
           aria-label="Mobile navigation"
           :ui="{
             list: 'flex-col items-stretch gap-2',
-            link: 'min-h-11 px-3 text-sm data-akaza-active:bg-muted',
+            link: 'min-h-11 px-3 text-sm data-akaza-active:bg-muted aria-[current=page]:bg-muted aria-[current=page]:text-foreground-highlighted',
           }"
           @click="menuOpen = false"
         />

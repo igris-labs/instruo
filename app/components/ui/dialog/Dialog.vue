@@ -20,7 +20,7 @@ interface Props {
 const {
   title,
   description,
-  closeOnBackdropClick,
+  closeOnBackdropClick = true,
   variant,
   size,
   class: customClass,

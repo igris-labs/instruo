@@ -147,7 +147,7 @@ onKeyStroke("/", (event) => {
           v-for="task in startingPoints"
           :key="task.path"
           :to="task.path"
-          class="group hover:bg-elevated focus-visible:outline-info flex min-w-0 items-center gap-3 rounded-md p-2 transition-colors duration-150 focus-visible:outline-2 motion-reduce:transition-none"
+          class="group hover:bg-elevated focus-visible:outline-accent-foreground flex min-w-0 items-center gap-3 rounded-md p-2 transition-colors duration-150 focus-visible:outline-2 motion-reduce:transition-none"
           @click="remember(task)"
         >
           <UiIcon
@@ -232,7 +232,7 @@ onKeyStroke("/", (event) => {
               v-for="item in recentItems"
               :key="item.id"
               :to="item.path"
-              class="text-foreground-muted hover:text-foreground focus-visible:outline-info rounded-sm text-xs leading-7 focus-visible:outline-2"
+              class="text-foreground-muted hover:text-foreground focus-visible:outline-accent-foreground rounded-sm text-xs leading-7 focus-visible:outline-2"
               @click="remember(item)"
               >{{ item.title }}</NuxtLink
             >
@@ -295,7 +295,7 @@ onKeyStroke("/", (event) => {
                 :key="item.id"
                 :to="item.path"
                 :aria-label="kind === 'game' ? `Play ${item.title}` : undefined"
-                class="group focus-visible:outline-info min-w-0 rounded-md transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
+                class="group focus-visible:outline-accent-foreground min-w-0 rounded-md transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
                 :class="
                   kind === 'tool'
                     ? 'hover:bg-muted/60 -mx-2 flex min-h-24 items-start gap-4 px-2 py-4'

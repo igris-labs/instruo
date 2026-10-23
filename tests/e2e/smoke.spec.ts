@@ -78,7 +78,8 @@ test("mobile resource navigation uses a dismissible sidebar", async ({ page }) =
   await page.getByRole("button", { name: "Browse tools", exact: true }).click();
   const drawer = page.getByRole("dialog");
   await expect(drawer).toBeVisible();
-  await drawer.getByRole("textbox", { name: "Filter tool navigation" }).fill("JSON Formatter");
+  await expect(drawer.getByRole("textbox")).toHaveCount(0);
+  await drawer.getByRole("button", { name: "Developer", exact: true }).click();
   await drawer.getByRole("link", { name: "JSON Formatter", exact: true }).click();
   await expect(page).toHaveURL(/json-formatter/);
   await expect(drawer).not.toBeVisible();

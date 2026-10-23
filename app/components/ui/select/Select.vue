@@ -78,7 +78,7 @@ const ui = computed(() => ({
   trigger: selectVariants({ variant, size: resolvedSize.value }),
   content:
     "z-50 min-w-40 rounded-lg border border-outline bg-elevated p-1.5 text-foreground shadow-lg",
-  viewport: "max-h-64 overflow-auto",
+  viewport: "max-h-64 space-y-0.5 overflow-auto",
   empty: cn(
     "px-2.5 py-2 text-foreground-muted",
     resolvedSize.value === "md" ? "text-sm leading-5" : "text-xs leading-4",

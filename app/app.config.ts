@@ -31,6 +31,7 @@ export default defineAppConfig({
       {
         label: "Other products",
         children: [
+          { label: "Initera", to: "https://initera.app", target: "_blank" },
           { label: "Inspira UI", to: "https://inspira-ui.com", target: "_blank" },
           { label: "Inspira UI Pro", to: "https://pro.inspira-ui.com", target: "_blank" },
           { label: "Akaza UI", to: "https://akaza-ui.com", target: "_blank" },

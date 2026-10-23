@@ -16,7 +16,7 @@ export const buttonDefaults = {
 };
 
 export const buttonVariants = cva(
-  "inline-flex cursor-pointer touch-manipulation items-center justify-center rounded-lg border font-medium whitespace-nowrap transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted disabled:cursor-not-allowed disabled:opacity-55",
+  "inline-flex cursor-pointer touch-manipulation items-center justify-center rounded-lg border font-medium whitespace-nowrap transition-[background-color,color,border-color,transform] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-foreground disabled:cursor-not-allowed disabled:opacity-55",
   {
     variants: {
       variant: {

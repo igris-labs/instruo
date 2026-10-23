@@ -16,7 +16,7 @@ export const selectDefaults = {
 };
 
 export const selectVariants = cva(
-  "flex cursor-pointer items-center justify-between gap-2 border text-left text-foreground outline-none transition-[background-color,border-color] duration-150 ease-out focus-visible:border-inverted focus-visible:ring-2 focus-visible:ring-inverted/15 disabled:cursor-not-allowed disabled:opacity-55",
+  "flex cursor-pointer items-center justify-between gap-2 border text-left text-foreground outline-none transition-[background-color,border-color] duration-150 ease-out focus-visible:border-accent-foreground focus-visible:ring-2 focus-visible:ring-accent/20 disabled:cursor-not-allowed disabled:opacity-55",
   {
     variants: {
       variant: {
