@@ -9,7 +9,7 @@ import { AppLayout } from "../components/ui/app-layout";
     sticky-header
     :ui="{
       root: 'min-h-dvh bg-background text-foreground',
-      header: 'z-30 h-14 border-0 bg-background px-0',
+      header: 'z-30 h-16 border-0 bg-background px-0',
       main: 'min-w-0',
       footer: 'border-0 bg-muted p-0',
     }"

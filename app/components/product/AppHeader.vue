@@ -14,8 +14,12 @@ const link = resolveComponent("NuxtLink");
 
 <template>
   <div
-    class="mx-auto flex h-14 w-full items-center"
-    :class="workspace ? '' : 'max-w-[90rem] gap-2 px-4 sm:gap-3 sm:px-8'"
+    class="mx-auto w-full items-center"
+    :class="
+      workspace
+        ? 'flex h-14'
+        : 'grid h-16 max-w-[90rem] grid-cols-[auto_1fr_auto] gap-2 px-4 sm:grid-cols-[1fr_auto_1fr] sm:gap-3 sm:px-8'
+    "
   >
     <div
       :class="
@@ -39,7 +43,6 @@ const link = resolveComponent("NuxtLink");
         to="/"
         aria-label="Instruo home"
         class="text-highlighted focus-visible:outline-ring flex shrink-0 items-center gap-2.5 rounded-sm text-lg font-semibold tracking-tight focus-visible:outline-1"
-        :class="workspace ? '' : 'mr-2 md:mr-4'"
       >
         <BrandLogo
           wordmark
@@ -89,7 +92,7 @@ const link = resolveComponent("NuxtLink");
     </nav>
     <NavigationMenu
       aria-label="Main navigation"
-      :class="workspace ? 'ml-auto hidden xl:block' : 'block'"
+      :class="workspace ? 'ml-auto hidden xl:block' : 'justify-self-center'"
       :items="[
         { value: '/', to: '/', label: 'Home', as: link, active: route.path === '/' },
         {
@@ -119,14 +122,14 @@ const link = resolveComponent("NuxtLink");
     />
     <div
       class="flex items-center gap-1"
-      :class="workspace ? 'mr-3 ml-auto xl:ml-0' : 'ml-auto'"
+      :class="workspace ? 'mr-3 ml-auto xl:ml-0' : 'justify-self-end'"
     >
       <Button
         v-if="!workspace"
         variant="soft"
         color="secondary"
-        class="gap-2 max-lg:w-8 max-lg:p-0 lg:w-56 lg:justify-start"
-        :ui="{ content: 'min-w-0 w-full' }"
+        shape="icon"
+        class="rounded-full"
         aria-label="Search tools and games"
         aria-haspopup="dialog"
         aria-keyshortcuts="Control+K Meta+K"
@@ -135,18 +138,16 @@ const link = resolveComponent("NuxtLink");
           name="tabler:search"
           mode="svg"
           class="size-4"
-        /><span
-          class="text-muted-foreground hidden min-w-0 truncate text-left text-[13px] lg:inline"
-          >Search tools and games…</span
-        ></Button
-      >
+      /></Button>
       <Separator
+        v-if="workspace"
         orientation="vertical"
         class="mx-1 hidden data-[akaza-orientation=vertical]:h-5 sm:block"
       />
       <Button
         variant="ghost"
         shape="icon"
+        :class="!workspace && 'rounded-full'"
         :aria-label="mode.value === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
         @click="mode.preference = mode.value === 'dark' ? 'light' : 'dark'"
         ><ClientOnly
@@ -162,7 +163,7 @@ const link = resolveComponent("NuxtLink");
         variant="ghost"
         shape="icon"
         aria-label="Instruo on GitHub"
-        class="hidden sm:inline-flex"
+        :class="workspace ? 'hidden sm:inline-flex' : 'hidden rounded-full sm:inline-flex'"
         ><Icon
           name="tabler:brand-github"
           mode="svg"

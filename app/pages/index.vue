@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { resolveComponent } from "vue";
+import HeroWorkspace from "../components/product/HeroWorkspace.vue";
 import ToolCard from "../components/product/ToolCard.vue";
 import { Button } from "../components/ui/button";
 import { quickStartSlugs } from "../features/catalogue/presentation";
@@ -22,14 +23,14 @@ const games = computed(() =>
 );
 </script>
 <template>
-  <div class="mx-auto w-full max-w-[90rem] px-5 pb-16 sm:px-8">
+  <div class="mx-auto w-full max-w-360 px-5 pb-16 sm:px-8">
     <section
-      class="mx-auto flex max-w-4xl flex-col items-center pt-20 pb-20 text-center sm:pt-28 sm:pb-28"
+      class="mx-auto flex flex-col items-center py-14 text-center sm:py-28"
       aria-labelledby="hero-title"
     >
       <h1
         id="hero-title"
-        class="text-highlighted max-w-2xl text-[clamp(2rem,3.5vw,3rem)] leading-[1.08] font-semibold tracking-[-0.045em] text-balance"
+        class="text-highlighted max-w-3xl text-[clamp(2.25rem,4.5vw,4rem)] leading-[1.06] font-semibold tracking-[-0.045em] text-balance"
       >
         Tools for everyday work.
       </h1>
@@ -54,6 +55,7 @@ const games = computed(() =>
           >Explore games</Button
         >
       </div>
+      <HeroWorkspace :game="games.find((game) => game.slug === 'lights-out')" />
     </section>
 
     <section aria-labelledby="benefits-title">
