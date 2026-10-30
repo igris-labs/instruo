@@ -23,6 +23,7 @@ Playwright starts an isolated Nuxt server on port 3197 with the `.nuxt-e2e` buil
 - Unit tests exercise current calculator, crypto, parser, text and game engines; catalogue search and registration; branding; UI utilities; syntax highlighting, folding and large-file viewport behavior.
 - Catalogue browser tests read the current `content/` metadata and registered presenters. They cover every tool and game without depending on historical migration inventories or Git commits.
 - Browser workflows cover actual exports, input validation and recovery, asynchronous cancellation, dialogs and navigation, camera fallback, keyboard ownership, game controls and scoring.
+- Workspace navigation tests delay tool/game imports to verify loading feedback, hidden stale content, and one selected sidebar link through navigation and browser back/forward.
 - Layout checks cover mobile/tablet/desktop widths, both themes, panel alignment, checkbox spacing, overflow and action hierarchy.
 - Code-editor tests exercise real Shiki tokens, JSON folding without export loss and 18,002-line documents.
 - Brand tests compare shipped SVG geometry and verify exported PNG dimensions. Regenerate icons with `pnpm brand:export`.

@@ -4,11 +4,32 @@ import { useSidebar } from "akaza-ui";
 import AppHeader from "../components/product/AppHeader.vue";
 import { AppLayout } from "../components/ui/app-layout";
 import { Button } from "../components/ui/button";
+import { Progress } from "../components/ui/progress";
 import { Sidebar } from "../components/ui/sidebar";
 import { categoryPresentation } from "../features/catalogue/presentation";
 
 const { data: catalogue } = await useCatalogue();
 const route = useRoute();
+const router = useRouter();
+const { isLoading } = useLoadingIndicator({ throttle: 0, hideDelay: 0, resetDelay: 0 });
+const pendingPath = ref<string | null>(null);
+const navigationPath = computed(() => pendingPath.value ?? route.path.replace(/\/$/, ""));
+const removeBefore = router.beforeEach((to, from) => {
+  if (to.path !== from.path) pendingPath.value = to.path.replace(/\/$/, "");
+});
+const removeAfter = router.afterEach((_to, _from, failure) => {
+  if (failure) pendingPath.value = null;
+});
+watch(isLoading, (loading) => {
+  if (!loading) pendingPath.value = null;
+});
+onBeforeUnmount(() => {
+  removeBefore();
+  removeAfter();
+});
+const destination = computed(() =>
+  catalogue.value?.find((item) => item.route === navigationPath.value),
+);
 const layout = useTemplateRef<InstanceType<typeof AppLayout>>("layout");
 const navigation = useTemplateRef<InstanceType<typeof Sidebar>>("navigation");
 const nav = useTemplateRef<HTMLElement>("navigationRegion");
@@ -40,8 +61,22 @@ const items = computed<SidebarItem[]>(() => {
   );
   return [
     { label: "Browse", value: "browse", type: "label" },
-    { label: "All tools", value: "/tools", to: "/tools", as: link },
-    { label: "All games", value: "/games", to: "/games", as: link },
+    {
+      label: "All tools",
+      value: "/tools",
+      to: "/tools",
+      as: link,
+      active: navigationPath.value === "/tools",
+      ariaCurrent: navigationPath.value === "/tools" ? "page" : false,
+    },
+    {
+      label: "All games",
+      value: "/games",
+      to: "/games",
+      as: link,
+      active: navigationPath.value === "/games",
+      ariaCurrent: navigationPath.value === "/games" ? "page" : false,
+    },
     ...categories.flatMap((category): SidebarItem[] => [
       {
         label:
@@ -51,11 +86,13 @@ const items = computed<SidebarItem[]>(() => {
       },
       ...resources
         .filter((item) => item.category === category)
-        .map((item) => ({
+        .map((item): SidebarItem => ({
           label: item.title,
           value: item.route,
           to: item.route,
           as: link,
+          active: item.route === navigationPath.value,
+          ariaCurrent: item.route === navigationPath.value ? "page" : false,
         })),
     ]),
   ];
@@ -101,7 +138,7 @@ onMounted(revealSelection);
           mode="ungrouped"
           design="standard"
           :items="items"
-          :model-value="route.path"
+          :model-value="null"
           navigation-label="Resources"
           :default-size="276"
           :mobile-size="288"
@@ -164,8 +201,32 @@ onMounted(revealSelection);
         </Sidebar>
       </div>
     </template>
-    <div class="mx-auto min-h-[calc(100dvh-3.5rem)] w-full max-w-[78rem] px-5 pt-12 pb-24 sm:px-8">
-      <slot />
+    <div
+      class="mx-auto min-h-[calc(100dvh-3.5rem)] w-full max-w-[78rem] px-5 pt-12 pb-24 sm:px-8"
+      :aria-busy="isLoading"
+    >
+      <section
+        v-if="isLoading"
+        role="status"
+        aria-live="polite"
+        class="grid min-h-64 content-start gap-4 py-4"
+      >
+        <p class="text-highlighted text-lg font-medium">
+          {{ destination ? `Loading ${destination.title}…` : "Loading page…" }}
+        </p>
+        <Progress
+          :model-value="null"
+          aria-label="Loading workspace"
+          class="max-w-sm"
+        />
+      </section>
+      <!-- Keep NuxtPage mounted so its Suspense boundary can finish the navigation. -->
+      <div
+        v-show="!isLoading"
+        :inert="isLoading"
+      >
+        <slot />
+      </div>
     </div>
   </AppLayout>
 </template>
