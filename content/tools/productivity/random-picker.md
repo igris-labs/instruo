@@ -1,4 +1,5 @@
 ---
+resourceId: tool:random-picker
 title: Random Picker
 description: Pick a fair name, task, or decision locally with optional no-repeat history.
 category: Productivity
@@ -7,9 +8,6 @@ icon: i-tabler-dice-5
 processing: local
 capabilityStatus: verified
 ---
-
-::RandomPicker
-::
 
 ## How it works
 

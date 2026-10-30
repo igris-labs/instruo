@@ -1,13 +1,11 @@
 ---
+resourceId: tool:word-char-counter
 title: "Word Character Counter"
 description: Count the number of words and characters (with or without spaces) in your text.
 category: Text
 tags: [text, word-frequency, word-character-counter, character-counter, text-length]
 icon: i-tabler-cursor-text
 ---
-
-::WordCharCounter
-::
 
 ## Count text as you type
 

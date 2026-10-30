@@ -1,13 +1,11 @@
 ---
+resourceId: game:lights-out
 title: Lights Out
 description: Solve a seeded daily light circuit, or practise on classic five-by-five and larger boards.
 category: Logic
 tags: [lights-out, logic, puzzle, toggle, brain-teaser]
 icon: i-tabler-bulb
 ---
-
-::LightsOut
-::
 
 ## Rules
 

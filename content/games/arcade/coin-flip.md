@@ -1,13 +1,11 @@
 ---
+resourceId: game:coin-flip
 title: Coin Flip
 description: Flip a local virtual coin whenever you need a quick random choice.
 category: Arcade
 tags: [coin-flip, random, choice, heads, tails]
 icon: i-tabler-coins
 ---
-
-::CoinFlip
-::
 
 ## Rules
 

@@ -1,13 +1,11 @@
 ---
+resourceId: game:mastermind
 title: Mastermind
 description: Crack a four-color code using exact and close-match clues.
 category: Logic
 tags: [mastermind, code, deduction, puzzle, logic]
 icon: i-tabler-lock
 ---
-
-::Mastermind
-::
 
 ## Rules
 

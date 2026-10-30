@@ -1,13 +1,11 @@
 ---
+resourceId: game:number-guess
 title: Number Guess
 description: Find the hidden number from 1 to 100 in seven guesses.
 category: Arcade
 tags: [number-guess, higher-lower, guessing, arcade]
 icon: i-tabler-list-numbers
 ---
-
-::NumberGuess
-::
 
 ## Rules
 

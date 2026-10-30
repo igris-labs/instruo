@@ -1,17 +1,17 @@
 ---
+resourceId: tool:csv-json
 title: CSV to JSON
-description: Convert simple comma-separated rows into a readable JSON array.
+description: Convert CSV, TSV, or delimited rows into JSON with header and value-type controls.
 category: Developer
 tags: [csv, json, converter, data, developer]
 icon: i-tabler-file-spreadsheet
 ---
 
-::CsvJson
-::
-
 ## Convert rows
 
-Use the first CSV row as field names. Each following row becomes one JSON object. This lightweight converter is best for simple comma-separated data without quoted commas.
+Paste up to 1 MB of CSV or tab-separated data. Quoted commas, escaped quotes and multiline cells are supported. Detect the delimiter automatically or choose comma, tab, semicolon or pipe.
+
+Use the first row as field names, or turn headers off to create arrays. Duplicate headers and uneven row lengths are reported rather than silently dropping values. Values remain strings unless you enable number and boolean conversion; leading-zero IDs and unsafe integers remain strings. Copy or download the JSON result.
 
 ## Privacy
 

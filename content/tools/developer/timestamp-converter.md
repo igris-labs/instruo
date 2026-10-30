@@ -1,13 +1,11 @@
 ---
+resourceId: tool:timestamp-converter
 title: Unix Timestamp Converter
 description: Convert Unix timestamps to readable dates and local dates back to timestamps.
 category: Developer
 tags: [unix, timestamp, epoch, date, time, developer]
 icon: i-tabler-clock
 ---
-
-::TimestampConverter
-::
 
 ## Convert in either direction
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cn } from "../app/lib/utils";
+import { cn } from "../app/utils/ui";
 
 describe("uI class merging", () => {
   it("keeps conditional classes and lets caller utilities override defaults", () => {

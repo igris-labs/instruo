@@ -1,13 +1,11 @@
 ---
+resourceId: tool:compound-interest
 title: Compound Interest Calculator
 description: Estimate long-term growth with recurring contributions and selectable compounding.
 category: Everyday
 tags: [money, savings, interest, calculator]
 icon: i-tabler-chart-line
 ---
-
-::CompoundInterest
-::
 
 ## Usage
 

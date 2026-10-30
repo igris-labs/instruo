@@ -1,4 +1,5 @@
 ---
+resourceId: tool:meeting-planner
 title: Meeting Planner
 description: Compare one reference time across four time zones and spot working-hour overlaps.
 category: Everyday
@@ -7,9 +8,6 @@ icon: i-tabler-world
 processing: local
 capabilityStatus: verified
 ---
-
-::MeetingPlanner
-::
 
 ## How it works
 

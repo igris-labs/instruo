@@ -1,13 +1,11 @@
 ---
+resourceId: game:reaction-timer
 title: Reaction Timer
 description: Test your reflexes by clicking the instant the panel turns green.
 category: Arcade
 tags: [reaction, reflex, timer, speed, arcade]
 icon: i-tabler-bolt
 ---
-
-::ReactionTimer
-::
 
 ## Rules
 

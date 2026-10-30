@@ -1,4 +1,5 @@
 ---
+resourceId: tool:pbkdf2-derivation
 title: PBKDF2 Password Derivation
 description: Derive a 256-bit key from a password and salt using browser Web Crypto.
 category: Security
@@ -7,9 +8,6 @@ icon: i-tabler-lock
 processing: local
 capabilityStatus: verified
 ---
-
-::Pbkdf2Derivation
-::
 
 ## How it works
 

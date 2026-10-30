@@ -1,13 +1,11 @@
 ---
+resourceId: game:tic-tac-toe
 title: Tic Tac Toe
 description: Make three in a row against a friend or an unbeatable computer opponent.
 category: Strategy
 tags: [tic-tac-toe, noughts-and-crosses, strategy, two-player, puzzle]
 icon: i-tabler-layout-grid
 ---
-
-::TicTacToe
-::
 
 ## Rules
 

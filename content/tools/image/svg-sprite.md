@@ -1,4 +1,5 @@
 ---
+resourceId: tool:svg-sprite
 title: SVG Sprite Generator
 description: Combine standalone SVG elements into a reusable symbol sprite locally.
 category: Image
@@ -7,9 +8,6 @@ icon: i-tabler-vector
 processing: local
 capabilityStatus: verified
 ---
-
-::SvgSprite
-::
 
 ## How it works
 

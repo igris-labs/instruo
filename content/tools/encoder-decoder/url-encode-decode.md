@@ -1,13 +1,11 @@
 ---
+resourceId: tool:url-encode-decode
 title: "URL"
 description: Encode or decode URL.
 category: Encoder Decoder
 tags: [encoder, decoder, url-encode, url-decode, url]
 icon: i-tabler-link
 ---
-
-::UrlEncodeDecode
-::
 
 ## Encode or decode URL text
 

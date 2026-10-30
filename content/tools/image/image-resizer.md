@@ -1,13 +1,11 @@
 ---
+resourceId: tool:image-resizer
 title: Image Resizer & Compressor
 description: Resize JPEG, PNG, or WebP images and adjust their output format and quality.
 category: Image
 tags: [image, resize, compress, jpeg, png, webp, photo]
 icon: i-tabler-photo-down
 ---
-
-::ImageResizer
-::
 
 ## Resize an image
 

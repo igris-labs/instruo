@@ -1,4 +1,5 @@
 ---
+resourceId: tool:pixel-art
 title: Pixel Art Converter
 description: Convert images into crisp pixel art with adjustable block size and local canvas rendering.
 category: Image
@@ -7,9 +8,6 @@ icon: i-tabler-grid-dots
 processing: local
 capabilityStatus: verified
 ---
-
-::PixelArt
-::
 
 ## How it works
 

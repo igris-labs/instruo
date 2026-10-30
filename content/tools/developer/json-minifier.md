@@ -1,13 +1,11 @@
 ---
+resourceId: tool:json-minifier
 title: "JSON Minifier"
 description: Remove unnecessary whitespace from valid JSON.
 category: Developer
 tags: [json, minifier, compact-json, validator, developer]
 icon: i-tabler-arrows-diagonal-minimize
 ---
-
-::JsonMinifier
-::
 
 ## Minify valid JSON
 

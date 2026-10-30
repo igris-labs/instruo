@@ -1,13 +1,11 @@
 ---
+resourceId: tool:jwt-decoder
 title: JWT Decoder
 description: Decode a JSON Web Token header and payload without verifying or uploading it.
 category: Developer
 tags: [jwt, token, json-web-token, decode, developer]
 icon: i-tabler-key
 ---
-
-::JwtDecoder
-::
 
 ## Inspect token claims
 

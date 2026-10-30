@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 
 const schema = () =>
   z.object({
+    resourceId: z.string().regex(/^(tool|game):[a-z0-9-]+$/),
     title: z.string(),
     description: z.string().optional(),
     tags: z.array(z.string()),

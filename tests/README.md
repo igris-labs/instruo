@@ -1,9 +1,33 @@
-# Verification fixtures
+# Testing
 
-The test suite is intentionally split by responsibility:
+Use Node.js 24 and install dependencies with `pnpm install`.
 
-- `pnpm test:unit` runs deterministic browser-tool primitives in Vitest.
-- `pnpm test:e2e` runs Chromium smoke checks through Playwright. The config starts Nuxt on port 3000 and captures traces on retry.
-- `pnpm typecheck`, `pnpm lint`, `pnpm format`, and `pnpm build` are the source and production gates.
+## Commands
 
-Fixtures must stay local and deterministic. Do not depend on wall-clock time, random output, external icon endpoints, network APIs, or a running third-party service. Add route-specific interaction coverage before changing a high-churn tool or game host.
+```sh
+pnpm test:unit
+pnpm exec playwright install --with-deps chromium
+pnpm test:e2e
+pnpm typecheck
+pnpm lint
+pnpm format
+pnpm build
+```
+
+Playwright starts an isolated Nuxt server on port 3197 with the `.nuxt-e2e` build directory. It does not reuse an existing server. Keep that port free; normal development can continue on port 3000. For a focused run, use `pnpm test:e2e tests/e2e/tool-panel-alignment.spec.ts`.
+
+## Coverage
+
+- Unit tests exercise current calculator, crypto, parser, text and game engines; catalogue search and registration; branding; UI utilities; syntax highlighting, folding and large-file viewport behavior.
+- Catalogue browser tests read the current `content/` metadata and registered presenters. They cover every tool and game without depending on historical migration inventories or Git commits.
+- Browser workflows cover actual exports, input validation and recovery, asynchronous cancellation, dialogs and navigation, camera fallback, keyboard ownership, game controls and scoring.
+- Layout checks cover mobile/tablet/desktop widths, both themes, panel alignment, checkbox spacing, overflow and action hierarchy.
+- Code-editor tests exercise real Shiki tokens, JSON folding without export loss and 18,002-line documents.
+- Brand tests compare shipped SVG geometry and verify exported PNG dimensions. Regenerate icons with `pnpm brand:export`.
+- Some game rules still live in Vue SFCs. `helpers/feature-functions.ts` extracts the relevant declarations from current source for deterministic tests; prefer direct engine imports when practical.
+
+Fixtures should be local and deterministic. Do not require a historical Git checkout or live external service to run unit tests. Add focused behavior and recovery tests when changing a tool or game.
+
+## Boundaries
+
+Passing tests is not a security, accessibility, financial, physical-camera or cross-browser certification. External APIs, Cloudflare bindings and real devices require separate deployment checks. Run `pnpm audit:prod` and review dependency advisories before release; a successful build is not an audit pass.

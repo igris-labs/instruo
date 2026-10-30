@@ -1,13 +1,11 @@
 ---
+resourceId: game:memory-match
 title: Memory Match
 description: Turn over cards, remember their positions, and clear every matching pair.
 category: Arcade
 tags: [memory-match, concentration, card-game, browser-game, puzzle]
 icon: i-tabler-cards
 ---
-
-::MemoryMatch
-::
 
 ## Rules
 

@@ -1,13 +1,11 @@
 ---
+resourceId: tool:password-generator
 title: Password Generator
 description: Create strong, customizable passwords with secure randomness from your browser.
 category: Security
 tags: [password, password-generator, security, random, privacy]
 icon: i-tabler-key
 ---
-
-::PasswordGenerator
-::
 
 ## How to use it
 

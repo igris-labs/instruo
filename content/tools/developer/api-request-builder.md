@@ -1,4 +1,5 @@
 ---
+resourceId: tool:api-request-builder
 title: API Request Builder
 description: Compose browser-local HTTP requests and export them as cURL, Fetch, Axios, or HTTPie.
 category: Developer
@@ -7,9 +8,6 @@ icon: i-tabler-api
 processing: local
 capabilityStatus: verified
 ---
-
-::ApiRequestBuilder
-::
 
 ## How it works
 

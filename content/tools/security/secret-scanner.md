@@ -1,4 +1,5 @@
 ---
+resourceId: tool:secret-scanner
 title: Secret Scanner
 description: Find likely credentials and private keys in pasted code before sharing or committing it.
 category: Security
@@ -7,9 +8,6 @@ icon: i-tabler-scan
 processing: local
 capabilityStatus: partial
 ---
-
-::SecretScanner
-::
 
 ## How it works
 

@@ -1,13 +1,11 @@
 ---
+resourceId: tool:openapi-viewer
 title: OpenAPI Viewer
 description: Explore complete OpenAPI JSON or YAML documents, including operations, schemas, and responses.
 category: Developer
 tags: [openapi, swagger, api, developer]
 icon: i-tabler-api
 ---
-
-::OpenApiViewer
-::
 
 ## Usage
 

@@ -1,13 +1,11 @@
 ---
+resourceId: tool:regex-tester
 title: Regex Tester
 description: Check JavaScript regular expressions against sample text with instant local feedback.
 category: Developer
 tags: [regex, regular-expression, javascript, pattern, testing, developer]
 icon: i-tabler-code
 ---
-
-::RegexTester
-::
 
 ## Test a pattern
 

@@ -1,13 +1,11 @@
 ---
+resourceId: tool:whitespace-cleaner
 title: "Whitespace Cleaner"
 description: Remove repeated spaces and excessive blank lines from text.
 category: Text
 tags: [whitespace, remove-spaces, blank-lines, clean-text, text]
 icon: i-tabler-arrows-join
 ---
-
-::WhitespaceCleaner
-::
 
 ## Clean inconsistent spacing
 

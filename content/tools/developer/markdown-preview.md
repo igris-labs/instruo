@@ -1,17 +1,15 @@
 ---
+resourceId: tool:markdown-preview
 title: Markdown Preview
-description: Write a small Markdown note and preview common formatting locally.
+description: Preview GitHub-flavored Markdown locally and export sanitized HTML.
 category: Developer
 tags: [markdown, preview, writing, developer]
 icon: i-tabler-file-text
 ---
 
-::MarkdownPreview
-::
-
 ## Preview notes
 
-Use headings, bold text, inline code, and simple lists to check a README or issue description before pasting it elsewhere. This compact preview intentionally covers common Markdown instead of trying to replace a full editor.
+Use headings, tables, lists, links, and fenced code blocks to review a README or document. The preview uses Marked and DOMPurify. Scripts, embedded frames, and image/media elements are removed; remote images are not fetched. Export sanitized HTML after rendering. Source is limited to 200,000 characters.
 
 ## Privacy
 

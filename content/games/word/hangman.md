@@ -1,13 +1,11 @@
 ---
+resourceId: game:hangman
 title: Hangman
 description: Guess letters, reveal a hidden word, and avoid six misses.
 category: Word
 tags: [hangman, word-game, spelling, browser-game, classic-game]
 icon: i-tabler-cursor-text
 ---
-
-::Hangman
-::
 
 ## Rules
 

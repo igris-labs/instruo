@@ -1,19 +1,6 @@
 <script setup lang="ts">
-const { data: games } = await useAsyncData("games", () => queryCollection("games").all());
-
-useSeoMeta({
-  title: "Free browser games",
-  description:
-    "Play arcade, word, number, logic, and strategy games in your browser without creating an account.",
-});
+import ResourceDirectory from "../../components/product/ResourceDirectory.vue";
+definePageMeta({ layout: "workspace" });
+useHead({ title: "Games" });
 </script>
-
-<template>
-  <Catalogue
-    :items="games ?? []"
-    kind="game"
-    title="Games"
-    description="A quick round or a longer challenge. Pick something worth your break."
-    search-placeholder="Search games or categories…"
-  />
-</template>
+<template><ResourceDirectory kind="game" /></template>

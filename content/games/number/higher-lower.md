@@ -1,13 +1,11 @@
 ---
+resourceId: game:higher-lower
 title: Higher or Lower
 description: Predict whether each new number will be higher or lower than the last.
 category: Number
 tags: [higher-lower, number, prediction, score, number-game]
 icon: i-tabler-chart-line
 ---
-
-::HigherLower
-::
 
 ## Rules
 

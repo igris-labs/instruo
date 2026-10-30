@@ -1,13 +1,11 @@
 ---
+resourceId: game:sudoku
 title: Sudoku
 description: Complete a classic 9×9 number puzzle directly in your browser.
 category: Number
 tags: [sudoku, number-game, logic, daily-game, puzzle]
 icon: i-tabler-grid-3x3
 ---
-
-::Sudoku
-::
 
 ## Rules
 

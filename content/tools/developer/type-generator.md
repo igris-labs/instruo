@@ -1,4 +1,5 @@
 ---
+resourceId: tool:type-generator
 title: JSON Type Generator
 description: Turn sample JSON into TypeScript, Zod, Valibot, or TypeBox definitions.
 category: Developer
@@ -7,9 +8,6 @@ icon: i-tabler-brand-typescript
 processing: local
 capabilityStatus: verified
 ---
-
-::TypeGenerator
-::
 
 ## How it works
 

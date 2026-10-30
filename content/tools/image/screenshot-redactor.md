@@ -1,4 +1,5 @@
 ---
+resourceId: tool:screenshot-redactor
 title: Screenshot Redactor
 description: Blur, pixelate, highlight, or redact sensitive screenshot areas locally.
 category: Image
@@ -7,9 +8,6 @@ icon: i-tabler-photo-edit
 processing: local
 capabilityStatus: verified
 ---
-
-::ScreenshotRedactor
-::
 
 ## How it works
 

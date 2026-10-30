@@ -1,55 +1,68 @@
-<h1 align="center">
-  Instruo
-</h1>
-<p align="center">
-  <b>Your all-in-one open-source platform for simple, efficient tools.</b><br>
-  A collection of online tools designed for productivity and simplicity.
-</p>
+# Instruo
 
-<p align="center">
-  <a href="https://github.com/rahulv-official/instruo/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/rahulv-official/instruo?style=social">
-  </a>
-  <a href="https://github.com/rahulv-official/instruo/blob/main/LICENSE.md">
-    <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg">
-  </a>  
-</p>
+[Instruo](https://instruo.org) is an open-source collection of browser tools and games. Format code, convert images, work with text, calculate everyday numbers, or take a game break—without creating an account.
 
----
+Most tools process input on your device. Features using external APIs need an internet connection; see each tool or game's documentation for details.
 
-Welcome to [**Instruo**](https://instruo.org), an open-source project dedicated to providing a collection of practical tools. Whether you need a quick utility to sort text or count words, Instruo has you covered!
+[Browse tools](https://instruo.org/tools) · [Play games](https://instruo.org/games) · [GitHub](https://github.com/igris-labs/instruo)
 
-## ✨ About Instruo
+## Development
 
-Instruo is a platform designed to provide essential online tools for everyday tasks. It is easy to use and accessible to everyone, with a focus on simplicity and efficiency.
+Use Node.js 24 (the local version is pinned in [.node-version](.node-version)) and the pnpm version specified in `package.json`.
 
-## 🚀 Why Instruo?
+```sh
+corepack enable
+pnpm install
+pnpm dev
+```
 
-Instruo was created to be a go-to platform for essential tools. The goal is to provide users with a seamless experience that saves time and enhances productivity.
+The development server runs at `http://localhost:3000`.
 
-## 🎯 Key Features
+## Commands
 
-- **Free and Open Source**: Completely [open source](https://github.com/rahulv-official/instruo) under the MIT license.
-- **Simple and Efficient Tools**: Perform common tasks like sorting text, removing duplicates, and more with ease. Check out the full list of [tools](https://instruo.org/tools).
-- **Mobile Friendly**: Optimized for use on all devices, from desktops to smartphones.
-- **Community-Driven**: Built with contributions and feedback from the community.
+| Command             | Purpose                                      |
+| ------------------- | -------------------------------------------- |
+| `pnpm dev`          | Start the development server                 |
+| `pnpm typecheck`    | Check TypeScript and Vue types               |
+| `pnpm lint`         | Run Oxlint and ESLint                        |
+| `pnpm format`       | Check formatting                             |
+| `pnpm test:unit`    | Run Vitest                                   |
+| `pnpm test:e2e`     | Run Chromium browser tests                   |
+| `pnpm build`        | Build for Cloudflare Pages                   |
+| `pnpm audit:prod`   | Check production dependency advisories       |
+| `pnpm brand:export` | Regenerate PNG brand icons from shipped SVGs |
 
-## 🙏 Acknowledgments
+Before the first browser test run, install Chromium:
 
-Special thanks to the open-source community for support in bringing Instruo to life.
+```sh
+pnpm exec playwright install --with-deps chromium
+```
 
-## Author
+See [testing](tests/README.md) for coverage and [contributing](CONTRIBUTING.md) for adding a tool or game.
 
-Hi, I'm [Rahul Vashishtha](https://rahulv.dev). I started Instruo to create a space where utility meets creativity. Instruo is designed to be a versatile platform for everyone. Check out my work on [GitHub](https://github.com/rahul-vashishtha) and join me on this journey [here](https://github.com/rahulv-official/instruo)!
+## Project structure
 
-## 🌟 Contribute
+- `app/features/tools/` — tool components, composables and engines.
+- `app/features/games/` — DOM and canvas game implementations.
+- `app/features/catalogue/` — view registration, search and presentation.
+- `app/components/ui/` — shared IPEX components using Akaza UI.
+- `app/components/product/` — application shell and shared product compositions.
+- `content/tools/`, `content/games/` — public catalogue metadata and instructions.
+- `public/` — brand assets, game artwork and licensed game resources.
+- `tests/` — unit, browser and visual-layout regression checks.
 
-We welcome contributions! If you want to suggest features, report bugs, or help improve the project, feel free to open an issue or submit a pull request on [GitHub](https://github.com/rahulv-official/instruo).
+Built with Nuxt, Vue, Tailwind CSS, Akaza UI and IPEX. Code editors use Shiki; canvas games use Phaser. Nuxt Image and nuxt-gtag remain part of the application.
 
-Check out the [Contribution Guide](https://instruo.org/getting-started/contribution) to get started.
+## Deployment
 
-## Sponsorship
+`pnpm build` targets Cloudflare Pages. Nuxt Content requires a D1 database bound as `DB`; configure the environment and bindings for your deployment. A successful local build does not validate production bindings or external services.
 
-You can support the development of this project by sponsoring the maintainer.
+## Contributing and support
 
-Support and sponsor the developer here: [Support Instruo](https://github.com/sponsors/rahul-vashishtha)
+Report bugs or suggest improvements on [GitHub](https://github.com/igris-labs/instruo/issues). Follow the [contribution guide](CONTRIBUTING.md) and [code of conduct](CODE_OF_CONDUCT.md).
+
+Created by [Rahul Vashishtha](https://rahulv.dev) at [Igris Labs](https://igrislabs.com). You can [sponsor the maintainer](https://github.com/sponsors/rahul-vashishtha).
+
+## License
+
+[MIT](LICENSE). Third-party game resources retain their own included licenses.

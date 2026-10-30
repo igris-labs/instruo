@@ -1,13 +1,11 @@
 ---
+resourceId: tool:query-builder
 title: Query String Builder
 description: Build URL-encoded query parameters from editable key and value rows.
 category: Developer
 tags: [query-string, url, parameters, encode, developer]
 icon: i-tabler-link
 ---
-
-::QueryBuilder
-::
 
 ## Build parameters
 

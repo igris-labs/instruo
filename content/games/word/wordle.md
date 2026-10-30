@@ -1,13 +1,11 @@
 ---
+resourceId: game:wordle
 title: Wordle
 description: Guess a five-letter word in six tries with a fresh daily starting word.
 category: Word
 tags: [wordle, word-game, daily-game, puzzle]
 icon: i-tabler-text-spellcheck
 ---
-
-::Wordle
-::
 
 ## Rules
 

@@ -1,10 +1,12 @@
 ---
+resourceId: tool:svg-optimizer
 title: SVG Optimizer
-description: Remove comments and unnecessary whitespace from SVG markup.
+description: Optimize SVG markup locally with SVGO while preserving viewBox, IDs, and descriptions.
 category: Image
 tags: [svg, optimize, minify, vector]
 icon: i-tabler-vector
 ---
 
-::SvgOptimizer
-::
+## Export notes
+
+Paste SVG markup and copy or download the optimized result. Optimization is not sanitization: do not publish untrusted SVG without a separate security review.

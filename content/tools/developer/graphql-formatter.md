@@ -1,6 +1,7 @@
 ---
+resourceId: tool:graphql-formatter
 title: GraphQL Formatter
-description: Format GraphQL operations locally with readable indentation and brace checks.
+description: Format GraphQL queries, mutations and schema documents with syntax-aware indentation.
 category: Developer
 tags: [graphql, formatter, query, developer]
 icon: i-tabler-graph
@@ -8,12 +9,9 @@ processing: local
 capabilityStatus: verified
 ---
 
-::GraphqlFormatter
-::
-
 ## How it works
 
-Paste a GraphQL query or mutation, choose indentation, and copy the formatted operation.
+Paste a GraphQL document or open a local file, choose indentation, then copy or download the result. The parser reports syntax errors without running queries or contacting a GraphQL endpoint. Up to 2 MB; formatting does not validate against a remote schema.
 
 ## Privacy
 
