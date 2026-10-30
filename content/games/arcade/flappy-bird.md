@@ -1,13 +1,11 @@
 ---
+resourceId: game:flappy-bird
 title: Flappy Bird
 description: A one-button arcade run where timing matters more than speed.
 category: Arcade
 tags: [flappy-bird, arcade, reflex, phaser, browser-game]
 icon: i-tabler-feather
 ---
-
-::FlappyBird
-::
 
 ## Rules
 

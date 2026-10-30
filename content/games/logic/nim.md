@@ -1,13 +1,11 @@
 ---
+resourceId: game:nim
 title: Nim
 description: Take stones from one pile and force the last move in this classic strategy game.
 category: Logic
 tags: [nim, strategy, stones, two-player, logic]
 icon: i-tabler-stack-2
 ---
-
-::Nim
-::
 
 ## Rules
 

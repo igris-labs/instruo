@@ -1,4 +1,5 @@
 ---
+resourceId: tool:nginx-formatter
 title: Nginx Configuration Formatter
 description: Format Nginx server blocks for easier review, copying, and version control.
 category: Developer
@@ -7,9 +8,6 @@ icon: i-tabler-server
 processing: local
 capabilityStatus: verified
 ---
-
-::NginxFormatter
-::
 
 ## How it works
 

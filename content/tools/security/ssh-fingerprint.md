@@ -1,4 +1,5 @@
 ---
+resourceId: tool:ssh-fingerprint
 title: SSH Key Fingerprint Calculator
 description: Calculate an OpenSSH public-key SHA-256 fingerprint locally.
 category: Security
@@ -7,9 +8,6 @@ icon: i-tabler-fingerprint
 processing: local
 capabilityStatus: verified
 ---
-
-::SshFingerprint
-::
 
 ## How it works
 

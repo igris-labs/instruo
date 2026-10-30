@@ -1,13 +1,11 @@
 ---
+resourceId: tool:totp-generator
 title: TOTP Generator
 description: Generate six-digit authenticator codes from a Base32 secret or otpauth URI.
 category: Security
 tags: [totp, otp, authenticator, security]
 icon: i-tabler-device-mobile-star
 ---
-
-::TotpGenerator
-::
 
 ## Safety
 

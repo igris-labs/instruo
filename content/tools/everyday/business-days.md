@@ -1,4 +1,5 @@
 ---
+resourceId: tool:business-days
 title: Business Days Calculator
 description: Count working days with custom weekends, holidays, and inclusive date controls.
 category: Everyday
@@ -7,9 +8,6 @@ icon: i-tabler-calendar-check
 processing: local
 capabilityStatus: verified
 ---
-
-::BusinessDays
-::
 
 ## How it works
 

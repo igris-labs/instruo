@@ -1,13 +1,11 @@
 ---
+resourceId: tool:pomodoro
 title: Pomodoro Timer
 description: A focused work timer with short and long break presets.
 category: Everyday
 tags: [pomodoro, timer, focus, productivity]
 icon: i-tabler-stopwatch
 ---
-
-::Pomodoro
-::
 
 ## Usage
 

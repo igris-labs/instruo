@@ -1,13 +1,11 @@
 ---
+resourceId: tool:duplicate-line-remover
 title: "Duplicate Line Remover"
 description: Remove duplicate lines from your text quickly and efficiently.
 category: Text
 tags: [text, duplicate-line-remover]
 icon: i-tabler-playlist-x
 ---
-
-::DuplicateLineRemover
-::
 
 ## Remove repeated lines
 

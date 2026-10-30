@@ -1,13 +1,11 @@
 ---
+resourceId: tool:lorem-generator
 title: Placeholder Copy Generator
 description: Generate short, neutral placeholder sentences for prototypes and drafts.
 category: Developer
 tags: [lorem, placeholder, copy, prototype, writing]
 icon: i-tabler-text-plus
 ---
-
-::LoremGenerator
-::
 
 ## Fill a draft
 

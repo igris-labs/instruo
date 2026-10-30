@@ -1,4 +1,5 @@
 ---
+resourceId: tool:package-json-scripts
 title: Package.json Script Builder
 description: Build a clean package.json scripts block from editable commands.
 category: Developer
@@ -7,9 +8,6 @@ icon: i-tabler-package
 processing: local
 capabilityStatus: verified
 ---
-
-::PackageJsonScripts
-::
 
 ## How it works
 

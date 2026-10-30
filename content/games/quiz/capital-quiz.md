@@ -1,13 +1,11 @@
 ---
+resourceId: game:capital-quiz
 title: Capital Quiz
 description: Play rotating ten-question geography rounds from a larger local bank of world capitals.
 category: Quiz
 tags: [capital-quiz, geography, trivia, capitals, quiz]
 icon: i-tabler-world
 ---
-
-::CapitalQuiz
-::
 
 ## Rules
 

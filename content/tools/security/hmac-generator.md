@@ -1,4 +1,5 @@
 ---
+resourceId: tool:hmac-generator
 title: HMAC Generator
 description: Create or verify HMAC signatures with SHA-256, SHA-384, or SHA-512 locally.
 category: Security
@@ -7,9 +8,6 @@ icon: i-tabler-key
 processing: local
 capabilityStatus: verified
 ---
-
-::HmacGenerator
-::
 
 ## How it works
 

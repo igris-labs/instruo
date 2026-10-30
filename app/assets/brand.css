@@ -1,0 +1,9 @@
+/* IPEX stays canonical. Instruo's approved application chrome is monochromatic. */
+@layer base {
+  :root,
+  .light,
+  .dark {
+    --accent: var(--primary);
+    --accent-foreground: var(--primary-foreground);
+  }
+}

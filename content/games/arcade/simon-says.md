@@ -1,13 +1,11 @@
 ---
+resourceId: game:simon-says
 title: Simon Says
 description: Watch the color pattern, then repeat it from memory as it grows.
 category: Arcade
 tags: [simon-says, memory, pattern, reflex, arcade]
 icon: i-tabler-brain
 ---
-
-::SimonSays
-::
 
 ## Rules
 

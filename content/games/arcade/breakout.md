@@ -1,13 +1,11 @@
 ---
+resourceId: game:breakout
 title: Breakout
 description: Clear continuously generated brick patterns, survive the speed ramp, and chase a clean local high score.
 category: Arcade
 tags: [breakout, paddle, bricks, physics, arcade, browser-game]
 icon: i-tabler-ball-basketball
 ---
-
-::Breakout
-::
 
 ## Rules
 

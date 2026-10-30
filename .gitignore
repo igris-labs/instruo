@@ -2,11 +2,14 @@
 .output
 .data
 .nuxt
+.nuxt-e2e
+.nuxt-*
 .nitro
 .cache
 dist
 playwright-report
 test-results
+.taste-skill
 
 # Node dependencies
 node_modules

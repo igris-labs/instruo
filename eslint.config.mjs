@@ -38,7 +38,21 @@ export default antfu(
     },
   },
   {
-    files: ["app/components/games/**/*.ts"],
+    files: ["app/components/ui/**/*.{vue,ts}", "app/utils/ui.ts"],
+    // Keep canonical IPEX source byte-identical; retain all correctness/accessibility rules.
+    rules: {
+      "import/consistent-type-specifier-style": "off",
+      "perfectionist/sort-imports": "off",
+      "perfectionist/sort-named-imports": "off",
+      "vue/define-macros-order": "off",
+      "vue/dot-notation": "off",
+      "vue/custom-event-name-casing": "off",
+      "vue/attributes-order": "off",
+      "vue/no-template-shadow": "off",
+    },
+  },
+  {
+    files: ["app/components/games/**/*.ts", "app/features/games/**/*.ts"],
     // Phaser palettes are intentionally expressed as hex literals; casing is not runtime-safe or user-facing.
     rules: {
       "unicorn/number-literal-case": "off",

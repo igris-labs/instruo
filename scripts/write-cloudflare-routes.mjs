@@ -23,7 +23,9 @@ const routes = {
 const invalidRules = [...routes.include, ...routes.exclude].filter((rule) => rule.length > 100);
 
 if (invalidRules.length) {
-  throw new Error(`Cloudflare route rules must be 100 characters or fewer: ${invalidRules.join(", ")}`);
+  throw new Error(
+    `Cloudflare route rules must be 100 characters or fewer: ${invalidRules.join(", ")}`,
+  );
 }
 
 const outputPath = resolve("dist/_routes.json");

@@ -1,13 +1,11 @@
 ---
+resourceId: tool:text-sorter
 title: "Text Sorter"
 description: Sort your text alphabetically, by length, or numerically.
 category: Text
 tags: [text, sorter, text-sort]
 icon: i-tabler-sort-ascending-letters
 ---
-
-::TextSorter
-::
 
 ## Sort lines of text
 

@@ -1,4 +1,5 @@
 ---
+resourceId: tool:xml-formatter
 title: XML Formatter
 description: Add indentation and line breaks to compact XML locally.
 category: Developer
@@ -6,12 +7,9 @@ tags: [xml, formatter, markup, developer]
 icon: i-tabler-file-code
 ---
 
-::XmlFormatter
-::
-
 ## Format XML
 
-Paste compact XML to make nested tags easier to scan. The formatter is intentionally small and does not rewrite values or validate every XML dialect.
+Paste XML or open a local file, choose indentation, then copy or download the result. A strict markup parser reports malformed tags and preserves entity references. This is formatting, not XSD or DTD validation. Documents are limited to 2 MB.
 
 ## Privacy
 

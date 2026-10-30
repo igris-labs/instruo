@@ -1,13 +1,11 @@
 ---
+resourceId: game:quick-trivia
 title: Quick Trivia
 description: Play a rotating ten-question round from the Open Trivia DB question library.
 category: Quiz
 tags: [trivia, quiz, general-knowledge, browser-game, learning]
 icon: i-tabler-help-circle
 ---
-
-::QuickTrivia
-::
 
 ## Rules
 

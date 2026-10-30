@@ -1,13 +1,11 @@
 ---
+resourceId: tool:csp-builder
 title: CSP Header Builder
 description: Build a readable Content-Security-Policy header from directive fields.
 category: Security
 tags: [csp, headers, web-security, security]
 icon: i-tabler-shield-check
 ---
-
-::CspBuilder
-::
 
 ## Usage
 

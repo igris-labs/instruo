@@ -1,13 +1,11 @@
 ---
+resourceId: tool:url-parser
 title: URL Parser
 description: Break a URL into protocol, origin, host, path, query, and hash without leaving your browser.
 category: Developer
 tags: [url, parser, query, hostname, developer]
 icon: i-tabler-link
 ---
-
-::UrlParser
-::
 
 ## Inspect a URL
 

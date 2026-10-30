@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="Instruo app icon">
+  <rect width="512" height="512" fill="#171717"/>
+  <svg x="96" y="93" width="320" height="326" viewBox="0 0 220 224" fill="#fafafa">
+    <path d="m20 68 82-47q2-1 4 0l62 36q4 2 0 4l-38 22q-2 1-4 0l-22-13-42 24v46q0 3-3 5l-38 22q-3 2-3-2V73q0-3 2-5Z"/>
+    <path d="m94 120 36-20q2-1 4 0l64 37q2 1 2 4v45q0 3-3 5l-36 21q-3 2-3-2v-46l-64-37q-3-2-3-4 0-2 3-3Z" opacity=".6"/>
+  </svg>
+</svg>

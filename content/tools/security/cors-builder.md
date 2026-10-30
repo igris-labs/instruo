@@ -1,4 +1,5 @@
 ---
+resourceId: tool:cors-builder
 title: CORS Header Builder
 description: Compose explicit CORS response headers for browser APIs and preflight requests.
 category: Security
@@ -7,9 +8,6 @@ icon: i-tabler-world
 processing: local
 capabilityStatus: verified
 ---
-
-::CorsBuilder
-::
 
 ## How it works
 

@@ -1,42 +1,50 @@
 <script setup lang="ts">
-import type { TooltipProps } from "akaza-ui";
-import type { PrimitiveSize, PrimitiveVariant } from "../ui.types";
-import { Tooltip as AkazaTooltip } from "akaza-ui";
-import { computed } from "vue";
-import { tooltipUi } from "./index";
+import { Tooltip as Primitive } from 'akaza-ui'
+import { computed, useAttrs } from 'vue'
 
-defineOptions({ inheritAttrs: false });
+import { cn } from '../../../utils/ui'
+import uiConfig from '../ui.config'
+import {
+  tooltipVariants,
+  resolveTooltipVariants,
+  type TooltipProps,
+  type TooltipSlots,
+} from './index'
 
-const props = defineProps<
-  TooltipProps & {
-    size?: PrimitiveSize;
-    variant?: PrimitiveVariant;
-    class?: string;
-    ui?: Record<string, string>;
-  }
->();
-
-const akazaProps = computed(() => {
-  const { size, variant, class: customClass, ui, ...rest } = props;
-  return rest;
-});
-
-const ui = computed(() => tooltipUi(props.size, props.variant, props.class, props.ui));
+defineOptions({ inheritAttrs: false })
+// Preserve Akaza defaults when optional props, including Boolean aliases, are omitted.
+const props = withDefaults(defineProps<TooltipProps>(), {
+  direction: undefined,
+  delayDuration: undefined,
+  closeDelay: undefined,
+  disabled: undefined,
+  arrow: undefined,
+  teleport: undefined,
+  transition: undefined,
+  ui: undefined,
+  modelValue: undefined,
+})
+defineSlots<TooltipSlots>()
+const attrs = useAttrs()
+const styles = computed(() => tooltipVariants(resolveTooltipVariants(props, uiConfig)))
+const mergedUi = computed(() => {
+  const overrides = props.ui as Record<string, string | undefined> | undefined
+  return Object.fromEntries(
+    Object.entries(styles.value).map(([part, style]) => [
+      part,
+      cn(style(), overrides?.[part], part === 'root' ? props.class : undefined),
+    ]),
+  )
+})
+const primitiveProps = computed(() => {
+  const { class: _class, ui: _ui, size: _size, ...native } = props
+  return native
+})
 </script>
-
 <template>
-  <AkazaTooltip
-    v-bind="{ ...akazaProps, ...$attrs }"
-    :ui="ui"
-  >
-    <template
-      v-for="(_, slotName) in $slots"
-      #[slotName]="slotProps"
-    >
-      <slot
-        :name="slotName"
-        v-bind="slotProps || {}"
-      />
-    </template>
-  </AkazaTooltip>
+  <component :is="Primitive" v-bind="{ ...primitiveProps, ...attrs }" :ui="mergedUi">
+    <template v-for="(_, name) in $slots" #[name]="scope"
+      ><slot :name="name as keyof TooltipSlots" v-bind="scope ?? {}"
+    /></template>
+  </component>
 </template>

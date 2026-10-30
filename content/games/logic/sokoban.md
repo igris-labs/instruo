@@ -1,13 +1,11 @@
 ---
+resourceId: game:sokoban
 title: Sokoban
 description: Push every crate onto a goal across fifty seeded warehouse puzzles.
 category: Logic
 tags: [sokoban, box-pushing, logic, puzzle, browser-game]
 icon: i-tabler-box
 ---
-
-::Sokoban
-::
 
 ## Rules
 

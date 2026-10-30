@@ -1,13 +1,11 @@
 ---
+resourceId: game:word-scramble
 title: Word Scramble
 description: Rearrange a shuffled word in four tries with a little help from your vocabulary.
 category: Word
 tags: [word-scramble, anagram, vocabulary, spelling, word-game]
 icon: i-tabler-letter-case
 ---
-
-::WordScramble
-::
 
 ## Rules
 

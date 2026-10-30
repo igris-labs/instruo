@@ -1,13 +1,11 @@
 ---
+resourceId: tool:unix-permissions
 title: Unix Permissions
 description: Translate three-digit octal file permissions into symbolic notation and chmod syntax.
 category: Developer
 tags: [unix, chmod, permissions, linux, developer]
 icon: i-tabler-lock
 ---
-
-::UnixPermissions
-::
 
 ## Read a mode
 

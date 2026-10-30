@@ -1,13 +1,11 @@
 ---
+resourceId: game:typing-test
 title: Typing Test
 description: Type a short sentence for thirty seconds and track your words.
 category: Word
 tags: [typing, speed, words, keyboard, test]
 icon: i-tabler-keyboard
 ---
-
-::TypingTest
-::
 
 ## Rules
 

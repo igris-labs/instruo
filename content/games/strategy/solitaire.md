@@ -1,13 +1,11 @@
 ---
+resourceId: game:solitaire
 title: Solitaire
 description: Build four suit stacks from ace to king in a tactile local Klondike game with hints, undo, and two deal styles.
 category: Strategy
 tags: [solitaire, klondike, cards, patience, strategy, browser-game]
 icon: i-tabler-cards
 ---
-
-::Solitaire
-::
 
 ## Rules
 

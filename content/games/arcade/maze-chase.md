@@ -1,13 +1,11 @@
 ---
+resourceId: game:maze-chase
 title: Maze Chase
 description: Clear ten seeded neon mazes, eat power pellets, and outrun the ghosts.
 category: Arcade
 tags: [maze-chase, pac-man, ghosts, arcade, phaser, browser-game]
 icon: i-tabler-ghost
 ---
-
-::MazeChase
-::
 
 ## Rules
 

@@ -1,42 +1,47 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { createToastManager, provideToastManager } from "akaza-ui";
+import AppSearch from "./components/product/AppSearch.vue";
+import { OverlayProvider } from "./components/ui/overlay-provider";
+import { Toast } from "./components/ui/toast";
 
 provideToastManager(createToastManager());
-const colorMode = useColorMode();
-const title = "Instruo | Free browser tools for everyday tasks";
-const description =
-  "Use fast, private utilities for text, encoding, data, and quick browser games. No account or installation required.";
-
-useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description,
+onMounted(() => {
+  document.documentElement.dataset.instruoReady = "true";
 });
-
+const search = useState("instruo-search", () => false);
 useHead({
+  bodyAttrs: { class: "[&_.akaza-checkbox-wrapper]:gap-2" },
   htmlAttrs: { lang: "en" },
-  titleTemplate: (pageTitle) => (pageTitle ? `${pageTitle} | Instruo` : title),
+  titleTemplate: (title) => (title ? `${title} · Instruo` : "Instruo — tools for the task at hand"),
   link: [
-    { rel: "icon", type: "image/svg+xml", href: "/logo.svg" },
-    { rel: "icon", type: "image/x-icon", href: "/favicon.ico", sizes: "32x32" },
-    { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+    { rel: "icon", type: "image/png", sizes: "32x32", href: "/brand/favicon-32.png" },
+    { rel: "icon", type: "image/svg+xml", sizes: "any", href: "/brand/favicon.svg" },
+    { rel: "apple-touch-icon", sizes: "180x180", href: "/brand/apple-touch-icon.png" },
   ],
-  meta: [
-    {
-      name: "theme-color",
-      content: computed(() => (colorMode.value === "dark" ? "#0a0a0a" : "#ffffff")),
-    },
-    { name: "color-scheme", content: "light dark" },
-  ],
+});
+useSeoMeta({
+  description: "Useful browser tools and games for a proper break. No account required.",
 });
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-  <AppSearch />
-  <UiToast />
-  <UiOverlayProvider />
+  <NuxtRouteAnnouncer />
+  <NuxtLayout
+    ><NuxtPage
+      :transition="{
+        mode: 'out-in',
+        enterActiveClass:
+          'transition-[opacity,transform] duration-180 ease-enter motion-reduce:transition-none',
+        enterFromClass: 'motion-safe:opacity-0 motion-safe:translate-y-1',
+        enterToClass: 'opacity-100 translate-y-0',
+        leaveActiveClass: 'transition-opacity duration-100 motion-reduce:transition-none',
+        leaveToClass: 'motion-safe:opacity-0',
+      }"
+  /></NuxtLayout>
+  <!-- Closed global overlays have no server content; mount their shared teleport stack once. -->
+  <ClientOnly>
+    <AppSearch v-model:open="search" />
+    <Toast />
+    <OverlayProvider />
+  </ClientOnly>
 </template>

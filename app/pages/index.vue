@@ -1,233 +1,223 @@
 <script setup lang="ts">
-import { NuxtLink } from "#components";
-import JsonFormatter from "~/components/tools/developer/json-formatter/JsonFormatter.vue";
-
-const landing = useTemplateRef<HTMLElement>("landing");
-useLandingMotion(landing);
-const [{ data: tools }, { data: games }] = await Promise.all([
-  useAsyncData("home_tools", () =>
-    queryCollection("tools")
-      .select("id", "path", "title", "description", "category", "tags", "icon")
-      .all(),
-  ),
-  useAsyncData("home_games", () =>
-    queryCollection("games")
-      .select("id", "path", "title", "description", "category", "tags", "icon")
-      .all(),
-  ),
-]);
-const toolPaths = [
-  "/tools/developer/json-formatter",
-  "/tools/image/image-resizer",
-  "/tools/security/password-generator",
-  "/tools/developer/timestamp-converter",
-];
-const gamePaths = [
-  "/games/arcade/flappy-bird",
-  "/games/number/2048",
-  "/games/word/wordle",
-  "/games/logic/lights-out",
-];
-const featuredTools = computed(() =>
-  toolPaths.flatMap((path) => tools.value?.find((item) => item.path === path) ?? []),
-);
-const featuredGames = computed(() =>
-  gamePaths.flatMap((path) => games.value?.find((item) => item.path === path) ?? []),
-);
-const sample =
-  '{"project":"Instruo","tools":["format","convert","create"],"accountRequired":false}';
+import { resolveComponent } from "vue";
+import ToolCard from "../components/product/ToolCard.vue";
+import { Button } from "../components/ui/button";
+import { quickStartSlugs } from "../features/catalogue/presentation";
+definePageMeta({ layout: "marketing" });
 useSeoMeta({
-  title: "Free browser tools and games",
+  title: "Instruo · Tools and browser games",
   description:
-    "Free tools for code, text, images, and everyday calculations. No account required. Plus browser games for your next break.",
+    "Find browser tools by task: work with code, data, images, text and everyday calculations. Free and open source, with games for a break.",
 });
+const link = resolveComponent("NuxtLink");
+const { data: catalogue } = await useCatalogue();
+const tools = computed(() => (catalogue.value ?? []).filter((item) => item.kind === "tool"));
+const featured = computed(() =>
+  quickStartSlugs.flatMap((slug) => tools.value.filter((item) => item.slug === slug)),
+);
+const games = computed(() =>
+  ["lights-out", "flappy-bird", "solitaire", "minesweeper"].flatMap((slug) =>
+    (catalogue.value ?? []).filter((item) => item.kind === "game" && item.slug === slug),
+  ),
+);
 </script>
-
 <template>
-  <div
-    ref="landing"
-    class="mx-auto w-full max-w-6xl px-5 sm:px-8"
-  >
+  <div class="mx-auto w-full max-w-[90rem] px-5 pb-16 sm:px-8">
     <section
-      aria-labelledby="home-heading"
-      class="pt-14 sm:pt-20 lg:pt-24"
+      class="mx-auto flex max-w-4xl flex-col items-center pt-20 pb-20 text-center sm:pt-28 sm:pb-28"
+      aria-labelledby="hero-title"
     >
       <h1
-        id="home-heading"
-        class="max-w-4xl text-[clamp(3.25rem,7.5vw,5.75rem)] leading-[1.04] font-semibold tracking-[-0.055em]"
+        id="hero-title"
+        class="text-highlighted max-w-2xl text-[clamp(2rem,3.5vw,3rem)] leading-[1.08] font-semibold tracking-[-0.045em] text-balance"
       >
-        <span class="block overflow-hidden pb-1"
-          ><span
-            data-line
-            class="block"
-            >Small tasks.</span
-          ></span
-        >
-        <span class="block overflow-hidden pb-2"
-          ><span
-            data-line
-            class="block"
-            >Done well.</span
-          ></span
-        >
+        Tools for everyday work.
       </h1>
+      <p class="text-foreground mt-5 max-w-xl text-base leading-7 text-pretty sm:text-lg">
+        Work with code, data, images and everyday numbers. Find the tool for your task and get
+        straight to it.
+      </p>
       <div
-        data-reveal
-        class="mt-6 flex flex-col justify-between gap-7 sm:mt-7 md:flex-row md:items-end"
+        class="mt-7 flex flex-wrap justify-center gap-3"
+        data-ui
       >
-        <p class="text-foreground-muted max-w-lg text-base leading-7 sm:text-lg sm:leading-8">
-          Free browser tools for code, text, images, and everyday calculations. Open a tool and get
-          back to your day.
-        </p>
-        <div class="flex shrink-0 items-center gap-6 pb-1">
-          <UiButton
-            :as="NuxtLink"
-            to="/tools"
-            label="Browse tools"
-            trailing-icon="i-tabler-arrow-right"
-          />
-          <NuxtLink
-            to="/games"
-            class="text-foreground-muted hover:text-foreground focus-visible:outline-accent-foreground inline-flex min-h-11 items-center gap-2 rounded-sm text-sm focus-visible:outline-2"
-          >
-            Play a game
-            <UiIcon
-              name="i-tabler-arrow-up-right"
-              class="size-4"
-            />
-          </NuxtLink>
-        </div>
-      </div>
-      <section
-        data-reveal
-        aria-labelledby="demo-heading"
-        class="mt-12 sm:mt-16"
-      >
-        <div class="mb-4 flex flex-wrap items-baseline justify-between gap-3">
-          <h2
-            id="demo-heading"
-            class="text-sm font-medium"
-          >
-            Try it. Make messy JSON readable.
-          </h2>
-          <NuxtLink
-            to="/tools/developer/json-formatter"
-            class="text-foreground-muted hover:text-foreground focus-visible:outline-accent-foreground inline-flex min-h-7 items-center gap-2 rounded-sm text-xs focus-visible:outline-2"
-          >
-            Open JSON Formatter <UiIcon name="i-tabler-arrow-up-right" />
-          </NuxtLink>
-        </div>
-        <div data-ui>
-          <JsonFormatter
-            mode="format"
-            :initial-value="sample"
-            :rows="8"
-          />
-        </div>
-      </section>
-    </section>
-
-    <section
-      aria-labelledby="tools-heading"
-      class="grid gap-8 py-20 sm:gap-12 sm:py-28 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.45fr)] lg:gap-20"
-    >
-      <div data-reveal>
-        <h2
-          id="tools-heading"
-          class="max-w-sm text-3xl leading-tight font-semibold tracking-[-0.035em] sm:text-4xl"
-        >
-          Find the right tool.<br />Skip the setup.
-        </h2>
-        <p class="text-foreground-muted mt-5 max-w-sm text-base leading-7">
-          A quick conversion. A cleaner file. A value you need right now. Useful things, without
-          another account.
-        </p>
-        <NuxtLink
+        <Button
+          :as="link"
           to="/tools"
-          class="hover:text-accent-foreground focus-visible:outline-accent-foreground mt-6 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium focus-visible:outline-2"
+          >Browse tools</Button
         >
-          Explore all tools
-          <UiIcon
-            name="i-tabler-arrow-right"
-            class="size-4"
-          />
-        </NuxtLink>
-      </div>
-      <div class="min-w-0">
-        <NuxtLink
-          v-for="item in featuredTools"
-          :key="item.id"
-          :to="item.path"
-          data-reveal
-          class="group hover:bg-muted/60 focus-visible:outline-accent-foreground flex min-h-20 items-center gap-4 rounded-md px-1 py-4 transition-colors duration-150 focus-visible:outline-2 motion-reduce:transition-none"
+        <Button
+          :as="link"
+          to="/games"
+          color="secondary"
+          variant="soft"
+          >Explore games</Button
         >
-          <UiIcon
-            :name="item.icon || 'i-tabler-tool'"
-            class="size-5 shrink-0"
-            :class="toolIconClass(item.category)"
-          />
-          <span class="min-w-0 flex-1">
-            <span class="block text-sm font-medium">{{ item.title }}</span>
-            <span class="text-foreground-muted mt-1 block text-base leading-7">{{
-              item.description
-            }}</span>
-          </span>
-          <UiIcon
-            name="i-tabler-arrow-up-right"
-            class="text-foreground-dimmed size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
-          />
-        </NuxtLink>
       </div>
     </section>
 
-    <section
-      aria-labelledby="games-heading"
-      class="pb-20 sm:pb-28"
-    >
-      <header
-        data-reveal
-        class="mb-7 flex flex-wrap items-end justify-between gap-5 sm:mb-9"
+    <section aria-labelledby="benefits-title">
+      <h2
+        id="benefits-title"
+        class="sr-only"
       >
-        <div>
+        Straight to the task.
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <article class="bg-muted/40 flex items-start gap-3 rounded-xl p-5">
+          <Icon
+            name="tabler:device-laptop"
+            mode="svg"
+            class="text-muted-foreground mt-0.5 size-5 shrink-0"
+            aria-hidden="true"
+          />
+          <div>
+            <h3 class="text-highlighted text-sm font-medium">Processed in your browser.</h3>
+            <p class="text-muted-foreground mt-1 text-[13px] leading-6">
+              Local tools keep input on your device.
+            </p>
+          </div>
+        </article>
+        <article class="bg-muted/40 flex items-start gap-3 rounded-xl p-5">
+          <Icon
+            name="tabler:login-2"
+            mode="svg"
+            class="text-muted-foreground mt-0.5 size-5 shrink-0"
+            aria-hidden="true"
+          />
+          <div>
+            <h3 class="text-highlighted text-sm font-medium">No signup. Just start.</h3>
+            <p class="text-muted-foreground mt-1 text-[13px] leading-6">No account needed.</p>
+          </div>
+        </article>
+        <article class="bg-muted/40 flex items-start gap-3 rounded-xl p-5">
+          <Icon
+            name="tabler:brand-github"
+            mode="svg"
+            class="text-muted-foreground mt-0.5 size-5 shrink-0"
+            aria-hidden="true"
+          />
+          <div>
+            <h3 class="text-highlighted text-sm font-medium">Free and open source</h3>
+            <a
+              href="https://github.com/igris-labs/instruo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-muted-foreground hover:text-highlighted focus-visible:outline-ring mt-1 inline-block rounded-sm text-[13px] leading-6 underline underline-offset-4 focus-visible:outline-1"
+              >MIT licensed. View the code.</a
+            >
+          </div>
+        </article>
+      </div>
+    </section>
+    <section
+      class="pt-16 sm:pt-24"
+      aria-labelledby="tools-title"
+    >
+      <div class="flex flex-wrap items-end justify-between gap-5">
+        <div class="max-w-xl">
           <h2
-            id="games-heading"
-            class="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl"
+            id="tools-title"
+            class="text-highlighted text-2xl font-semibold tracking-tight sm:text-3xl"
           >
-            A little room to play.
+            Find your next tool.
           </h2>
-          <p class="text-foreground-muted mt-4 text-base leading-7">
-            Close the spreadsheet. Open a game. Your next break is right here.
+          <p class="text-muted-foreground mt-3 text-base leading-7">
+            Code, images, text and everyday calculations.
           </p>
         </div>
-        <NuxtLink
+        <Button
+          :as="link"
+          to="/tools"
+          color="secondary"
+          variant="outline"
+          >View all tools</Button
+        >
+      </div>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <ToolCard
+          v-for="tool in featured"
+          :key="tool.id"
+          :resource="tool"
+          compact
+        />
+      </div>
+    </section>
+
+    <section
+      class="pt-16 sm:pt-24"
+      aria-labelledby="games-title"
+    >
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2
+            id="games-title"
+            class="text-highlighted text-2xl font-semibold tracking-tight sm:text-3xl"
+          >
+            Take a break
+          </h2>
+          <p class="text-muted-foreground mt-3 max-w-xl text-base leading-7">
+            Quick rounds, daily puzzles and familiar favourites.
+          </p>
+        </div>
+        <Button
+          :as="link"
           to="/games"
-          class="hover:text-accent-foreground focus-visible:outline-accent-foreground inline-flex min-h-11 items-center gap-2 rounded-sm text-sm font-medium focus-visible:outline-2"
+          color="secondary"
+          variant="outline"
+          >View all games</Button
         >
-          All games
-          <UiIcon
-            name="i-tabler-arrow-right"
-            class="size-4"
-          />
-        </NuxtLink>
-      </header>
-      <div class="grid grid-cols-2 gap-x-4 gap-y-7 sm:gap-x-6 sm:gap-y-9">
+      </div>
+      <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 lg:grid-cols-4">
         <NuxtLink
-          v-for="game in featuredGames"
+          v-for="game in games"
           :key="game.id"
-          :to="game.path"
-          :aria-label="`Play ${game.title}`"
-          data-reveal
-          class="group focus-visible:outline-accent-foreground min-w-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-4"
+          :to="game.route"
+          class="group focus-visible:outline-ring rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4"
         >
-          <GamePreview
-            :path="game.path"
-            :title="game.title"
-            :category="game.category"
-            class="rounded-md"
+          <img
+            :src="game.artwork"
+            :alt="`${game.title} game artwork`"
+            width="1280"
+            height="720"
+            loading="lazy"
+            class="aspect-video w-full rounded-lg object-cover transition-[filter] duration-150 group-hover:brightness-110 motion-reduce:transition-none"
           />
-          <h3 class="mt-3 text-base font-medium">{{ game.title }}</h3>
-          <p class="text-foreground-muted mt-1 text-sm">{{ game.category }}</p>
+          <h3 class="text-highlighted mt-3 text-sm font-semibold">{{ game.title }}</h3>
+          <p class="text-muted-foreground mt-1 text-xs">{{ game.category }}</p>
         </NuxtLink>
+      </div>
+    </section>
+
+    <section
+      class="bg-muted/50 mt-16 rounded-xl px-6 py-10 text-center sm:mt-24 sm:px-10 sm:py-14"
+      aria-labelledby="start-title"
+    >
+      <div class="mx-auto max-w-2xl">
+        <h2
+          id="start-title"
+          class="text-highlighted text-2xl font-semibold tracking-tight sm:text-3xl"
+        >
+          Ready when you are.
+        </h2>
+        <p class="text-muted-foreground mt-3 text-base leading-7">No account required.</p>
+      </div>
+      <div
+        class="mt-7 flex flex-wrap justify-center gap-3"
+        data-ui
+      >
+        <Button
+          :as="link"
+          to="/tools"
+          >Get started</Button
+        >
+        <Button
+          :as="link"
+          to="/games"
+          color="secondary"
+          variant="outline"
+          >Find a game</Button
+        >
       </div>
     </section>
   </div>

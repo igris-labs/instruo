@@ -1,13 +1,11 @@
 ---
+resourceId: tool:hash-generator
 title: SHA Hash Generator
 description: Create SHA-256, SHA-384, SHA-512, or legacy SHA-1 digests from text.
 category: Developer
 tags: [sha, sha-256, sha-512, hash, digest, checksum, developer]
 icon: i-tabler-hash
 ---
-
-::HashGenerator
-::
 
 ## Create a digest
 

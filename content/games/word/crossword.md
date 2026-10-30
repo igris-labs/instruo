@@ -1,4 +1,5 @@
 ---
+resourceId: game:crossword
 title: Daily Crossword
 description: Solve a traditional 15×15 blocked crossword with numbered clues, keyboard controls, and dictionary-backed definitions.
 category: Word
@@ -6,9 +7,6 @@ tags: [crossword, puzzle, clues, vocabulary, browser-game]
 icon: i-tabler-puzzle-2
 art: /game-arts/crossword.jpg
 ---
-
-::Crossword
-::
 
 ## Rules
 

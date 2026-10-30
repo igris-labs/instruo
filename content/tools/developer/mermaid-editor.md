@@ -1,19 +1,17 @@
 ---
+resourceId: tool:mermaid-editor
 title: Mermaid Diagram Editor
-description: Edit simple Mermaid flowcharts locally with an instant structural preview.
+description: Render Mermaid diagrams locally and export a clean SVG.
 category: Developer
 tags: [mermaid, diagram, flowchart, editor]
 icon: i-tabler-chart-dots-3
 processing: local
-capabilityStatus: partial
+capabilityStatus: verified
 ---
-
-::MermaidEditor
-::
 
 ## How it works
 
-Edit basic `A --> B` flowchart edges and preview the diagram without a remote renderer.
+Edit a Mermaid flowchart, sequence diagram, or another supported Mermaid diagram, then choose Render diagram. Source changes clear the old result. Download the SVG after a successful render. Rendering uses strict mode with a 20,000-character and 200-edge limit; syntax errors leave the source editable.
 
 ## Privacy
 

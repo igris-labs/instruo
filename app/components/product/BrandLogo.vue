@@ -1,0 +1,30 @@
+<script setup lang="ts">
+withDefaults(defineProps<{ wordmark?: boolean }>(), { wordmark: false });
+</script>
+<template>
+  <span
+    class="inline-flex shrink-0 items-center gap-2.5"
+    :aria-hidden="wordmark ? undefined : true"
+  >
+    <svg
+      viewBox="0 0 220 224"
+      fill="currentColor"
+      :class="wordmark ? 'size-7 shrink-0' : 'size-full'"
+      aria-hidden="true"
+      data-brand="instruo-open-junction"
+    >
+      <path
+        d="m20 68 82-47q2-1 4 0l62 36q4 2 0 4l-38 22q-2 1-4 0l-22-13-42 24v46q0 3-3 5l-38 22q-3 2-3-2V73q0-3 2-5Z"
+      />
+      <path
+        d="m94 120 36-20q2-1 4 0l64 37q2 1 2 4v45q0 3-3 5l-36 21q-3 2-3-2v-46l-64-37q-3-2-3-4 0-2 3-3Z"
+        opacity=".6"
+      />
+    </svg>
+    <span
+      v-if="wordmark"
+      class="font-[650] tracking-[-0.05em]"
+      >Instruo</span
+    >
+  </span>
+</template>

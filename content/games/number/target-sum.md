@@ -1,13 +1,11 @@
 ---
+resourceId: game:target-sum
 title: Target Sum
 description: Select two number tiles that add up to the target.
 category: Number
 tags: [target-sum, arithmetic, numbers, puzzle, mental-math]
 icon: i-tabler-target
 ---
-
-::TargetSum
-::
 
 ## Rules
 
