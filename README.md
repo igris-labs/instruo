@@ -28,7 +28,7 @@ The development server runs at `http://localhost:3000`.
 | `pnpm format`       | Check formatting                             |
 | `pnpm test:unit`    | Run Vitest                                   |
 | `pnpm test:e2e`     | Run Chromium browser tests                   |
-| `pnpm build`        | Build for Cloudflare Pages                   |
+| `pnpm build`        | Prerender the static site into `dist/`       |
 | `pnpm audit:prod`   | Check production dependency advisories       |
 | `pnpm brand:export` | Regenerate PNG brand icons from shipped SVGs |
 
@@ -55,7 +55,11 @@ Built with Nuxt, Vue, Tailwind CSS, Akaza UI and IPEX. Code editors use Shiki; c
 
 ## Deployment
 
-`pnpm build` targets Cloudflare Pages. Nuxt Content requires a D1 database bound as `DB`; configure the environment and bindings for your deployment. A successful local build does not validate production bindings or external services.
+`pnpm build` (or `npm run build`) prerenders the homepage, directories and every tool/game page into `dist/`. Catalogue content is prepared during the build. Production needs no Node server, Cloudflare Worker or D1 database.
+
+For Cloudflare Pages, set the build command to `npm run build` and output directory to `dist`, using Node.js 24. Deploy the complete directory, including generated payloads, content assets and `404.html`. Rebuild when adding or changing catalogue content. Other static hosts can serve the same output.
+
+The build checks that every catalogue entry has prerendered HTML and a page payload, and that no Worker or Functions routing file is emitted. Nuxt Content uses local build-time storage; no production database configuration is needed.
 
 ## Contributing and support
 

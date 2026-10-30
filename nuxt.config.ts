@@ -1,4 +1,14 @@
+import { globSync } from "node:fs";
+import { basename, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
+
+const contentDirectory = fileURLToPath(new URL("./content/", import.meta.url));
+const resourceRoutes = ["tools", "games"].flatMap((collection) =>
+  globSync("**/*.md", { cwd: resolve(contentDirectory, collection) }).map(
+    (file) => `/${collection}/${basename(file, ".md")}`,
+  ),
+);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -30,7 +40,14 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: "cloudflare-pages",
+    preset: "static",
+    output: { publicDir: resolve("dist") },
+    prerender: {
+      routes: ["/", "/tools", "/games", ...resourceRoutes],
+      crawlLinks: true,
+      failOnError: true,
+      ignore: ["/__foundation"],
+    },
   },
 
   css: ["~/assets/main.css", "~/assets/brand.css"],
@@ -101,7 +118,7 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: "",
-    preference: "system",
+    preference: "light",
     fallback: "light",
   },
 

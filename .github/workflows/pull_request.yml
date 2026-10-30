@@ -41,7 +41,7 @@ jobs:
       - name: Production dependency audit
         run: pnpm audit:prod
 
-      - name: Production build
+      - name: Prerender static site
         run: pnpm build
 
       - name: Install Playwright browser
