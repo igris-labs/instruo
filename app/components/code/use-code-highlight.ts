@@ -1,6 +1,7 @@
 import type { CodeRow, HighlightRequest, HighlightResponse } from "./highlight.types";
 import type { JsonFold } from "./json-folds";
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vue";
+import { escapeCode } from "../../utils/escape-code";
 
 export function useCodeHighlight(
   source: () => string,
@@ -12,16 +13,23 @@ export function useCodeHighlight(
   const result = shallowRef<Extract<HighlightResponse, { type: "result" }> | null>(null);
   const pending = ref(false);
   const failed = ref(false);
-  const window = computed(() => {
-    const value = rows();
-    return { key: value.map((row) => `${row.line}:${row.foldEnd ?? ""}`).join(","), rows: value };
+  const sourceLines = computed(() => source().split("\n"));
+  const ready = computed(() => !!result.value);
+  // Project cached tokens synchronously; scrolling must never wait for a worker response.
+  const html = computed(() => {
+    if (!result.value) return "";
+    const lines = result.value.lines;
+    return rows()
+      .map((row) =>
+        row.foldEnd === undefined
+          ? (lines[row.line] ?? "")
+          : `${lines[row.line] ?? ""} … ${escapeCode(sourceLines.value[row.foldEnd]?.trimStart() ?? "")}`,
+      )
+      .join("\n");
   });
-  const ready = computed(() => !!result.value && result.value.key === window.value.key);
-  const html = computed(() => (ready.value ? result.value!.lines.join("\n") : ""));
   let worker: Worker | undefined;
   let mounted = false;
   let version = 0;
-  let posted = 0;
   let timer: ReturnType<typeof setTimeout> | undefined;
   function send(message: HighlightRequest) {
     worker?.postMessage(message);
@@ -66,14 +74,12 @@ export function useCodeHighlight(
           worker.onerror = fail;
           worker.onmessageerror = fail;
         }
-        posted = version;
         send({
           type: "document",
           version,
           source: source(),
           language: language(),
           foldable: foldable(),
-          window: window.value,
         });
       } catch {
         fail();
@@ -81,9 +87,6 @@ export function useCodeHighlight(
     }, 80);
   }
   watch([source, language, foldable], update);
-  watch(window, () => {
-    if (worker && posted === version) send({ type: "viewport", version, window: window.value });
-  });
   onMounted(() => {
     mounted = true;
     update();

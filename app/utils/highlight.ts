@@ -1,6 +1,9 @@
 import type { HighlighterCore } from "shiki/core";
 import { createHighlighterCore } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+import { escapeCode } from "./escape-code";
+
+export { escapeCode } from "./escape-code";
 
 const languages = {
   json: () => import("shiki/langs/json.mjs"),
@@ -40,15 +43,6 @@ const aliases: Record<string, string> = {
 };
 let instance: Promise<HighlighterCore> | undefined;
 const loading = new Map<string, Promise<void>>();
-
-export function escapeCode(source: string) {
-  return source
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
 
 export async function highlightLines(source: string, requestedLanguage: string): Promise<string[]> {
   const language = aliases[requestedLanguage] ?? requestedLanguage;

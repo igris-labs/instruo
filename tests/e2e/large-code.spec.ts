@@ -2,6 +2,77 @@ import { Buffer } from "node:buffer";
 import { expect, test } from "@playwright/test";
 import { visit } from "./helpers";
 
+for (const theme of ["light", "dark"] as const) {
+  for (const surface of ["editor", "block"] as const) {
+    test(`${surface} keeps syntax colors while scrolling in ${theme} mode without worker round trips`, async ({
+      page,
+    }) => {
+      await page.addInitScript((mode) => {
+        localStorage.setItem("nuxt-color-mode", mode);
+        const NativeWorker = window.Worker;
+        window.Worker = class extends NativeWorker {
+          postMessage(message: unknown) {
+            // A busy worker must not interrupt an already-highlighted document during scrolling.
+            if ((message as { type?: string }).type === "viewport") return;
+            super.postMessage(message);
+          }
+        };
+      }, theme);
+      const data = Object.fromEntries(
+        Array.from({ length: 300 }, (_, index) => [`line${index}`, `value-${index}`]),
+      );
+      if (surface === "editor") {
+        await visit(page, "/tools/json-formatter");
+        await page
+          .getByRole("textbox", { name: "JSON input", exact: true })
+          .fill(JSON.stringify(data, null, 2));
+      } else {
+        await visit(page, "/tools/openapi-viewer");
+        await page
+          .getByRole("textbox")
+          .first()
+          .fill(
+            JSON.stringify({
+              openapi: "3.0.3",
+              info: { title: "Scroll check", version: "1", contact: data },
+              paths: {},
+            }),
+          );
+        await page.getByRole("button", { name: "Inspect document", exact: true }).click();
+      }
+      const code = page
+        .locator(surface === "editor" ? "[data-code-editor]" : "[data-code-block]")
+        .first();
+      await expect(code).toHaveAttribute("data-highlight-state", "ready");
+      const frames = await code.evaluate(async (root) => {
+        const input = root.querySelector("textarea")!;
+        const observed: string[] = [];
+        const visible: string[] = [];
+        const observer = new MutationObserver(() =>
+          observed.push(root.getAttribute("data-highlight-state")!),
+        );
+        observer.observe(root, { attributes: true, attributeFilter: ["data-highlight-state"] });
+        for (const fraction of [0.2, 0.7, 1, 0.4, 0]) {
+          input.scrollTop = fraction * (input.scrollHeight - input.clientHeight);
+          input.scrollLeft = fraction * 20;
+          input.dispatchEvent(new Event("scroll"));
+          await new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          );
+          observed.push(root.getAttribute("data-highlight-state")!);
+          visible.push(root.querySelector("pre")?.textContent ?? "");
+        }
+        observer.disconnect();
+        return { observed, visible };
+      });
+      expect(frames.observed.every((state) => state === "ready")).toBe(true);
+      expect(frames.visible[2]).toContain("value-299");
+      expect(frames.visible[4]).toContain("value-0");
+      expect(Number(await code.getAttribute("data-rendered-lines"))).toBeLessThan(100);
+    });
+  }
+}
+
 test("18k-line JSON stays highlighted with bounded DOM, folding and complete export", async ({
   page,
 }) => {
